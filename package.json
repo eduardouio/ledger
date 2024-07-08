@@ -22,7 +22,6 @@
     "pinia": "^2.1.7",
     "pnpm": "^9.4.0",
     "vectormap": "^0.0.2",
-    "vite-plugin-svgr": "^4.2.0",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5",
     "vue3-apexcharts": "^1.4.4"
