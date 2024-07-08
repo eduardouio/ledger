@@ -5,6 +5,7 @@ import BasicChartView from '@/views/Charts/BasicChartView.vue'
 import ECommerceView from '@/views/Dashboard/ECommerceView.vue'
 import SettingsView from '@/views/Pages/SettingsView.vue'
 import ProfileView from '@/views/ProfileView.vue'
+import SalesView from '@/views/Comercial/SalesView.vue'
 
 const routes = [
   {
@@ -29,6 +30,14 @@ const routes = [
     component: SettingsView,
     meta: {
       title: 'Settings'
+    }
+  },
+  {
+    path: '/pages/sales/inovoice-sale',
+    name: 'inovoiceSale',
+    component: SalesView,
+    meta: {
+      title: 'Sales View'
     }
   },
   {
