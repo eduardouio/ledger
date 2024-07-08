@@ -1,4 +1,5 @@
 import defaultTheme from 'tailwindcss/defaultTheme'
+const daisyui = require('daisyui')
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -308,5 +309,7 @@ export default {
       }
     }
   },
-  plugins: []
+  plugins: [
+    daisyui,
+  ]
 }

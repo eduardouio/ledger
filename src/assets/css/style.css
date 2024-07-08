@@ -250,3 +250,16 @@ input[type='search']::-webkit-search-cancel-button {
 .my-table{
     @apply bg-emerald-200
 }
+
+
+.btn {
+    @apply  text-white;
+}
+
+.table > thead > tr > th {
+    @apply bg-blue-200 font-bold text-lg text-cyan-900;
+}
+
+.table > thead > tr > th, .table > tbody > tr > td {
+    @apply  border border-slate-400 p-2;
+}
