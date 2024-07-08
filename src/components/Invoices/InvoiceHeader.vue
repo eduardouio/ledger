@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import ModalFormItemInvoiceVue from '@/components/Invoices/ModalFormItemInvoice.vue'
 import {
-  IconPlus, IconCubePlus, IconEdit, IconPrinter,
+  IconPlus, IconEdit, IconPrinter,
   IconTrash,IconCheck, IconCancel
 } from '@tabler/icons-vue'
 
@@ -30,10 +31,7 @@ import {
     <!-- Detalle de la Factura -->
     <div class="mb-8">
       <div class="flex justify-end p-2">
-        <button class="btn btn-sm bg-blue-900">
-                <IconCubePlus stroke-width="1.5" class="text-withe h-5 w-5"/>
-                Add Item 
-      </button>
+                <ModalFormItemInvoiceVue/>
       </div>
       <div class="overflow-x-auto">
         <table class="table">
