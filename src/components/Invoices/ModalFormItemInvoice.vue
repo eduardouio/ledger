@@ -41,7 +41,7 @@ const openModal = () => {
     </button>
     <!-- Modal -->
     <dialog id="myModal" class="modal">
-      <div class="bg-white p-10 rounded-xl w-full md:w-3/4 lg:w-2/4 ">
+      <div class="bg-white p-10 rounded-xl w-full md:w-3/4 lg:w-3/4 ">
           <div class="flex justify-between gap-3 mb-3">
             <label class="input input-bordered flex justify-between gap-2 input-sm w-full">
               <input type="text" placeholder="Buscar producto...">
@@ -63,13 +63,44 @@ const openModal = () => {
           <div class="modal-action">
               <button class="btn btn-primary btn-sm" @click="addProduct">
                 <IconPlus class="h-5 w-5" />
-                Agregar
+                Add
               </button>
               <button class="btn btn-error btn-sm" @click="closeModal">
                 <IconCancel class="h-5 w-5" />
-                Cancelar
+                Cancel
               </button>
             </div>
+            <hr class="p-3 m-3 text-slate-300"/>
+            <h3>Customize Items</h3>
+            <div class="flex gap-3 justify-between align-middle p-3 bg-yellow-200">
+              <span class="text-success">Mouse genius 300dpi Gamer</span>
+              <label class="p-1 pl-2 pr-2 border bg-blue-200 hover:bg-red">
+                Quantity
+                <input
+                  type="number"
+                  class="input input-bordered pl-5"
+                  placeholder="0"
+                  value="1"
+                  step="1"
+                />
+              </label>
+              <label class="p-1 pl-2 pr-2 border bg-blue-200 hover:bg-red">
+                Value
+                <input
+                  type="number"
+                  class="input input-bordered"
+                  placeholder="0"
+                  value="23.2"
+                  step="0.01"
+                />
+              </label>
+          </div>
+          <div class="flex justify-end p-3">
+            <button class="btn btn-primary">
+                <IconPlus class="h-5 w-5" />
+                Add to Invoice
+              </button>
+          </div>
         </div>
     </dialog>
   </div>
