@@ -1,9 +1,17 @@
-<script setup>
+<script setup lang="js">
 import { IconHomeDollar, IconClipboardData, IconUsers, IconPlus, IconList } from '@tabler/icons-vue';
 import { ref } from 'vue'
+
+const props = defineProps({
+  category: {
+    type: String,
+    required: true
+  }
+})
+
+
 </script>
 <template>
-  <!-- Card Item Start -->
   <div class="relative bg-white py-6 px-6 rounded-3xl w-64 my-4 shadow-xl border border-cyan-500">
             <div class=" text-white flex items-center absolute rounded-full py-4 px-4 shadow-xl left-4 -top-6 border bg-gray-100 border-cyan-500">
                <IconHomeDollar class="h-8 w-8 text-cyan-500"/>
@@ -32,5 +40,4 @@ import { ref } from 'vue'
                 </div>
             </div>
         </div>
-  <!-- Card Item End -->
 </template>
