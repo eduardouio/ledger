@@ -26,7 +26,7 @@ const handleItemClick = () => {
   <li>
     <router-link
       :to="item.route"
-      class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+      class="group relative flex items-center gap-3 rounded-sm py-2 px-4 font-light duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 text-white"
       @click.prevent="handleItemClick"
       :class="{
         'bg-graydark dark:bg-meta-4': sidebarStore.page === item.label
