@@ -1,10 +1,11 @@
-from common.models import BaseModel
+from common import BaseModel
 from accounts.models import CustomUserModel
 from accounting.models import Account
 from django.db import models
 
 
 class Transaction(BaseModel):
+    id = models.AutoField(primary_key=True)
     company = models.ForeignKey(
         'companies.Company',
         on_delete=models.CASCADE

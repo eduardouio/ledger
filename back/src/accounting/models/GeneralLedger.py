@@ -1,10 +1,11 @@
-from common.models import BaseModel
+from common import BaseModel
 from companies.models import Company
-from accounting.models import Account
+from accounting.models import Account, Transaction
 from django.db import models
 
 
 class generalLedger(BaseModel):
+    id = models.AutoField(primary_key=True)
     company = models.ForeignKey(
         Company,
         on_delete=models.CASCADE

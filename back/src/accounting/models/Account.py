@@ -1,10 +1,11 @@
-from common.models import BaseModel
+from common import BaseModel
 from companies.models import Company
 from django.db import models
 
 
 class Account(BaseModel):
-    code = models.CharField(max_length=20)
+    id = models.AutoField(primary_key=True)
+    code = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=100)
     type = models.CharField(
         max_length=20,

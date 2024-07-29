@@ -1,5 +1,5 @@
 from django.db import models
-from common.models import BaseModel
+from common import BaseModel
 from companies.models import Company
 from accounting.models import Account
 
@@ -31,6 +31,9 @@ class Product(BaseModel):
         ],
         default='product'
     )
+
+    class Meta:
+        unique_together = ('company', 'name')
 
     def __str__(self):
         return self.name

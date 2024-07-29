@@ -1,10 +1,11 @@
 from django.db import models
-from common.models import BaseModel
+from common import BaseModel
 from .Product import Product
 from companies.models import Company
 
 
 class InventoryMovement(BaseModel):
+    id = models.AutoField(primary_key=True)
     company = models.ForeignKey(
         Company,
         on_delete=models.CASCADE

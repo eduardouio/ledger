@@ -1,10 +1,12 @@
-from common.models import BaseModel
+from common import BaseModel
 from accounts.models import CustomUserModel
 from django.db import models
 
 
 class Company(BaseModel):
-    tax_id = models.CharField(max_length=20, blank=True, null=True)
+    id = models.AutoField(primary_key=True)
+    tax_id = models.CharField(
+        max_length=20, blank=True, null=True, unique=True)
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=255, blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True, null=True)
@@ -14,7 +16,7 @@ class Company(BaseModel):
     notes = models.TextField(blank=True, null=True)
     manager = models.ForeignKey(
         'CustomUserModel',
-        on_delete=models.restict,
+        on_delete=models.RESTRICT,
     )
 
     def __str__(self):

@@ -1,5 +1,5 @@
 from django.db import models
-from common.models import BaseModel
+from common import BaseModel
 from companies.models import Company
 from accounts.models import CustomUserModel
 from inventary.models import Product
