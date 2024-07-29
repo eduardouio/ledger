@@ -1,2 +1,2 @@
-from .Invoice import Invoice
+from .Invoice import Invoice, InvoiceItems
 from .Payment import Payment
