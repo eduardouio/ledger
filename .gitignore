@@ -172,3 +172,4 @@ GitHub.sublime-settings
 !.vscode/extensions.json 
 .history
 .devdbrc
+migrations

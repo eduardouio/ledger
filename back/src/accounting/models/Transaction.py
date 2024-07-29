@@ -1,5 +1,6 @@
 from common import BaseModel
 from accounts.models import CustomUserModel
+from companies.models import Company
 from accounting.models import Account
 from django.db import models
 
@@ -7,7 +8,7 @@ from django.db import models
 class Transaction(BaseModel):
     id = models.AutoField(primary_key=True)
     company = models.ForeignKey(
-        'companies.Company',
+        Company,
         on_delete=models.CASCADE
     )
     description = models.TextField(blank=True, null=True)

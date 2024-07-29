@@ -15,7 +15,7 @@ class Company(BaseModel):
     logo = models.ImageField(upload_to='companies/', blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
     manager = models.ForeignKey(
-        'CustomUserModel',
+        CustomUserModel,
         on_delete=models.RESTRICT,
     )
 
