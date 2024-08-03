@@ -4,7 +4,14 @@ from companies.models import Company
 
 
 class CompanyAdmin(SimpleHistoryAdmin):
-    pass
+    list_display = (
+        'name',
+        'address',
+        'email',
+        'manager',
+        'created_at',
+        'is_active'
+    )
 
 
 admin.site.register(Company, CompanyAdmin)

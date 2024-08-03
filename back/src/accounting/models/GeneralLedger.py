@@ -22,3 +22,4 @@ class GeneralLedger(BaseModel):
 
     def __str__(self):
         return self.description
+    

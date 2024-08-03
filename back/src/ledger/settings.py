@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'crm',
     'inventary',
     'invoices',
+    'warenhouses',
 ]
 
 MIDDLEWARE = [

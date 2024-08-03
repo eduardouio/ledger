@@ -2,6 +2,7 @@ from django.db import models
 from common import BaseModel
 from .Product import Product
 from companies.models import Company
+from warenhouses.models import Warenhouse
 
 
 class InventoryMovement(BaseModel):
@@ -12,6 +13,10 @@ class InventoryMovement(BaseModel):
     )
     product = models.ForeignKey(
         Product,
+        on_delete=models.CASCADE
+    )
+    warenhouse = models.ForeignKey(
+        Warenhouse,
         on_delete=models.CASCADE
     )
     description = models.CharField(max_length=255)

@@ -14,7 +14,6 @@ class Transaction(BaseModel):
     description = models.TextField(blank=True, null=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    notes = models.TextField(blank=True, null=True)
     date = models.DateField()
     user = models.ForeignKey(
         CustomUserModel,
