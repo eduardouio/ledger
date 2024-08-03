@@ -1,3 +1,5 @@
+## generear pagos para varias facturas
+
 from django.db import models
 from common import BaseModel
 from companies.models import Company
@@ -15,12 +17,10 @@ class Payment(BaseModel):
     )
     date = models.DateField()
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    notes = models.TextField(blank=True, null=True)
     method = models.CharField(max_length=50,
                               choices=[
                                   ('cash', 'Cash'),
                                   ('credit_card', 'Credit Card'),
-                                  ('debit_card', 'Debit Card'),
                                   ('check', 'Check'),
                                   ('bank_transfer', 'Bank Transfer'),
                                   ('other', 'Other')

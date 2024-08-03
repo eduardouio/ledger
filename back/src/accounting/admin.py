@@ -4,15 +4,15 @@ from accounting.models import GeneralLedger, Transaction, Account
 
 
 class GeneralLedgerAdmin(SimpleHistoryAdmin):
-    pass
+    list_display = ('id', 'company', 'account', 'balance', 'created_at')
 
 
 class TransactionAdmin(SimpleHistoryAdmin):
-    pass
+    list_display = ('id', 'company', 'account', 'amount', 'date', 'user')
 
 
 class AccountAdmin(SimpleHistoryAdmin):
-    pass
+    list_display = ('code', 'name', 'type', 'company')
 
 
 admin.site.register(GeneralLedger, GeneralLedgerAdmin)

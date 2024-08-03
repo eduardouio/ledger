@@ -33,8 +33,16 @@ class Invoice(BaseModel):
     due_date = models.DateField()
     number = models.CharField(max_length=20)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_method = models.CharField(
+        max_length=20,
+        choices=(
+            ('cash', 'Cash'),
+            ('credit', 'Credit'),
+            ('transfer', 'Transfer'),
+            ('check', 'Check')
+        )
+    )
     paid = models.BooleanField(default=False)
-    notes = models.TextField(blank=True, null=True)
     tax = models.DecimalField(max_digits=10, decimal_places=2)
     user = models.ForeignKey(
         CustomUserModel,
@@ -43,12 +51,10 @@ class Invoice(BaseModel):
     status = models.CharField(
         max_length=20,
         choices=[
-            ('draft', 'Draft'),
-            ('sent', 'Sent'),
-            ('paid', 'Paid'),
+            ('generated', 'Generated'),
             ('cancelled', 'Cancelled')
         ],
-        default='draft'
+        default='generated'
     )
 
     def __str__(self):
@@ -64,11 +70,11 @@ class InvoiceItems(BaseModel):
         Product,
         on_delete=models.CASCADE
     )
-    description = models.CharField(max_length=255)
     quantity = models.IntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     discount = models.DecimalField(max_digits=10, decimal_places=2)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+    tax = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return self.description

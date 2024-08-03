@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import BreadcrumbDefault from '@/components/Breadcrumbs/BreadcrumbDefault.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import InvoiceHeader from '@/components/Invoices/InvoiceHeader.vue'
+import Invoice from '@/forms/Invoice.vue';
 
 const pageTitle = ref('New Invoice')
 
@@ -10,6 +10,6 @@ const pageTitle = ref('New Invoice')
 <template>
     <DefaultLayout>
         <BreadcrumbDefault  :pageTitle="pageTitle"/>
-        <InvoiceHeader />
+        <Invoice/>
     </DefaultLayout>
 </template>

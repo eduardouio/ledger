@@ -30,4 +30,4 @@ class Account(BaseModel):
     )
 
     def __str__(self):
-        return self.name
+        return self.name + ' - ' + self.code

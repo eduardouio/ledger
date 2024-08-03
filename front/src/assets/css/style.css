@@ -19,5 +19,17 @@
 }
 
 .table > thead > tr > th, .table > tbody > tr > td {
-    @apply  border border-slate-400 p-2;
+    @apply  border border-slate-300 p-2;
+}
+
+.input {
+    @apply border border-slate-300 p-1 input-sm;
+}
+
+.select {
+    @apply border border-slate-300 p-1 select-sm;
+}
+
+.textarea {
+    @apply border border-slate-300 p-1 input-sm;
 }
