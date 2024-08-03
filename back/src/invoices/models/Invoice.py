@@ -33,15 +33,6 @@ class Invoice(BaseModel):
     due_date = models.DateField()
     number = models.CharField(max_length=20)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    payment_method = models.CharField(
-        max_length=20,
-        choices=(
-            ('cash', 'Cash'),
-            ('credit', 'Credit'),
-            ('transfer', 'Transfer'),
-            ('check', 'Check')
-        )
-    )
     paid = models.BooleanField(default=False)
     tax = models.DecimalField(max_digits=10, decimal_places=2)
     user = models.ForeignKey(
@@ -77,4 +68,4 @@ class InvoiceItems(BaseModel):
     tax = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
-        return self.description
+        return self.product.name

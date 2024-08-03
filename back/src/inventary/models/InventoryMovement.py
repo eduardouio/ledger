@@ -3,6 +3,8 @@ from common import BaseModel
 from .Product import Product
 from companies.models import Company
 from warenhouses.models import Warenhouse
+from accounts.models import CustomUserModel
+from invoices.models import Invoice
 
 
 class InventoryMovement(BaseModel):
@@ -21,14 +23,31 @@ class InventoryMovement(BaseModel):
     )
     description = models.CharField(max_length=255)
     quantity = models.IntegerField()
-    cost_per_unit = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    cost_per_unit = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        null=True
+        )
     total_cost = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    invoice = models.ForeignKey(
+        Invoice,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
     movement = models.CharField(
         max_length=20,
         choices=[
             ('in', 'In'),
             ('out', 'Out')
         ]
+    )
+    user = models.ForeignKey(
+        CustomUserModel,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
     )
 
     def __str__(self):

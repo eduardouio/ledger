@@ -1,6 +1,6 @@
 from simple_history.admin import SimpleHistoryAdmin
 from django.contrib import admin
-from accounting.models import GeneralLedger, Transaction, Account
+from accounting.models import GeneralLedger, Transaction, Account, Bank
 
 
 class GeneralLedgerAdmin(SimpleHistoryAdmin):
@@ -15,6 +15,11 @@ class AccountAdmin(SimpleHistoryAdmin):
     list_display = ('code', 'name', 'type', 'company')
 
 
+class BankAdmin(SimpleHistoryAdmin):
+    list_display = ('name', 'company', 'account')
+
+
 admin.site.register(GeneralLedger, GeneralLedgerAdmin)
 admin.site.register(Transaction, TransactionAdmin)
 admin.site.register(Account, AccountAdmin)
+admin.site.register(Bank, BankAdmin)

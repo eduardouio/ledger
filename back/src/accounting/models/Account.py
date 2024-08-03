@@ -7,14 +7,15 @@ class Account(BaseModel):
     id = models.AutoField(primary_key=True)
     code = models.CharField(max_length=20, unique=True)
     name = models.CharField(max_length=100)
+    is_children = models.BooleanField(default=False)
     type = models.CharField(
         max_length=20,
         choices=[
-            ('asset', 'Activo'),
-            ('liability', 'Pasivo'),
-            ('equity', 'Patrimonio'),
-            ('income', 'Ingreso'),
-            ('expense', 'Gasto'),
+            ('asset', 'Asset'),
+            ('liability', 'Liability'),
+            ('equity', 'Equity'),
+            ('income', 'Income'),
+            ('expense', 'Expense'),
         ]
     )
     description = models.TextField(blank=True, null=True)

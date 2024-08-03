@@ -4,11 +4,11 @@ from crm.models import Supplier, Customer
 
 
 class SupplierAdmin(SimpleHistoryAdmin):
-    pass
+    list_display = ('name', 'company',)
 
 
 class CustomerAdmin(SimpleHistoryAdmin):
-    pass
+    list_display = ('name', 'company',)
 
 
 admin.site.register(Supplier, SupplierAdmin)
