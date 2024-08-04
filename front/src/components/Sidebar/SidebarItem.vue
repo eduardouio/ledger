@@ -33,7 +33,7 @@ const handleItemClick = () => {
       }"
     >
       <span v-html="item.icon"></span>
-      {{ item.label }}
+      <span v-html="item.label"></span>
       <svg
         v-if="item.children"
         class="absolute right-4 top-1/2 -translate-y-1/2 fill-current"
