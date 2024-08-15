@@ -8,4 +8,4 @@ class Command(BaseCommand):
         print('Cargamos las cuentas contables')
 
     def loadCOA(self):
-        
+        pass
