@@ -7,6 +7,9 @@ export default {
       satoshi: ['Satoshi', 'sans-serif']
     },
   },
+  daisyui: {
+    themes: ["acid"],
+  },
   plugins: [
     require('daisyui'),
   ]

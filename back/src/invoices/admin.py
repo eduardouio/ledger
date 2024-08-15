@@ -18,7 +18,7 @@ class InvoiceAdmin(SimpleHistoryAdmin):
 
 
 class PaymentAdmin(SimpleHistoryAdmin):
-    list_display = ('invoice', 'date', 'amount', 'method')
+    list_display = ('date', 'amount', 'method')
 
 
 admin.site.register(Invoice, InvoiceAdmin)

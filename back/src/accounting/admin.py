@@ -8,7 +8,7 @@ class GeneralLedgerAdmin(SimpleHistoryAdmin):
 
 
 class TransactionAdmin(SimpleHistoryAdmin):
-    list_display = ('id', 'company', 'account', 'amount', 'date', 'user')
+    list_display = ('id', 'company', 'amount', 'date', 'user')
 
 
 class AccountAdmin(SimpleHistoryAdmin):

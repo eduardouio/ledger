@@ -1,10 +1,10 @@
 from django.db import models
 from common import BaseModel
-from .Product import Product
+from inventary.models import Product
 from companies.models import Company
 from warenhouses.models import Warenhouse
 from accounts.models import CustomUserModel
-from invoices.models import Invoice
+from accounting.models import Transaction
 
 
 class InventoryMovement(BaseModel):
@@ -29,9 +29,14 @@ class InventoryMovement(BaseModel):
         blank=True,
         null=True
         )
-    total_cost = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    invoice = models.ForeignKey(
-        Invoice,
+    total_cost = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        null=True
+    )
+    trasanction = models.ForeignKey(
+        Transaction,
         on_delete=models.CASCADE,
         blank=True,
         null=True

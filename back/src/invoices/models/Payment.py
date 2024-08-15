@@ -1,5 +1,3 @@
-## generear pagos para varias facturas
-
 from django.db import models
 from common import BaseModel
 from companies.models import Company
@@ -11,10 +9,7 @@ class Payment(BaseModel):
         Company,
         on_delete=models.CASCADE
     )
-    invoice = models.ForeignKey(
-        Invoice,
-        on_delete=models.CASCADE
-    )
+    invoice = models.ManyToManyField(Invoice)
     date = models.DateField()
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     method = models.CharField(max_length=50,

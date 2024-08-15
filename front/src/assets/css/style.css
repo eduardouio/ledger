@@ -5,31 +5,22 @@
 @tailwind utilities;
 
 
-.my-table{
-    @apply bg-emerald-200
+
+.btn{
+    @apply font-medium
 }
-
-
-.btn {
-    @apply  text-white bg-slate-500 hover:bg-slate-600 font-light
-}
-
-.table > thead > tr > th {
-    @apply bg-blue-200 font-bold text-lg text-cyan-900;
-}
-
 .table > thead > tr > th, .table > tbody > tr > td {
-    @apply  border border-slate-300 p-2;
+    @apply  border;
 }
 
 .input {
-    @apply border border-slate-300 p-1 input-sm;
+    @apply border border-slate-300 p-1 input-sm rounded-none;
 }
 
 .select {
-    @apply border border-slate-300 p-1 select-sm;
+    @apply border border-slate-300 p-1 select-sm rounded-none;
 }
 
 .textarea {
-    @apply border border-slate-300 p-1 input-sm;
+    @apply border border-slate-300 p-1 input-sm rounded-none;
 }
