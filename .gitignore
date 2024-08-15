@@ -173,3 +173,9 @@ GitHub.sublime-settings
 .history
 .devdbrc
 migrations
+*/migrations/*
+!*/migrations/__init__.py
+migrations/
+migrations/*
+back/src/accounts/migrations/*
+back/src/accounts/migrations/
