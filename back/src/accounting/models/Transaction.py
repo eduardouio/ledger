@@ -10,9 +10,19 @@ class Transaction(BaseModel):
         Company,
         on_delete=models.CASCADE
     )
-    description = models.TextField(blank=True, null=True)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    date = models.DateField()
+    description = models.TextField(
+        'Description',
+        blank=True,
+        null=True
+    )
+    amount = models.DecimalField(
+        'Amount',
+        max_digits=10,
+        decimal_places=2
+    )
+    date = models.DateField(
+        'Transaction Date',
+    )
     user = models.ForeignKey(
         CustomUserModel,
         on_delete=models.CASCADE

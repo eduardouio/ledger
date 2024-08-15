@@ -10,16 +10,24 @@ class Payment(BaseModel):
         on_delete=models.CASCADE
     )
     invoice = models.ManyToManyField(Invoice)
-    date = models.DateField()
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    method = models.CharField(max_length=50,
-                              choices=[
-                                  ('cash', 'Cash'),
-                                  ('credit_card', 'Credit Card'),
-                                  ('check', 'Check'),
-                                  ('bank_transfer', 'Bank Transfer'),
-                                  ('other', 'Other')
-                              ])
+    date = models.DateField(
+        'Payment Date'
+    )
+    amount = models.DecimalField(
+        'Amount',
+        max_digits=10,
+        decimal_places=2
+    )
+    method = models.CharField(
+        'Payment Method',
+        max_length=50,
+        choices=[
+            ('cash', 'Cash'),
+            ('credit_card', 'Credit Card'),
+            ('check', 'Check'),
+            ('bank_transfer', 'Bank Transfer'),
+            ('other', 'Other')
+        ])
 
     def __str__(self):
         return self.invoice.number

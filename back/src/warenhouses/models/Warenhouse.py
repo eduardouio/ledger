@@ -9,9 +9,18 @@ class Warenhouse(BaseModel):
         Company,
         on_delete=models.CASCADE
     )
-    code = models.CharField(max_length=20)
-    name = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
+    code = models.CharField(
+        'Warenhouse Code',
+        max_length=20
+    )
+    name = models.CharField(
+        'Warenhouse Name',
+        max_length=100
+    )
+    address = models.CharField(
+        'Warenhouse Address',
+        max_length=100
+    )
 
     class Meta:
         unique_together = ('company', 'code')

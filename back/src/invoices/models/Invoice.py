@@ -61,11 +61,30 @@ class InvoiceItems(BaseModel):
         Product,
         on_delete=models.CASCADE
     )
-    quantity = models.IntegerField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    discount = models.DecimalField(max_digits=10, decimal_places=2)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    tax = models.DecimalField(max_digits=10, decimal_places=2)
+    quantity = models.IntegerField(
+        'Quantity',
+        default=1
+    )
+    price = models.DecimalField(
+        'Price',
+        max_digits=10,
+        decimal_places=2
+    )
+    discount = models.DecimalField(
+        'Discount',
+        max_digits=10,
+        decimal_places=2
+    )
+    amount = models.DecimalField(
+        'Amount',
+        max_digits=10,
+        decimal_places=2
+    )
+    tax = models.DecimalField(
+        'Tax',
+        max_digits=10,
+        decimal_places=2
+    )
 
     def __str__(self):
         return self.product.name

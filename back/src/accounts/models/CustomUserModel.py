@@ -26,12 +26,6 @@ class CustomUserModel(AbstractUser):
         default=False,
         help_text='Estado de confirmación del correo electrónico.'
     )
-    token = models.CharField(
-        'token',
-        max_length=40,
-        blank=True,
-        help_text='Token de acceso del usuario.'
-    )
     notes = models.TextField(
         'notas',
         blank=True

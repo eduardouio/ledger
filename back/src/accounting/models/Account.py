@@ -4,11 +4,24 @@ from django.db import models
 
 
 class Account(BaseModel):
-    id = models.AutoField(primary_key=True)
-    code = models.CharField(max_length=20, unique=True)
-    name = models.CharField(max_length=100)
-    is_children = models.BooleanField(default=False)
+    id = models.AutoField(
+        primary_key=True
+    )
+    code = models.CharField(
+        'Account Code',
+        max_length=20,
+        unique=True
+    )
+    name = models.CharField(
+        'Account Name',
+        max_length=100
+    )
+    is_children = models.BooleanField(
+        'Account Is Children',
+        default=False
+    )
     type = models.CharField(
+        'Account Type',
         max_length=20,
         choices=[
             ('asset', 'Asset'),
@@ -18,7 +31,11 @@ class Account(BaseModel):
             ('expense', 'Expense'),
         ]
     )
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField(
+        'Account Description',
+        blank=True,
+        null=True
+    )
     parent_account = models.ForeignKey(
         'self',
         on_delete=models.CASCADE,

@@ -9,10 +9,20 @@ class Customer(BaseModel):
         Company,
         on_delete=models.CASCADE
     )
-    name = models.CharField(max_length=100)
-    id_num = models.CharField(max_length=20, blank=True, null=True)
-    email = models.EmailField(max_length=100, blank=True, null=True)
-    notes = models.TextField(blank=True, null=True)
+    name = models.CharField(
+        'Customer Name',
+        max_length=100
+    )
+    id_num = models.CharField(
+        'ID Number',
+        max_length=20,
+    )
+    email = models.EmailField(
+        'Email Address',
+        max_length=100,
+        blank=True,
+        null=True
+    )
 
     class Meta:
         unique_together = ('company', 'id')

@@ -21,15 +21,22 @@ class InventoryMovement(BaseModel):
         Warenhouse,
         on_delete=models.CASCADE
     )
-    description = models.CharField(max_length=255)
-    quantity = models.IntegerField()
+    description = models.CharField(
+        'Description',
+        max_length=255
+    )
+    quantity = models.IntegerField(
+        'Quantity',
+    )
     cost_per_unit = models.DecimalField(
+        'Cost Per Unit',
         max_digits=10,
         decimal_places=2,
         blank=True,
         null=True
         )
     total_cost = models.DecimalField(
+        'Total Cost',
         max_digits=10,
         decimal_places=2,
         blank=True,
@@ -42,6 +49,7 @@ class InventoryMovement(BaseModel):
         null=True
     )
     movement = models.CharField(
+        'Movement Type',
         max_length=20,
         choices=[
             ('in', 'In'),

@@ -13,12 +13,32 @@ class Product(BaseModel):
         Account,
         on_delete=models.CASCADE
     )
-    code_sku = models.CharField(max_length=20, unique=True)
-    code_bars = models.CharField(max_length=30, unique=True)
-    name = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    cost = models.DecimalField(max_digits=10, decimal_places=2)
+    code_sku = models.CharField(
+        'SKU Code',
+        max_length=20,
+        unique=True
+    )
+    code_bars = models.CharField(
+        'Bars Code',
+        max_length=30,
+        unique=True
+    )
+    name = models.CharField(
+        'Product Name',
+        max_length=100
+    )
+    price = models.DecimalField(
+        'Product Price',
+        max_digits=10,
+        decimal_places=2
+    )
+    cost = models.DecimalField(
+        'Product Cost',
+        max_digits=10,
+        decimal_places=2
+    )
     type = models.CharField(
+        'Product Type',
         max_length=20,
         choices=[
             ('product', 'Product'),
