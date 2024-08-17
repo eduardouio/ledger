@@ -9,8 +9,7 @@ class Account(BaseModel):
     )
     code = models.CharField(
         'Account Code',
-        max_length=20,
-        unique=True
+        max_length=20
     )
     name = models.CharField(
         'Account Name',
@@ -28,6 +27,7 @@ class Account(BaseModel):
             ('liability', 'Liability'),
             ('equity', 'Equity'),
             ('income', 'Income'),
+            ('cost', 'Cost Of Goods Sold'),
             ('expense', 'Expense'),
         ]
     )
@@ -46,6 +46,12 @@ class Account(BaseModel):
         Company,
         on_delete=models.CASCADE
     )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['code', 'company'], name='unique_code_company'),
+            models.UniqueConstraint(fields=['name', 'company'], name='unique_name_company'),
+        ]
 
     def __str__(self):
         return self.name + ' - ' + self.code
