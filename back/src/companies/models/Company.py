@@ -51,5 +51,14 @@ class Company(BaseModel):
         on_delete=models.RESTRICT,
     )
 
+    def get_by_tax_id(self, tax_id):
+        company = self.objects.filter(
+            tax_id=tax_id,
+        )
+        if company:
+            return company
+
+        return None
+
     def __str__(self):
         return self.name
