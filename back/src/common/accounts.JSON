@@ -206,3 +206,37 @@
     {"code":"3101001004","name":"Exercise Profits","type":"equity","is_children":true,"parent_account":"3101001"},
 ]
 }
+
+
+SELECT 
+    T0.DocEntry, 
+    T0.[FolioNum] AS '# de Facturas', 
+    T0.[DocDate], 
+    T0.[DocDueDate], 
+    T0.[CardName] AS 'Nombre Cliente', 
+    T0.[DocTotal], 
+    SUM(T2.[CashSum]) AS 'Efectivo', 
+    T2.[CheckSum] AS 'Cheque', 
+    T4.[CreditSum] AS 'Tarjeta', 
+    T0.[DocTotal] - T0.[PaidToDate] AS 'CXC', 
+    T0.U_FXD_VALORPROPINA, 
+    T0.ReceiptNum, 
+    T2.CANCELED, 
+    T0.[PaidToDate], 
+    T4.[U_CXS_NUM_LOTE], 
+    T5.SlpName AS 'Vendedor' 
+FROM 
+    OINV T0 
+    LEFT JOIN RCT2 T1 ON T0.DocEntry = T1.DocEntry 
+    LEFT JOIN ORCT T2 ON T1.DocNum = T2.DocEntry 
+    LEFT JOIN OCRD T3 ON T0.[CardCode] = T3.[CardCode] 
+    LEFT JOIN RCT3 T4 ON T2.[DocEntry] = T4.[DocNum] 
+    LEFT JOIN OSLP T5 ON T0.SlpCode = T5.SlpCode 
+WHERE 
+    T0.[DocDate] >= '2024-08-01' 
+    AND T0.[DocDate] <= '2024-08-19'
+    AND T0.[U_DOC_DECLARABLE] = 'S' 
+    AND T0.U_SER_EST = [%2] 
+    AND T0.U_SER_PE = [%3] 
+ORDER BY 
+    T0.[FolioNum]

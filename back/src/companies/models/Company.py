@@ -58,7 +58,5 @@ class Company(BaseModel):
         if company:
             return company
 
-        return None
-
     def __str__(self):
         return self.name

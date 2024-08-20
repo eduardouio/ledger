@@ -35,7 +35,6 @@ class CustomUserModel(AbstractUser):
     REQUIRED_FIELDS = []
     objects = CustomUserManager()
 
-# reemplazo y homescholing LAS DOS SI
     @classmethod
     def get(cls, email):
         try:
