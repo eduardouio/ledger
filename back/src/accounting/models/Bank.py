@@ -51,5 +51,17 @@ class Bank(BaseModel):
     class Meta:
         unique_together = ('company', 'account_number')
 
+    @classmethod
+    def get_by_account_number(cls, account_number, company):
+        bank = cls.objects.filter(
+            account_number=account_number,
+            company=company
+        ).first()
+
+        if bank is None:
+            return None
+
+        return bank
+
     def __str__(self):
         return self.name + ' - ' + self.company.name
