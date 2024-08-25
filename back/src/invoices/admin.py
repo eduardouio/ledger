@@ -10,7 +10,7 @@ class InvoiceLineAdmin(admin.TabularInline):
 
 class InvoiceAdmin(SimpleHistoryAdmin):
     list_display = (
-        'number', 'company', 'customer', 'supplier', 'date',
+        'number', 'company', 'date',
         'due_date', 'amount', 'paid', 'tax',
         'user', 'status'
         )

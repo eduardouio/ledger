@@ -1,15 +1,10 @@
 from django.contrib import admin
 from simple_history.admin import SimpleHistoryAdmin
-from crm.models import Supplier, Customer
+from crm.models import Partner
 
 
-class SupplierAdmin(SimpleHistoryAdmin):
-    list_display = ('name', 'company',)
+class ParentAdmin(SimpleHistoryAdmin):
+    list_display = ('name', 'type', 'company', 'id_num', 'email')
 
 
-class CustomerAdmin(SimpleHistoryAdmin):
-    list_display = ('name', 'company',)
-
-
-admin.site.register(Supplier, SupplierAdmin)
-admin.site.register(Customer, CustomerAdmin)
+admin.site.register(Partner, ParentAdmin)

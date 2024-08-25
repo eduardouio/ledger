@@ -3,8 +3,16 @@ from companies.models import Company
 from django.db import models
 
 
-class Supplier(BaseModel):
+class Partner(BaseModel):
     id = models.AutoField(primary_key=True)
+    type = models.CharField(
+        'Supplier Type',
+        max_length=50,
+        choices=[
+            ('supplier', 'Supplier'),
+            ('customer', 'Customer'),
+        ]
+    )
     company = models.ForeignKey(
         Company,
         on_delete=models.CASCADE
@@ -25,7 +33,7 @@ class Supplier(BaseModel):
     )
 
     class Meta:
-        unique_together = ('company', 'id_num')
+        unique_together = ('company', 'id_num', 'type')
 
     def __str__(self):
         return 'S' + self.name

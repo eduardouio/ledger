@@ -3,7 +3,7 @@ from common import BaseModel
 from companies.models import Company
 from accounts.models import CustomUserModel
 from inventary.models import Product
-from crm.models import Customer, Supplier
+from crm.models import Partner
 
 
 class Invoice(BaseModel):
@@ -11,14 +11,8 @@ class Invoice(BaseModel):
         Company,
         on_delete=models.CASCADE
     )
-    customer = models.ForeignKey(
-        'crm.Customer',
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True
-    )
-    supplier = models.ForeignKey(
-        'crm.Supplier',
+    Partner = models.ForeignKey(
+        Partner,
         on_delete=models.CASCADE,
         blank=True,
         null=True
