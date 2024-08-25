@@ -1,2 +1,1 @@
-from .Customer import Customer
-from .Supplier import Supplier
+from .Partner import Partner

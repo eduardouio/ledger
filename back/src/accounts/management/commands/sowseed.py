@@ -2,8 +2,8 @@ from django.core.management.base import BaseCommand
 from companies.models import Company
 from accounts.models import CustomUserModel
 from accounting.models import Account, Bank
-from crm.models import Supplier, Customer
-import faker import Faker
+from crm.models import Partner
+from faker import Faker
 import json
 
 
@@ -18,11 +18,11 @@ class Command(BaseCommand):
         self.LoadBaseEnterprise()
         print('Fin')
         print('Cargamos Cuentas contables')
-        self.loadCOAInEnterpise(faker)
+        self.loadCOAInEnterpise()
         print('cargamos cuenta de banco')
         self.createDefaultBank()
         print('cargamos proveedores')
-        self.createSuppliers(faker)
+        self.createPartners(faker)
         print('Fin')
 
     def createSuperUser(self):
@@ -92,7 +92,7 @@ class Command(BaseCommand):
         my_company = Company.get_by_tax_id('9999999999')
         if not my_company:
             raise Exception('No existe el cliente System Company')
-        
+
         my_account = Bank.get_by_account_number('0000000001', my_company)
         if my_account:
             print('Ya existe la cuenta')
@@ -108,33 +108,35 @@ class Command(BaseCommand):
         )
         return True
 
-    def createSuppliersAndCustomers(self, faker):
+    def createPartners(self, faker):
         my_company = Company.get_by_tax_id('9999999999')
         if not my_company:
             raise Exception('No existe el cliente System Company')
-        
-        suppliers = Supplier.objects.filter(company=my_company)
+
+        suppliers = Partner.objects.filter(company=my_company, type='supplier')
         if suppliers.count() > 0:
             print('Ya existen proveedores')
             return True
 
-        for _ in range(18):
-            Customer.objects.create(
+        for _ in range(21):
+            Partner.objects.create(
                 company=my_company,
                 name=faker.company(),
                 id_num=faker.ean8(),
-                email=faker.email()
+                email=faker.email(),
+                type='supplier'
             )
 
-        customers = Customer.objects.filter(company=my_company)
+        customers = Partner.objects.filter(company=my_company, type='customer')
         if customers.count() > 0:
             print('Ya existen clientes')
             return True
-    
-        for _ in range(18):
-            Customer.objects.create(
+
+        for _ in range(36):
+            Partner.objects.create(
                 company=my_company,
                 name=faker.company(),
                 id_num=faker.ean8(),
-                email=faker.email()
+                email=faker.email(),
+                type='customer'
             )
