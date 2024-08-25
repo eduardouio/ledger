@@ -52,5 +52,43 @@ class Product(BaseModel):
         unique_together = ('company', 'code_bars')
         unique_together = ('company', 'code_sku')
 
+    def get_product_by_code_sku(cls, code_sku, company):
+        product = cls.objects.filter(
+            code_sku=code_sku,
+            company=company
+        ).first()
+        if product:
+            return product
+
+        return None
+
+    def get_product_by_code_bars(cls, code_bars, company):
+        product = cls.objects.filter(
+            code_bars=code_bars,
+            company=company
+        ).first()
+        if product:
+            return product
+
+        return None
+
+    def get_product_by_name(cls, name, company):
+        product = cls.objects.filter(
+            name=name,
+            company=company
+        ).first()
+        if product:
+            return product
+
+        return
+
+    def get_by_type(cls, type, company):
+        products = cls.objects.filter(
+            type=type,
+            company=company
+        )
+        if products:
+            return products
+
     def __str__(self):
         return self.name
