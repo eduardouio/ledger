@@ -31,6 +31,10 @@ class Account(BaseModel):
             ('expense', 'Expense'),
         ]
     )
+    level = models.IntegerField(
+        'Account Level',
+        default=1
+    )
     description = models.TextField(
         'Account Description',
         blank=True,
@@ -47,10 +51,20 @@ class Account(BaseModel):
         on_delete=models.CASCADE
     )
 
+    @classmethod
+    def get_account(cls, code, company):
+        account = cls.objects.filter(code=code, company=company)
+        if len(account) == 1:
+            return account.first()
+
+        raise Exception('Hubo un error al obtener la cuenta ' + account)
+
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['code', 'company'], name='unique_code_company'),
-            models.UniqueConstraint(fields=['name', 'company'], name='unique_name_company'),
+            models.UniqueConstraint(
+                fields=['code', 'company'], name='unique_code_company'),
+            models.UniqueConstraint(
+                fields=['name', 'company', 'level'], name='unique_name_company'),
         ]
 
     def __str__(self):
