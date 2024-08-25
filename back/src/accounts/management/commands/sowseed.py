@@ -1,7 +1,9 @@
 from django.core.management.base import BaseCommand
 from companies.models import Company
 from accounts.models import CustomUserModel
-from accounting.models import Account
+from accounting.models import Account, Bank
+from crm.models import Supplier, Customer
+import faker import Faker
 import json
 
 
@@ -9,13 +11,18 @@ class Command(BaseCommand):
     help = 'This command creates a list of users'
 
     def handle(self, *args, **options):
+        faker = Faker()
         print('creamos el superuser')
         self.createSuperUser()
         print('Creamos empresa base')
         self.LoadBaseEnterprise()
         print('Fin')
         print('Cargamos Cuentas contables')
-        self.loadCOAInEnterpise()
+        self.loadCOAInEnterpise(faker)
+        print('cargamos cuenta de banco')
+        self.createDefaultBank()
+        print('cargamos proveedores')
+        self.createSuppliers(faker)
         print('Fin')
 
     def createSuperUser(self):
@@ -23,12 +30,13 @@ class Command(BaseCommand):
         if user:
             print('Ya existe el usuario')
             return True
-        CustomUserModel.objects.create(
+        user = CustomUserModel(
             email='eduardouio7@gmail.com',
-            password='seguro',
             is_staff=True,
             is_superuser=True
         )
+        user.set_password('seguro')
+        user.save()
 
     def LoadBaseEnterprise(self):
         testCompanie = Company.objects.filter(
@@ -79,3 +87,54 @@ class Command(BaseCommand):
                     parent_account=parent_account,
                     id_user_created=1
                 )
+
+    def createDefaultBank(self):
+        my_company = Company.get_by_tax_id('9999999999')
+        if not my_company:
+            raise Exception('No existe el cliente System Company')
+        
+        my_account = Bank.get_by_account_number('0000000001', my_company)
+        if my_account:
+            print('Ya existe la cuenta')
+            return True
+
+        account = Account.get_account('1101003001', my_company)
+        Bank.objects.create(
+            account=account,
+            name='Banco de prueba',
+            account_number='0000000001',
+            company=my_company,
+            account_type='checking',
+        )
+        return True
+
+    def createSuppliersAndCustomers(self, faker):
+        my_company = Company.get_by_tax_id('9999999999')
+        if not my_company:
+            raise Exception('No existe el cliente System Company')
+        
+        suppliers = Supplier.objects.filter(company=my_company)
+        if suppliers.count() > 0:
+            print('Ya existen proveedores')
+            return True
+
+        for _ in range(18):
+            Customer.objects.create(
+                company=my_company,
+                name=faker.company(),
+                id_num=faker.ean8(),
+                email=faker.email()
+            )
+
+        customers = Customer.objects.filter(company=my_company)
+        if customers.count() > 0:
+            print('Ya existen clientes')
+            return True
+    
+        for _ in range(18):
+            Customer.objects.create(
+                company=my_company,
+                name=faker.company(),
+                id_num=faker.ean8(),
+                email=faker.email()
+            )
