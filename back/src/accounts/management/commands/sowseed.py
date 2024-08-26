@@ -3,6 +3,7 @@ from companies.models import Company
 from accounts.models import CustomUserModel
 from accounting.models import Account, Bank
 from crm.models import Partner
+from inventary.models import Product
 from faker import Faker
 import json
 
@@ -23,6 +24,8 @@ class Command(BaseCommand):
         self.createDefaultBank()
         print('cargamos proveedores')
         self.createPartners(faker)
+        print('cargamos los productos')
+        self.createProducts(faker)
         print('Fin')
 
     def createSuperUser(self):
@@ -140,3 +143,44 @@ class Command(BaseCommand):
                 email=faker.email(),
                 type='customer'
             )
+
+    def createProducts(self, faker):
+        my_company = Company.get_by_tax_id('9999999999')
+        account = Account.get_account('1103001001', my_company)
+        if not my_company:
+            raise Exception('No existe el cliente System Company')
+
+        products = Product.get_by_type('product', my_company)
+        if len(products) > 0:
+            print('Ya existen productos')
+            return True
+
+        for _ in range(76):
+            Product.objects.create(
+                company=my_company,
+                account=account,
+                code_sku=faker.ean13(),
+                code_bars=faker.ean13(),
+                name=faker.word(),
+                price=faker.random_number(2),
+                cost=faker.random_number(2),
+                type='product'
+            )
+
+        services = Product.get_by_type('service', my_company)
+        if len(services) > 0:
+            print('Ya existen servicios')
+            return True
+
+        for _ in range(36):
+            Product.objects.create(
+                company=my_company,
+                account=account,
+                code_sku=faker.ean13(),
+                code_bars=faker.ean13(),
+                name=faker.word(),
+                price=faker.random_number(2),
+                cost=faker.random_number(2),
+                type='service'
+            )
+        return True
