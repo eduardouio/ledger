@@ -1,9 +1,10 @@
 from django.core.management.base import BaseCommand
 from companies.models import Company
 from accounts.models import CustomUserModel
-from accounting.models import Account, Bank, Transaction
-from invoices.models import Invoice, InvoiceItems, Payment
+from accounting.models import Account, Bank
+from invoices.models import Invoice, InvoiceItems
 from crm.models import Partner
+from decimal import Decimal
 from inventary.models import Product
 import random
 from faker import Faker
@@ -28,7 +29,7 @@ class Command(BaseCommand):
         self.createPartners(faker)
         print('cargamos los productos')
         self.createProducts(faker)
-        print('cargamos los movimientos de inventario')
+        print('Generamos facturas de compra y venta')
         self.loadTransactions(faker)
         print('Fin')
 
@@ -165,7 +166,7 @@ class Command(BaseCommand):
                 account=account,
                 code_sku=faker.ean13(),
                 code_bars=faker.ean13(),
-                name=faker.word(),
+                name='Product {} {}'.format(faker.word(), faker.word()),
                 price=faker.random_number(2),
                 cost=faker.random_number(2),
                 type='product'
@@ -191,15 +192,14 @@ class Command(BaseCommand):
 
     def loadTransactions(self, faker):
         company = Company.get_by_tax_id('9999999999')
-        products = Product.get_by_type('product', company)
-        suppliers = Partner.get_by_type('supplier', company)
-        customers = Partner.get_by_type('customer', company)
+        products = Product.get_products(company.name)
+        suppliers = Partner.get_suppliers(company.name)
         user = CustomUserModel.get('eduardouio7@gmail.com')
-        banks = Bank.objects.all()
         self.generateBills(company, user, products, suppliers, faker)
 
     def generateBills(self, company, user, products, suppliers, faker):
         bills = Invoice.get_by_type('bill', company.name)
+        status = ['draft', 'acepted', 'cancelled', 'paid']
         if len(bills) > 0:
             print('Ya existen compras')
             return True
@@ -219,6 +219,7 @@ class Command(BaseCommand):
                     number=faker.ean8(),
                     amount=faker.random_number(2),
                     user=user,
+                    status=random.choice(status),
                     tax=12.2
                 )
                 for _ in range(random.randint(1, 10)):
@@ -228,5 +229,12 @@ class Command(BaseCommand):
                         product=product,
                         quantity=random.randint(1, 100),
                         price=product.price,
-                        discount=random.randfloat(0, 0.5)
+                        discount=random.choice([
+                            Decimal(0.00),
+                            Decimal(0.05),
+                            Decimal(0.00),
+                            Decimal(0.08),
+                            Decimal(0.00),
+                            Decimal(0.00)
+                        ])
                     )

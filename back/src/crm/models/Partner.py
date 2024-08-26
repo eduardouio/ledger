@@ -33,16 +33,14 @@ class Partner(BaseModel):
     )
 
     @classmethod
-    def get_by_name(cls, name, company):
-        return cls.objects.filter(name=name, company=company)
+    def get_suppliers(cls, company):
+        my_company = Company.get_by_name(company)
+        return cls.objects.filter(type='supplier', company=my_company)
 
     @classmethod
-    def get_by_id(cls, id, company):
-        return cls.objects.filter(id=id, company=company)
-
-    @classmethod
-    def get_by_type(cls, type, company):
-        return cls.objects.filter(type=type, company=company)
+    def get_customers(cls, company):
+        my_company = Company.get_by_name(company)
+        return cls.objects.filter(type='customer', company=my_company)
 
     class Meta:
         unique_together = ('company', 'id_num', 'type')

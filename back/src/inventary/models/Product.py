@@ -86,15 +86,20 @@ class Product(BaseModel):
         return []
 
     @classmethod
-    def get_by_type(cls, type, company):
-        products = cls.objects.filter(
-            type=type,
-            company=company
+    def get_products(cls, type, company):
+        my_company = Company.get_by_name(company)
+        return cls.objects.filter(
+            type='product',
+            company=my_company
         )
-        if products:
-            return products
-        
-        return []
+
+    @classmethod
+    def get_services(cls, type, company):
+        my_company = Company.get_by_name(company)
+        return cls.objects.filter(
+            type='service',
+            company=my_company
+        )
 
     def __str__(self):
         return self.name

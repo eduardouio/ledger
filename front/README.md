@@ -170,4 +170,8 @@ all your Vue.js dashboard development needs! 🎯
 
 -- find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
 
- accounting, accounts, companies, crm, inventary, invoices, sessions, warenhouses
+./manage.py makemigrations accounting accounts companies crm inventary invoices warenhouses
+
+./manage.py migrate
+
+./manage.py sowseed

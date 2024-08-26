@@ -11,7 +11,7 @@ class Invoice(BaseModel):
         Company,
         on_delete=models.CASCADE
     )
-    Partner = models.ForeignKey(
+    partner = models.ForeignKey(
         Partner,
         on_delete=models.CASCADE,
         blank=True,
@@ -23,23 +23,50 @@ class Invoice(BaseModel):
             ('invoice', 'Invoice'),
             ('bill', 'Bill'))
     )
-    date = models.DateField()
-    due_date = models.DateField()
-    number = models.CharField(max_length=20)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    paid = models.BooleanField(default=False)
-    tax = models.DecimalField(max_digits=10, decimal_places=2)
+    date = models.DateField(
+        'Date'
+    )
+    due_date = models.DateField(
+        'Due Date'
+    )
+    number = models.CharField(
+        'Document Number',
+        max_length=20
+    )
+    amount = models.DecimalField(
+        'Amount',
+        max_digits=10,
+        decimal_places=2
+    )
+    discount = models.DecimalField(
+        'Discount',
+        max_digits=10,
+        decimal_places=2,
+        default=0
+    )
+    paid = models.BooleanField(
+        'Paid',
+        default=False
+    )
+    tax = models.DecimalField(
+        'Tax',
+        max_digits=10,
+        decimal_places=2
+    )
     user = models.ForeignKey(
         CustomUserModel,
         on_delete=models.CASCADE
     )
     status = models.CharField(
+        'Status',
         max_length=20,
         choices=[
-            ('generated', 'Generated'),
-            ('cancelled', 'Cancelled')
+            ('draft', 'draft'),
+            ('acepted', 'Acepted'),
+            ('void', 'Void'),
+            ('paid', 'Paid'),
         ],
-        default='generated'
+        default='draft'
     )
 
     class Meta:
@@ -84,13 +111,11 @@ class InvoiceItems(BaseModel):
     discount = models.DecimalField(
         'Discount',
         max_digits=10,
-        decimal_places=2
+        decimal_places=2,
+        default=0
     )
-    amount = models.DecimalField(
-        'Amount',
-        max_digits=10,
-        decimal_places=2
-    )
+
+    
 
     def __str__(self):
         return self.product.name

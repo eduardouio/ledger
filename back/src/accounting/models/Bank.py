@@ -63,5 +63,11 @@ class Bank(BaseModel):
 
         return bank
 
+    @classmethod
+    def get_accounts(cls, company):
+        return cls.objects.filter(
+            company=company
+        )
+
     def __str__(self):
         return self.name + ' - ' + self.company.name

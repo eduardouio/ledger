@@ -66,5 +66,11 @@ class InventoryMovement(BaseModel):
         null=True
     )
 
+    @classmethod
+    def get_by_company(cls, company):
+        return cls.objects.filter(
+            company=company
+        )
+
     def __str__(self):
         return self.product.name

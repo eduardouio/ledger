@@ -52,6 +52,15 @@ class Company(BaseModel):
     )
 
     @classmethod
+    def get_by_user(self, email):
+        user = CustomUserModel.get_by_email(email)
+        if user:
+            return self.objects.filter(
+                manager=user
+            )
+        raise Exception('User not found')
+
+    @classmethod
     def get_by_tax_id(cls, tax_id):
         company = cls.objects.filter(
             tax_id=tax_id,

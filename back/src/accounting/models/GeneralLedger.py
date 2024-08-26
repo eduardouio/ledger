@@ -41,5 +41,12 @@ class GeneralLedger(BaseModel):
         null=True
     )
 
+    @classmethod
+    def getLedgersByAccount(cls, account, company):
+        return cls.objects.filter(
+            account=account,
+            company=company
+        )
+
     def __str__(self):
         return self.description

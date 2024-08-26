@@ -62,6 +62,14 @@ class Account(BaseModel):
         on_delete=models.CASCADE
     )
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['code', 'company'], name='unique_code_company'),
+            models.UniqueConstraint(
+                fields=['name', 'company', 'level'], name='unique_name_company'),
+        ]
+
     @classmethod
     def get_account(cls, code, company):
         account = cls.objects.filter(code=code, company=company)
@@ -70,13 +78,13 @@ class Account(BaseModel):
 
         raise Exception('Hubo un error al obtener la cuenta ' + account)
 
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['code', 'company'], name='unique_code_company'),
-            models.UniqueConstraint(
-                fields=['name', 'company', 'level'], name='unique_name_company'),
-        ]
+    @classmethod
+    def get_accounts(cls, company):
+        return cls.objects.filter(company=company)
+
+    @classmethod
+    def get_by_name(cls, name, company):
+        return cls.objects.filter(company=company).contains(name=name)
 
     def __str__(self):
         return self.name + ' - ' + self.code
