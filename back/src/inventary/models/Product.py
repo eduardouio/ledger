@@ -61,7 +61,7 @@ class Product(BaseModel):
         if product:
             return product
 
-        return None
+        return []
 
     @classmethod
     def get_product_by_code_bars(cls, code_bars, company):
@@ -83,7 +83,7 @@ class Product(BaseModel):
         if product:
             return product
 
-        return
+        return []
 
     @classmethod
     def get_by_type(cls, type, company):
@@ -93,6 +93,8 @@ class Product(BaseModel):
         )
         if products:
             return products
+        
+        return []
 
     def __str__(self):
         return self.name
