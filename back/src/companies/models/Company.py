@@ -59,5 +59,13 @@ class Company(BaseModel):
         if company:
             return company.first()
 
+    @classmethod
+    def get_by_name(cls, name):
+        company = cls.objects.filter(
+            name=name,
+        )
+        if company:
+            return company.first()
+
     def __str__(self):
         return self.name
