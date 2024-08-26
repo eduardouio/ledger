@@ -11,7 +11,7 @@ class InvoiceLineAdmin(admin.TabularInline):
 class InvoiceAdmin(SimpleHistoryAdmin):
     list_display = (
         'number', 'company', 'date',
-        'due_date', 'amount', 'paid', 'tax',
+        'due_date', 'amount', 'tax',
         'user', 'status'
         )
     inlines = [InvoiceLineAdmin]

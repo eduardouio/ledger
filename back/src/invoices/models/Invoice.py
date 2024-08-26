@@ -44,10 +44,6 @@ class Invoice(BaseModel):
         decimal_places=2,
         default=0
     )
-    paid = models.BooleanField(
-        'Paid',
-        default=False
-    )
     tax = models.DecimalField(
         'Tax',
         max_digits=10,
