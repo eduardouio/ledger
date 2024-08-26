@@ -83,11 +83,20 @@ class Invoice(BaseModel):
         return Invoice.objects.get(number=number, company=company)
 
     @classmethod
-    def get_by_type(cls, type, name_company):
+    def get_bills(cls, name_company):
         company = Company.get_by_name(name_company)
         if not company:
-            return []
-        return Invoice.objects.filter(type=type, company=company)
+            raise Exception('Company not found')
+
+        return Invoice.objects.filter(type='bill', company=company)
+
+    @classmethod
+    def get_invoices(cls, name_company):
+        company = Company.get_by_name(name_company)
+        if not company:
+            raise Exception('Company not found')
+
+        return Invoice.objects.filter(type='invoice', company=company)
 
 
 class InvoiceItems(BaseModel):
@@ -114,8 +123,6 @@ class InvoiceItems(BaseModel):
         decimal_places=2,
         default=0
     )
-
-    
 
     def __str__(self):
         return self.product.name

@@ -28,6 +28,15 @@ class Payment(BaseModel):
             ('bank_transfer', 'Bank Transfer'),
             ('other', 'Other')
         ])
+    payment_number = models.CharField(
+        'Payment Number',
+        max_length=50,
+        blank=True,
+        null=True
+    )
+
+    class Meta:
+        unique_together = ('company', 'payment_number')
 
     def __str__(self):
         return self.invoice.number

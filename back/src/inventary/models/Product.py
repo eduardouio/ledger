@@ -54,39 +54,39 @@ class Product(BaseModel):
 
     @classmethod
     def get_product_by_code_sku(cls, code_sku, company):
-        product = cls.objects.filter(
-            code_sku=code_sku,
-            company=company
-        ).first()
-        if product:
-            return product
+        my_company = Company.get_by_name(company)
+        if not my_company:
+            raise Exception('Company not found')
 
-        return []
+        return cls.objects.filter(
+            code_sku=code_sku,
+            company=my_company
+        )
 
     @classmethod
     def get_product_by_code_bars(cls, code_bars, company):
-        product = cls.objects.filter(
-            code_bars=code_bars,
-            company=company
-        ).first()
-        if product:
-            return product
+        my_company = Company.get_by_name(company)
+        if not my_company:
+            raise Exception('Company not found')
 
-        return None
+        return cls.objects.filter(
+            code_bars=code_bars,
+            company=my_company
+        )
 
     @classmethod
     def get_product_by_name(cls, name, company):
-        product = cls.objects.filter(
-            name=name,
-            company=company
-        ).first()
-        if product:
-            return product
+        my_company = Company.get_by_name(company)
+        if not my_company:
+            raise Exception('Company not found')
 
-        return []
+        return cls.objects.filter(
+            name=name,
+            company=my_company
+        )
 
     @classmethod
-    def get_products(cls, type, company):
+    def get_products(cls, company):
         my_company = Company.get_by_name(company)
         return cls.objects.filter(
             type='product',
@@ -94,7 +94,7 @@ class Product(BaseModel):
         )
 
     @classmethod
-    def get_services(cls, type, company):
+    def get_services(cls, company):
         my_company = Company.get_by_name(company)
         return cls.objects.filter(
             type='service',
