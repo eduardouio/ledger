@@ -42,8 +42,22 @@ class Invoice(BaseModel):
         default='generated'
     )
 
+    class Meta:
+        unique_together = ('company', 'number')
+
     def __str__(self):
         return self.number
+
+    @classmethod
+    def get_all_by_company(cls, company):
+        return Invoice.objects.filter(company=company)
+
+    @classmethod
+    def get_by_number(cls, number, name_company):
+        company = Company.get_by_name(name_company)
+        if not company:
+            return []
+        return Invoice.objects.get(number=number, company=company)
 
 
 class InvoiceItems(BaseModel):
@@ -71,11 +85,6 @@ class InvoiceItems(BaseModel):
     )
     amount = models.DecimalField(
         'Amount',
-        max_digits=10,
-        decimal_places=2
-    )
-    tax = models.DecimalField(
-        'Tax',
         max_digits=10,
         decimal_places=2
     )
