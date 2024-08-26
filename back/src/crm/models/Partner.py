@@ -32,6 +32,18 @@ class Partner(BaseModel):
         null=True
     )
 
+    @classmethod
+    def get_by_name(cls, name, company):
+        return cls.objects.filter(name=name, company=company)
+
+    @classmethod
+    def get_by_id(cls, id, company):
+        return cls.objects.filter(id=id, company=company)
+
+    @classmethod
+    def get_by_type(cls, type, company):
+        return cls.objects.filter(type=type, company=company)
+
     class Meta:
         unique_together = ('company', 'id_num', 'type')
 

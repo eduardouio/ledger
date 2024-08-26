@@ -49,15 +49,18 @@ class Invoice(BaseModel):
         return self.number
 
     @classmethod
-    def get_all_by_company(cls, company):
-        return Invoice.objects.filter(company=company)
-
-    @classmethod
     def get_by_number(cls, number, name_company):
         company = Company.get_by_name(name_company)
         if not company:
             return []
         return Invoice.objects.get(number=number, company=company)
+
+    @classmethod
+    def get_by_type(cls, type, name_company):
+        company = Company.get_by_name(name_company)
+        if not company:
+            return []
+        return Invoice.objects.filter(type=type, company=company)
 
 
 class InvoiceItems(BaseModel):
