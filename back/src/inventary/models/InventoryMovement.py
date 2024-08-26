@@ -13,6 +13,9 @@ class InventoryMovement(BaseModel):
         Company,
         on_delete=models.CASCADE
     )
+    date = models.DateField(
+        'Date',
+    )
     product = models.ForeignKey(
         Product,
         on_delete=models.CASCADE
