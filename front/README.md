@@ -166,3 +166,8 @@ all your Vue.js dashboard development needs! 🎯
 ### Version 1.0.0 - Initial Release - [Jan 22, 2024]
 
 - Initial release of TailAdmin Vue.
+
+
+-- find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+
+ accounting, accounts, companies, crm, inventary, invoices, sessions, warenhouses
