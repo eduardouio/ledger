@@ -172,7 +172,7 @@ class Command(BaseCommand):
                 type='product'
             )
 
-        services = Product.get_by_type('service', my_company)
+        services = Product.get_services(my_company.name)
         if len(services) > 0:
             print('Ya existen servicios')
             return True
@@ -198,7 +198,7 @@ class Command(BaseCommand):
         self.generateBills(company, user, products, suppliers, faker)
 
     def generateBills(self, company, user, products, suppliers, faker):
-        bills = Invoice.get_by_type('bill', company.name)
+        bills = Invoice.get_bills(company.name)
         status = ['draft', 'acepted', 'cancelled', 'paid']
         if len(bills) > 0:
             print('Ya existen compras')
