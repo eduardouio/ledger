@@ -38,5 +38,17 @@ class Payment(BaseModel):
     class Meta:
         unique_together = ('company', 'payment_number')
 
+    @classmethod
+    def get_payments(cls, company, date_start, date_end):
+        my_company = Company.get_by_name(company)
+        if not my_company:
+            raise Exception('Company not found')
+
+        return Payment.objects.filter(
+            company=my_company,
+            date__gte=date_start,
+            date__lte=date_end
+        )
+
     def __str__(self):
-        return self.invoice.number
+        return self.invoice.number + ' ' + str(self.amount)

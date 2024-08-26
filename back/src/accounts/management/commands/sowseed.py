@@ -155,7 +155,7 @@ class Command(BaseCommand):
         if not my_company:
             raise Exception('No existe el cliente System Company')
 
-        products = Product.get_by_type('product', my_company)
+        products = Product.get_products(my_company.name)
         if len(products) > 0:
             print('Ya existen productos')
             return True

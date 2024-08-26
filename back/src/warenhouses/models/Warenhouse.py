@@ -25,5 +25,13 @@ class Warenhouse(BaseModel):
     class Meta:
         unique_together = ('company', 'code')
 
+    @classmethod
+    def get_warenhouses(cls, company):
+        my_company = Company.get_by_name(company)
+        if not my_company:
+            raise Exception('Company not found')
+
+        return Warenhouse.objects.filter(company=my_company)
+
     def __str__(self):
         return self.name
