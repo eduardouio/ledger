@@ -72,27 +72,33 @@ class Invoice(BaseModel):
         return self.number
 
     @classmethod
-    def get_by_number(cls, number, name_company):
-        company = Company.get_by_name(name_company)
-        if not company:
-            return []
+    def get_by_id(cls, id, company):
+        header = Invoice.objects.get(pk=id, company=company)
+        if not header:
+            raise Exception('Invoice not found')
+
+        items = InvoiceItems.get_by_invoice(header.id)
+
+        return {
+            'header': header,
+            'items': items
+        }
+
+    @classmethod
+    def get_by_number(cls, number, company):
         return Invoice.objects.get(number=number, company=company)
 
     @classmethod
-    def get_bills(cls, name_company):
-        company = Company.get_by_name(name_company)
-        if not company:
-            raise Exception('Company not found')
-
-        return Invoice.objects.filter(type='bill', company=company)
+    def get_bills(cls, company):
+        return Invoice.objects.filter(
+            type='bill', company=company
+        )
 
     @classmethod
-    def get_invoices(cls, name_company):
-        company = Company.get_by_name(name_company)
-        if not company:
-            raise Exception('Company not found')
-
-        return Invoice.objects.filter(type='invoice', company=company)
+    def get_invoices(cls, company):
+        return Invoice.objects.filter(
+            type='invoice', company=company
+        )
 
 
 class InvoiceItems(BaseModel):
@@ -119,6 +125,13 @@ class InvoiceItems(BaseModel):
         decimal_places=2,
         default=0
     )
+
+    @classmethod
+    def get_by_invoice(cls, invoice):
+        return {
+            "header": invoice,
+            "items": cls.objects.filter(invoice=invoice)
+        }
 
     def __str__(self):
         return self.product.name
