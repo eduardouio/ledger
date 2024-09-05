@@ -1,4 +1,57 @@
 {% extends 'base/base.html' %}
 {% block content %}
-    
-{% endblock content %}
+<form method="POST" class="w-full max-w-lg mx-auto">
+    {% csrf_token %}
+    <div class="form-control">
+      <label class="label" for="code">
+        <span class="label-text">Account Code</span>
+      </label>
+      {{ form.code}}
+    </div>
+    <div class="form-control">
+      <label class="label" for="name">
+        <span class="label-text">Account Name</span>
+      </label>
+      {{ form.name}}
+    </div>
+    <div class="form-control">
+      <label class="cursor-pointer label">
+        <span class="label-text">Account Register Values</span> 
+        {{ form.is_children}}
+      </label>
+    </div>
+    <div class="form-control">
+      <label class="label" for="type">
+        <span class="label-text">Account Type</span>
+      </label>
+      {{ form.type}}
+    </div>
+    <div class="form-control">
+      <label class="label" for="level">
+        <span class="label-text">Account Level</span>
+      </label>
+      {{ form.level}}
+    </div>
+    <div class="form-control">
+      <label class="label" for="description">
+        <span class="label-text">Account Description</span>
+      </label>
+      {{ form.description}}
+    </div>
+    <div class="form-control">
+      <label class="label" for="parent_account">
+        <span class="label-text">Parent Account</span>
+      </label>
+      {{ form.parent_account}}
+    </div>
+    <div class="form-control">
+      <label class="label" for="company">
+        <span class="label-text">Company</span>
+      </label>
+      {{ form.company}}
+    </div>
+    <div class="form-control">
+      <button type="submit" class="btn btn-primary w-full">Save</button>
+    </div>
+  </form>
+  {% endblock content %}
