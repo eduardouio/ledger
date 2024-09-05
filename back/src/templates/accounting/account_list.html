@@ -4,7 +4,7 @@
 <table class="table table-xs table-pin-rows table-pin-cols" id="myTable">
   <thead>
     <tr class="text-teal-600">
-        <th>Code</th>
+        <th class="text-center">Code</th>
         <th>Name</th>
         <th>Type</th>
         <th>Level</th>
@@ -16,7 +16,7 @@
     <tr>
         <td>
             <div class="flex justify-between">
-            <a href="">
+            <a href="/accounting/account/{{ item.id}}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-maximize" width="20" height="20" viewBox="0 0 20 20" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <path d="M16 4l4 0l0 4" />
@@ -36,7 +36,7 @@
         </td>
         <td>{{ item.name }}</td>
         <td>{{ item.type }}</td>
-        <td>Level {{ item.level }}</td>
+        <td>Level{{ item.level }}</td>
         <td>
             {% if item.parent_account.code %}
             <span class="badge bg-gray-200 border border-gray-500 text-xs">

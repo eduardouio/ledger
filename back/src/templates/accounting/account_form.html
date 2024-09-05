@@ -1,12 +1,16 @@
 {% extends 'base/base.html' %}
 {% block content %}
+<div class="text-error">
+  {{ form.errors }}
+</div>
 <form method="POST" class="w-full max-w-lg mx-auto">
     {% csrf_token %}
+    {{ form.company }}
     <div class="form-control">
       <label class="label" for="code">
         <span class="label-text">Account Code</span>
       </label>
-      {{ form.code}}
+      {{ form.code }}
     </div>
     <div class="form-control">
       <label class="label" for="name">
@@ -44,14 +48,8 @@
       </label>
       {{ form.parent_account}}
     </div>
-    <div class="form-control">
-      <label class="label" for="company">
-        <span class="label-text">Company</span>
-      </label>
-      {{ form.company}}
-    </div>
-    <div class="form-control">
-      <button type="submit" class="btn btn-primary w-full">Save</button>
+    <div class=" py-3 text-end">
+      <button type="submit" class="btn btn-sm bg-gray-300 border border-gray-400">Save</button>
     </div>
   </form>
   {% endblock content %}

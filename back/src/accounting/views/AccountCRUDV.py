@@ -19,6 +19,7 @@ class AccountCreateView(CreateView):
     success_url = reverse_lazy('account-list')
 
 
+# /accounting/account/<pk>/edit/
 class AccountUpdateView(UpdateView):
     model = Account
     form_class = AccountForm
@@ -32,6 +33,7 @@ class AccountDeleteView(DeleteView):
     success_url = reverse_lazy('account-list')
 
 
+# /accounting/
 class AccountListView(ListView):
     model = Account
     template_name = 'accounting/account_list.html'
@@ -44,9 +46,8 @@ class AccountListView(ListView):
         return []
 
 
+# /accounting/account/<pk>/
 class AccountDetailView(DetailView):
     model = Account
     template_name = 'accounting/account_detail.html'
     context_object_name = 'account'
-    paginate_by = 10
-    queryset = Account.objects.all()
