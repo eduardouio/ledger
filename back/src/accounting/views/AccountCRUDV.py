@@ -1,3 +1,4 @@
+from django.db.models.query import QuerySet
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -8,6 +9,7 @@ from django.views.generic import (
 )
 from accounting.models import Account
 from accounting.forms import AccountForm
+from companies.models import Company
 
 
 class AccountCreateView(CreateView):
@@ -34,8 +36,12 @@ class AccountListView(ListView):
     model = Account
     template_name = 'accounting/account_list.html'
     context_object_name = 'accounts'
-    paginate_by = 10
-    queryset = Account.objects.all()
+
+    def get_queryset(self):
+        my_company = Company.get_by_user(self.request.user)
+        if my_company:
+            return Account.get_accounts(my_company)
+        return []
 
 
 class AccountDetailView(DetailView):

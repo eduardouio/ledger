@@ -79,8 +79,8 @@ class Account(BaseModel):
         raise Exception('Hubo un error al obtener la cuenta ' + account)
 
     @classmethod
-    def get_accounts(cls, company):
-        return cls.objects.filter(company=company)
+    def get_accounts(cls, my_company):
+        return cls.objects.filter(company=my_company)
 
     @classmethod
     def get_by_name(cls, name, company):
