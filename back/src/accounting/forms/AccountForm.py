@@ -8,7 +8,6 @@ class AccountForm(forms.ModelForm):
         fields = ['code', 'name', 'is_children', 'type',
                   'level', 'description', 'parent_account', 'company']
         widgets = {
-            'company': forms.TextInput(attrs={'class': 'border border-gray-400 p-1 rounded-md', 'disabled': 'disabled', 'hidden': 'hidden'}),
             'code': forms.TextInput(attrs={'class': 'border border-gray-400 p-1 rounded-sm'}),
             'name': forms.TextInput(attrs={'class': 'border border-gray-400 p-1 rounded-sm'}),
             'is_children': forms.CheckboxInput(attrs={'class': 'border border-gray-400 p-1 rounded-sm'}),
