@@ -7,4 +7,5 @@ class HomeTV(TemplateView):
 
     def get(self, request, *args, **kwargs):
         ctx = self.get_context_data(**kwargs)
+        ctx["title_bar"] = "Home"
         return self.render_to_response(ctx)
