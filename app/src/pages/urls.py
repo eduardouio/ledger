@@ -1,5 +1,5 @@
 from django.urls import path
-from home import HomeTV
+from pages import HomeTV
 
 
 urlpatterns = [
