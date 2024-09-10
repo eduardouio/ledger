@@ -2,8 +2,8 @@ from django.views.generic import TemplateView
 
 
 # /invoice
-class InvoiceTV(TemplateView):
-    template_name = 'pages/invoice.html'
+class salesTV(TemplateView):
+    template_name = 'pages/sales.html'
 
     def get(self, request, *args, **kwargs):
         ctx = self.get_context_data(**kwargs)
