@@ -7,5 +7,5 @@ class salesTV(TemplateView):
 
     def get(self, request, *args, **kwargs):
         ctx = self.get_context_data(**kwargs)
-        ctx["title_bar"] = "Invoice"
+        ctx["title_bar"] = "Sales Module"
         return self.render_to_response(ctx)
