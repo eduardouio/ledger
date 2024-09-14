@@ -40,7 +40,7 @@ class AccountUpdateView(UpdateView):
 # /accounting/delete/pk/
 class AccountDeleteView(DeleteView):
     model = Account
-    template_name = 'accounting/account_confirm_delete.html'
+    template_name = 'accounting/account-confirm-delete.html'
     success_url = reverse_lazy('account-list')
 
     def get_context_data(self, **kwargs):
@@ -56,6 +56,8 @@ class AccountListView(ListView):
     context_object_name = 'accounts'
 
     def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return Account.objects.none()
         my_company = Company.get_by_user(self.request.user)
         if my_company:
             return Account.get_accounts(my_company)

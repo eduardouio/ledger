@@ -1,0 +1,56 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+<div class="overflow-x-auto">
+  <table class="table table-xs table-pin-rows table-pin-cols" id="myTable">
+    <thead>
+      <tr class="text-teal-600">
+        <th class="text-center">Company</th>
+        <th>Account</th>
+        <th>Transaction</th>
+        <th>Debit Amount</th>
+        <th>Credit Amount</th>
+        <th>Balance</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for general_ledger in general_ledgers %}
+      <tr>
+        <td>
+          <div class="flex justify-between">
+            <a href="{% url 'generalledger-detail' general_ledger.id %}">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-maximize" width="20" height="20" viewBox="0 0 20 20" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M16 4l4 0l0 4" />
+                <path d="M14 10l6 -6" />
+                <path d="M8 20l-4 0l0 -4" />
+                <path d="M4 20l6 -6" />
+                <path d="M16 20l4 0l0 -4" />
+                <path d="M14 14l6 6" />
+                <path d="M8 4l-4 0l0 4" />
+                <path d="M4 4l6 6" />
+              </svg>
+            </a>
+            <span>{{ general_ledger.company.name }}</span>
+          </div>
+        </td>
+        <td>{{ general_ledger.account.name }}</td>
+        <td>{{ general_ledger.transaction.name }}</td>
+        <td>{{ general_ledger.debit }}</td>
+        <td>{{ general_ledger.credit }}</td>
+        <td>{{ general_ledger.balance }}</td>
+        <td>{{ general_ledger.description }}</td>
+        <td>
+          <a href="{% url 'generalledger-update' general_ledger.id %}" class="btn btn-sm border border-gray-400">Edit</a>
+          <a href="{% url 'generalledger-delete' general_ledger.id %}" class="btn btn-sm btn-error">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<a href="{% url 'generalledger-create' %}" class="btn btn-sm border border-gray-400">Create New General Ledger</a>
+{% endblock content %}

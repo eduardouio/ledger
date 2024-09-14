@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<h2 class="text-2xl font-bold mb-4">Transactions List</h2>
+
+<div class="overflow-x-auto">
+  <table class="table w-full">
+    <thead>
+      <tr>
+        <th>Company</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Transaction Date</th>
+        <th>User</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for transaction in transactions %}
+      <tr>
+        <td>{{ transaction.company.name }}</td>
+        <td>{{ transaction.description }}</td>
+        <td>{{ transaction.amount }}</td>
+        <td>{{ transaction.date }}</td>
+        <td>{{ transaction.user.username }}</td>
+        <td>
+          <a href="{% url 'transaction-detail' transaction.id %}" class="btn btn-sm border border-gray-400">View</a>
+          <a href="{% url 'transaction-update' transaction.id %}" class="btn btn-sm border border-gray-400">Edit</a>
+          <a href="{% url 'transaction-delete' transaction.id %}" class="btn btn-sm border border-gray-400">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<a href="" class="btn btn-sm border border-gray-400">Create New Transaction</a>
+{% endblock content %}

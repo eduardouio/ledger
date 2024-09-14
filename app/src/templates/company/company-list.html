@@ -1,0 +1,56 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+<div class="overflow-x-auto">
+  <table class="table table-xs table-pin-rows table-pin-cols" id="myTable">
+    <thead>
+      <tr class="text-teal-600">
+        <th class="text-center">Tax ID</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Website</th>
+        <th>Manager</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for company in companies %}
+      <tr>
+        <td>
+          <div class="flex justify-between">
+            <a href="{% url 'company-detail' company.id %}">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-maximize" width="20" height="20" viewBox="0 0 20 20" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M16 4l4 0l0 4" />
+                <path d="M14 10l6 -6" />
+                <path d="M8 20l-4 0l0 -4" />
+                <path d="M4 20l6 -6" />
+                <path d="M16 20l4 0l0 -4" />
+                <path d="M14 14l6 6" />
+                <path d="M8 4l-4 0l0 4" />
+                <path d="M4 4l6 6" />
+              </svg>
+            </a>
+            <span>{{ company.tax_id }}</span>
+          </div>
+        </td>
+        <td>{{ company.name }}</td>
+        <td>{{ company.address }}</td>
+        <td>{{ company.phone }}</td>
+        <td>{{ company.email }}</td>
+        <td>{{ company.website }}</td>
+        <td>{{ company.manager.username }}</td>
+        <td>
+          <a href="{% url 'company-update' company.id %}" class="btn btn-sm border border-gray-400">Edit</a>
+          <a href="{% url 'company-delete' company.id %}" class="btn btn-sm border border-gray-400">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<a href="{% url 'company-create' %}" class="btn btn-sm border border-gray-400">Create New Company</a>
+{% endblock content %}

@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+<div class="overflow-x-auto">
+  <table class="table table-xs table-pin-rows table-pin-cols" id="myTable">
+    <thead>
+      <tr class="text-teal-600">
+        <th class="text-center">Company</th>
+        <th>Bank Name</th>
+        <th>Account Number</th>
+        <th>Account Type</th>
+        <th>Swift Code</th>
+        <th>Routing Number</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for bank in banks %}
+      <tr>
+        <td>
+          <div class="flex justify-between">
+            <a href="{% url 'bank-detail' bank.id %}">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-maximize" width="20" height="20" viewBox="0 0 20 20" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M16 4l4 0l0 4" />
+                <path d="M14 10l6 -6" />
+                <path d="M8 20l-4 0l0 -4" />
+                <path d="M4 20l6 -6" />
+                <path d="M16 20l4 0l0 -4" />
+                <path d="M14 14l6 6" />
+                <path d="M8 4l-4 0l0 4" />
+                <path d="M4 4l6 6" />
+              </svg>
+            </a>
+            <span>{{ bank.company.name }}</span>
+          </div>
+        </td>
+        <td>{{ bank.name }}</td>
+        <td>{{ bank.account_number }}</td>
+        <td>{{ bank.get_account_type_display }}</td>
+        <td>{{ bank.swift_code }}</td>
+        <td>{{ bank.routing_number }}</td>
+        <td>
+          <a href="{% url 'bank-update' bank.id %}" class="btn btn-sm border border-gray-400">Edit</a>
+          <a href="{% url 'bank-delete' bank.id %}" class="btn btn-sm btn-error">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<a href="{% url 'bank-create' %}" class="btn btn-sm border border-gray-400">Create New Bank Account</a>
+{% endblock content %}
+

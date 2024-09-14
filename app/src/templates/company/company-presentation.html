@@ -1,0 +1,60 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<h2 class="text-2xl font-bold mb-4">Company Details</h2>
+
+<div class="bg-white shadow-md rounded-lg p-6 grid md:grid-cols-2 gap-2 grid-cols-1">
+  <div class="mb-4 flex justify-between align-middle bg-gray-100 border border-gray-300 p-1">
+    <label class="block text-sm font-medium text-gray-700">Tax ID</label>
+    <span class="text-lg font-semibold">{{ object.tax_id }}</span>
+  </div>
+
+  <div class="mb-4 flex justify-between align-middle bg-gray-100 border border-gray-300 p-1">
+    <label class="block text-sm font-medium text-gray-700">Company Name</label>
+    <span class="text-lg font-semibold">{{ object.name }}</span>
+  </div>
+
+  <div class="mb-4 flex justify-between align-middle bg-gray-100 border border-gray-300 p-1">
+    <label class="block text-sm font-medium text-gray-700">Address</label>
+    <span class="text-lg font-semibold">{{ object.address }}</span>
+  </div>
+
+  <div class="mb-4 flex justify-between align-middle bg-gray-100 border border-gray-300 p-1">
+    <label class="block text-sm font-medium text-gray-700">Phone Number</label>
+    <span class="text-lg font-semibold">{{ object.phone }}</span>
+  </div>
+
+  <div class="mb-4 flex justify-between align-middle bg-gray-100 border border-gray-300 p-1">
+    <label class="block text-sm font-medium text-gray-700">Email Address</label>
+    <span class="text-lg font-semibold">{{ object.email }}</span>
+  </div>
+
+  <div class="mb-4 flex justify-between align-middle bg-gray-100 border border-gray-300 p-1">
+    <label class="block text-sm font-medium text-gray-700">Website</label>
+    <span class="text-lg font-semibold">{{ object.website }}</span>
+  </div>
+
+  <div class="mb-4 flex justify-between align-middle bg-gray-100 border border-gray-300 p-1">
+    <label class="block text-sm font-medium text-gray-700">Manager</label>
+    <span class="text-lg font-semibold">{{ object.manager.username }}</span>
+  </div>
+
+  <div class="mb-4 flex justify-between align-middle bg-gray-100 border border-gray-300 p-1">
+    <label class="block text-sm font-medium text-gray-700">Logo</label>
+    {% if object.logo %}
+      <img src="{{ object.logo.url }}" alt="Company Logo" class="w-24 h-24 object-contain">
+    {% endif %}
+  </div>
+</div>
+
+<div class="flex space-x-4 mt-4">
+  <a href="{% url 'company-update' object.pk %}" class="btn btn-sm border border-gray-400">
+    Edit
+  </a>
+  <a href="{% url 'company-delete' object.pk %}" class="btn btn-sm border border-gray-400 text-error">
+    Delete
+  </a>
+  <a href="{% url 'company-list' %}" class="btn btn-sm border border-gray-400">
+    Back to List
+  </a>
+</div>
+{% endblock content %}

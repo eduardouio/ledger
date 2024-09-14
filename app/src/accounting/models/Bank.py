@@ -4,7 +4,7 @@ from .Account import Account
 from companies.models import Company
 
 
-class Bank(BaseModel):
+class Bank(BaseModel,models.Model):
     id = models.AutoField(
         primary_key=True
     )

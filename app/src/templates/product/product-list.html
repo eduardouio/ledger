@@ -1,0 +1,33 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<div class="overflow-x-auto">
+<table class="table table-xs table-pin-rows table-pin-cols" id="myTable">
+  <thead>
+    <tr class="text-teal-600">
+        <th>ID</th>
+        <th>Name</th>
+        <th>SKU</th>
+        <th>Bars Code</th>
+        <th>Price</th>
+        <th>Type</th>
+    </tr>
+</thead>
+<tbody>
+    {% for item in object_list %}
+    <tr>
+        <td>
+            <a href="/products/{{ item.id }}">
+                {{ item.id }}
+            </a>
+        </td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.code_sku }}</td>
+        <td>{{ item.code_bars }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.get_type_display }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock content %}

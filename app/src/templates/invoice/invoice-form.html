@@ -1,0 +1,177 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<div class="text-error">
+  {{ invoice_form.errors }}
+</div>
+<form method="POST" class="w-full max-w-lg mx-auto">
+    {% csrf_token %}
+    <h2 class="text-2xl font-bold mb-2">Invoice Details</h2>
+    <div class="form-control">
+        <label class="label" for="company">
+            <span class="label-text">Company</span>
+        </label>
+        {{ invoice_form.company }}
+    </div>
+    <div class="form-control">
+        <label class="label" for="partner">
+            <span class="label-text">Partner</span>
+        </label>
+        {{ invoice_form.partner }}
+    </div>
+    <div class="form-control">
+        <label class="label" for="type">
+            <span class="label-text">Type</span>
+        </label>
+        {{ invoice_form.type }}
+    </div>
+    <div class="form-control">
+        <label class="label" for="date">
+            <span class="label-text">Date</span>
+        </label>
+        {{ invoice_form.date }}
+    </div>
+    <div class="form-control">
+        <label class="label" for="due_date">
+            <span class="label-text">Due Date</span>
+        </label>
+        {{ invoice_form.due_date }}
+    </div>
+    <div class="form-control">
+        <label class="label" for="number">
+            <span class="label-text">Document Number</span>
+        </label>
+        {{ invoice_form.number }}
+    </div>
+    <div class="form-control">
+        <label class="label" for="amount">
+            <span class="label-text">Amount</span>
+        </label>
+        {{ invoice_form.amount }}
+    </div>
+    <div class="form-control">
+        <label class="label" for="discount">
+            <span class="label-text">Discount</span>
+        </label>
+        {{ invoice_form.discount }}
+    </div>
+    <div class="form-control">
+        <label class="label" for="tax">
+            <span class="label-text">Tax</span>
+        </label>
+        {{ invoice_form.tax }}
+    </div>
+    <div class="form-control">
+        <label class="label" for="user">
+            <span class="label-text">User</span>
+        </label>
+        {{ invoice_form.user }}
+    </div>
+    <div class="form-control">
+        <label class="label" for="status">
+            <span class="label-text">Status</span>
+        </label>
+        {{ invoice_form.status }}
+    </div>
+
+    <h2 class="text-2xl font-bold mt-4 mb-2">Invoice Items</h2>
+    <div class="text-error">
+      {{ items_formset.errors }}
+    </div>
+    <div id="invoice-items">
+        {% for form in items_formset %}
+            <div class="form-control">
+                <label class="label" for="product">
+                    <span class="label-text">Product</span>
+                </label>
+                {{ form.product }}
+            </div>
+            <div class="form-control">
+                <label class="label" for="quantity">
+                    <span class="label-text">Quantity</span>
+                </label>
+                {{ form.quantity }}
+            </div>
+            <div class="form-control">
+                <label class="label" for="price">
+                    <span class="label-text">Price</span>
+                </label>
+                {{ form.price }}
+            </div>
+            <div class="form-control">
+                <label class="label" for="discount">
+                    <span class="label-text">Discount</span>
+                </label>
+                {{ form.discount }}
+            </div>
+            <hr class="my-2">
+        {% endfor %}
+    </div>
+
+    <button type="button" id="add-item" class="btn btn-sm border border-gray-400">
+        Add Item
+    </button>
+
+    <div class="py-3 text-end flex justify-between">
+      <button type="submit" class="btn btn-sm border border-gray-400">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
+          <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+          <path d="M14 4l0 4l-6 0l0 -4" />
+        </svg>
+          Save Invoice
+      </button>
+      <a href="/accounting/" class="btn btn-sm border border-gray-400">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ban" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+          <path d="M5.7 5.7l12.6 12.6" />
+        </svg>
+        Cancel
+      </a>
+    </div>
+</form>
+
+<script>
+    const addItemButton = document.getElementById('add-item');
+    const invoiceItemsContainer = document.getElementById('invoice-items');
+
+    addItemButton.addEventListener('click', () => {
+        // Obtén el template HTML del item
+        const newItemTemplate = `
+            <div class="form-control">
+                <label class="label" for="product">
+                    <span class="label-text">Product</span>
+                </label>
+                <select class="border border-gray-400 p-1 rounded-sm" name="items-{{ items_formset.management_form.prefix }}-product">
+                    {% for product in product_list %}
+                        <option value="{{ product.id }}">{{ product.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-control">
+                <label class="label" for="quantity">
+                    <span class="label-text">Quantity</span>
+                </label>
+                <input type="number" class="border border-gray-400 p-1 rounded-sm" name="items-{{ items_formset.management_form.prefix }}-quantity">
+            </div>
+            <div class="form-control">
+                <label class="label" for="price">
+                    <span class="label-text">Price</span>
+                </label>
+                <input type="number" class="border border-gray-400 p-1 rounded-sm" name="items-{{ items_formset.management_form.prefix }}-price">
+            </div>
+            <div class="form-control">
+                <label class="label" for="discount">
+                    <span class="label-text">Discount</span>
+                </label>
+                <input type="number" class="border border-gray-400 p-1 rounded-sm" name="items-{{ items_formset.management_form.prefix }}-discount">
+            </div>
+            <hr class="my-2">
+        `;
+
+        // Inserta el template en el contenedor de items
+        invoiceItemsContainer.insertAdjacentHTML('beforeend', newItemTemplate);
+    });
+</script>
+{% endblock content %}
