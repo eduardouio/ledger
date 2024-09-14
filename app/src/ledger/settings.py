@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'user_sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'user_sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -62,8 +64,8 @@ MIDDLEWARE = [
 ]
 
 
+SESSION_ENGINE = 'user_sessions.backends.db'
 CORS_ORIGIN_ALLOW_ALL = True
-
 ROOT_URLCONF = 'ledger.urls'
 
 TEMPLATES = [

@@ -18,13 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path('', include('user_sessions.urls', 'user_sessions')),
     path('', include('pages.urls')),
-    
     path('grappelli/', include('grappelli.urls')),
-    
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-    
     path('accounting/', include('accounting.urls')),
     path('companies/', include('companies.urls')),
     path('crm/', include('crm.urls')),

@@ -1,5 +1,5 @@
 # eliminar migraciones anteriores
-sudo +x delete_migrations.sh
+sudo chmod +x delete_migrations.sh
 ./delete_migrations.sh
 
 # generamos las migraciones
