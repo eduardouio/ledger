@@ -191,6 +191,7 @@ class Command(BaseCommand):
         return True
 
     def loadTransactions(self, faker):
+        return 1
         company = Company.get_by_tax_id('9999999999')
         products = Product.get_products(company.name)
         suppliers = Partner.get_suppliers(company.name)
@@ -198,6 +199,7 @@ class Command(BaseCommand):
         self.generateBills(company, user, products, suppliers, faker)
 
     def generateBills(self, company, user, products, suppliers, faker):
+        return 1
         bills = Invoice.get_bills(company.name)
         status = ['draft', 'acepted', 'cancelled', 'paid']
         if len(bills) > 0:
