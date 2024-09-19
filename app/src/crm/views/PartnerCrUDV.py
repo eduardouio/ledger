@@ -12,22 +12,24 @@ from crm.forms import PartnerForm
 from companies.models import Company
 
 
+# /crm/partner/add
 class PartnerCreateView(CreateView):
     model = Partner
     form_class = PartnerForm
-    template_name = 'partner/partner-form.html'
+    template_name = 'crm/partner-form.html'
     success_url = reverse_lazy('partner-list')
 
-    def get_context_data(self, **kwargs):
-        ctx = super(PartnerCreateView, self).get_context_data(**kwargs)
+    def get_context_data(self, *args, **kwargs):
+        ctx = self.get_context_data(*args, **kwargs)
         ctx['title_bar'] = 'Create Partner'
         return ctx
 
 
+# /crm/partners/<pk>/edit/
 class PartnerUpdateView(UpdateView):
     model = Partner
     form_class = PartnerForm
-    template_name = 'partner/partner-form.html'
+    template_name = 'crm/partner-form.html'
     success_url = reverse_lazy('partner-list')
 
     def get_context_data(self, **kwargs):
@@ -38,7 +40,7 @@ class PartnerUpdateView(UpdateView):
 
 class PartnerDeleteView(DeleteView):
     model = Partner
-    template_name = 'partner/partner_confirm-delete.html'
+    template_name = 'crm/partner_confirm-delete.html'
     success_url = reverse_lazy('partner-list')
 
     def get_context_data(self, **kwargs):
@@ -47,9 +49,10 @@ class PartnerDeleteView(DeleteView):
         return ctx
 
 
+# /crm/partners/
 class PartnerListView(ListView):
     model = Partner
-    template_name = 'partner/partner-list.html'
+    template_name = 'crm/partner-list.html'
     context_object_name = 'partners'
 
     def get_queryset(self):
@@ -67,9 +70,10 @@ class PartnerListView(ListView):
         return ctx
 
 
+# /crm/partners/<pk>/
 class PartnerDetailView(DetailView):
     model = Partner
-    template_name = 'partner/partner-presentation.html'
+    template_name = 'crm/partner-presentation.html'
     context_object_name = 'partner'
 
     def get_context_data(self, **kwargs):
