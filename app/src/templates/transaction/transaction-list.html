@@ -1,9 +1,8 @@
 {% extends 'base/base.html' %}
 {% block content %}
-<h2 class="text-2xl font-bold mb-4">Transactions List</h2>
 
 <div class="overflow-x-auto">
-  <table class="table w-full">
+  <table class="table table-xs table-pin-rows table-pin-cols" id="myTable">
     <thead>
       <tr>
         <th>Company</th>
@@ -25,13 +24,13 @@
         <td>
           <a href="{% url 'transaction-detail' transaction.id %}" class="btn btn-sm border border-gray-400">View</a>
           <a href="{% url 'transaction-update' transaction.id %}" class="btn btn-sm border border-gray-400">Edit</a>
-          <a href="{% url 'transaction-delete' transaction.id %}" class="btn btn-sm border border-gray-400">Delete</a>
+          <a href="{% url 'transaction-delete' transaction.id %}" class="btn btn-sm border border-gray-400 text-error">Delete</a>
         </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
-
-<a href="" class="btn btn-sm border border-gray-400">Create New Transaction</a>
+<br>
+<a href="{% url 'transaction-create' %}" class="btn btn-sm border border-gray-400">Create New Transaction</a>
 {% endblock content %}

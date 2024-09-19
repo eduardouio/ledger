@@ -9,9 +9,11 @@ from django.views.generic import (
 from invoices.models import Payment
 from invoices.forms import PaymentForm
 from companies.models import Company
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class PaymentCreateView(CreateView):
+class PaymentCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/accounts/login/'
     model = Payment
     form_class = PaymentForm
     template_name = 'payment/payment-form.html'
@@ -23,7 +25,8 @@ class PaymentCreateView(CreateView):
         return ctx
 
 
-class PaymentUpdateView(UpdateView):
+class PaymentUpdateView(LoginRequiredMixin,UpdateView):
+    login_url = '/accounts/login/'
     model = Payment
     form_class = PaymentForm
     template_name = 'payment/payment-form.html'
@@ -35,7 +38,8 @@ class PaymentUpdateView(UpdateView):
         return ctx
 
 
-class PaymentDeleteView(DeleteView):
+class PaymentDeleteView(LoginRequiredMixin,DeleteView):
+    login_url = '/accounts/login/'
     model = Payment
     template_name = 'payment/payment-confirm-delete.html'
     success_url = reverse_lazy('payment-list')

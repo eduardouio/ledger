@@ -23,13 +23,13 @@
         <td>
           <a href="{% url 'warenhouse-detail' warenhouse.id %}" class="btn btn-sm border border-gray-400">View</a>
           <a href="{% url 'warenhouse-update' warenhouse.id %}" class="btn btn-sm border border-gray-400">Edit</a>
-          <a href="{% url 'warenhouse-delete' warenhouse.id %}" class="btn btn-sm border border-gray-400">Delete</a>
+          <a href="{% url 'warenhouse-delete' warenhouse.id %}" class="btn btn-sm border border-gray-400 text-error">Delete</a>
         </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
-
+<br>
 <a href="{% url 'warenhouse-create' %}" class="btn btn-sm border border-gray-400">Create New Warenhouse</a>
 {% endblock content %}

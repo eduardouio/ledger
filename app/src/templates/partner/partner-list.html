@@ -4,12 +4,10 @@
 <table class="table table-xs table-pin-rows table-pin-cols" id="myTable">
   <thead>
     <tr class="text-teal-600">
-        <th>ID</th>
-        <th>Name</th>
-        <th>SKU</th>
-        <th>Bars Code</th>
-        <th>Price</th>
+        <th class="text-center">ID</th>
+        <th>Names</th>
         <th>Type</th>
+        <th>Email</th>
     </tr>
 </thead>
 <tbody>
@@ -17,7 +15,7 @@
     <tr>
         <td>
             <div class="flex justify-between">
-                <a href="{% url 'product-detail' item.id %}">
+                <a href="{% url 'partner-detail' item.id %}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-maximize" width="20" height="20" viewBox="0 0 20 20" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                         <path d="M16 4l4 0l0 4" />
@@ -30,19 +28,18 @@
                         <path d="M4 4l6 6" />
                     </svg>
                 </a>
-                <span>{{ bank.company.id }}</span>
+                <span>{{ item.id }}</span>
             </div>
         </td>
         <td>{{ item.name }}</td>
-        <td>{{ item.code_sku }}</td>
-        <td>{{ item.code_bars }}</td>
-        <td>{{ item.price }}</td>
-        <td>{{ item.get_type_display }}</td>
+        <td>{{ item.type }}</td>
+        <td>{{ item.email }}</td>
     </tr>
     {% endfor %}
 </tbody>
 </table>
 </div>
 <br>
-<a href="{% url 'product-create' %}" class="btn btn-sm border border-gray-400 ">Create New Product</a>
+<a href="{% url 'partner-create' %}" class="btn btn-sm border border-gray-400">Create New Partner</a>
+
 {% endblock content %}

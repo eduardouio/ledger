@@ -1,9 +1,8 @@
 {% extends 'base/base.html' %}
 {% block content %}
-<h2 class="text-2xl font-bold mb-4">Inventory Movements List</h2>
 
 <div class="overflow-x-auto">
-  <table class="table w-full">
+  <table class="table table-xs table-pin-rows table-pin-cols" id="myTable">
     <thead>
       <tr>
         <th>Company</th>
@@ -43,9 +42,9 @@
           {% endif %}
         </td>
         <td>
-          <a href="{% url 'inventorymovement-detail' inventory_movement.id %}" class="btn btn-sm border border-gray-400">View</a>
+          <a href="{% url 'inventorymovement-detail' inventory_movement.id %}" class="btn btn-sm border border-gray-400">View</a><br>
           <a href="{% url 'inventorymovement-update' inventory_movement.id %}" class="btn btn-sm border border-gray-400">Edit</a>
-          <a href="{% url 'inventorymovement-delete' inventory_movement.id %}" class="btn btn-sm border border-gray-400">Delete</a>
+          <a href="{% url 'inventorymovement-delete' inventory_movement.id %}" class="btn btn-sm border border-gray-400 text-error">Delete</a>
         </td>
       </tr>
       {% endfor %}
@@ -53,5 +52,6 @@
   </table>
 </div>
 
-
+<br>
+<a href="{% url 'inventorymovement-create' %}" class="btn btn-sm border border-gray-400">Create New Inventory Movement</a>
 {% endblock content %}
