@@ -39,6 +39,7 @@ class PartnerUpdateView(LoginRequiredMixin, UpdateView):
         return ctx
 
 
+# /crm/partners/<pk>/delete/
 class PartnerDeleteView(LoginRequiredMixin, DeleteView):
     model = Partner
     template_name = 'crm/partner_confirm-delete.html'
@@ -57,14 +58,24 @@ class PartnerListView(LoginRequiredMixin, ListView):
     context_object_name = 'partners'
 
     def get_queryset(self):
+        type_partner = self.request.GET.get('type')
         my_company = Company.get_by_user(self.request.user)
-        if my_company:
+        if not my_company:
+            raise Exception('Company not found')
+
+        if type_partner == 'customer':
+            return Partner.objects.filter(company=my_company, type='customer')
+        elif type_partner == 'supplier':
+            return Partner.objects.filter(company=my_company, type='supplier')
+        else:
             return Partner.objects.filter(company=my_company)
-        return []
 
     def get_context_data(self, **kwargs):
         ctx = super(PartnerListView, self).get_context_data(**kwargs)
         ctx['title_bar'] = 'Partners List'
+        ctx['customer_class'] = 'badge border text-xs bg-cyan-600 uppercase text-white'
+        ctx['supplier_class'] = 'badge border text-xs bg-green-600 uppercase text-white'
+        ctx['option'] = self.request.GET.get('type')
         return ctx
 
 
