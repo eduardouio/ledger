@@ -72,10 +72,18 @@ class PartnerListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         ctx = super(PartnerListView, self).get_context_data(**kwargs)
+        options = {
+            'customer': 1,
+            'supplier': 2,
+            'all': 0
+        }
         ctx['title_bar'] = 'Partners List'
         ctx['customer_class'] = 'badge border text-xs bg-cyan-600 uppercase text-white'
         ctx['supplier_class'] = 'badge border text-xs bg-green-600 uppercase text-white'
-        ctx['option'] = self.request.GET.get('type')
+        ctx['url_filter_1'] = reverse_lazy('partner-list') + '?type=customer'
+        ctx['url_filter_2'] = reverse_lazy('partner-list') + '?type=supplier'
+        ctx['url_base'] = reverse_lazy('partner-list')
+        ctx['option'] = options.get(self.request.GET.get('type', 'all'))
         return ctx
 
 
