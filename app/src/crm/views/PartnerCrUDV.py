@@ -56,6 +56,7 @@ class PartnerListView(ListView):
     context_object_name = 'partners'
 
     def get_queryset(self):
+        import ipdb; ipdb.set_trace()
         # Asegúra usuario esté autenticado
         if not self.request.user.is_authenticated:
             return Partner.objects.none()
