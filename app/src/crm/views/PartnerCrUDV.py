@@ -10,10 +10,11 @@ from django.views.generic import (
 from crm.models import Partner
 from crm.forms import PartnerForm
 from companies.models import Company
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # /crm/partner/add
-class PartnerCreateView(CreateView):
+class PartnerCreateView(LoginRequiredMixin, CreateView):
     model = Partner
     form_class = PartnerForm
     template_name = 'crm/partner-form.html'
@@ -26,7 +27,7 @@ class PartnerCreateView(CreateView):
 
 
 # /crm/partners/<pk>/edit/
-class PartnerUpdateView(UpdateView):
+class PartnerUpdateView(LoginRequiredMixin, UpdateView):
     model = Partner
     form_class = PartnerForm
     template_name = 'crm/partner-form.html'
@@ -38,7 +39,7 @@ class PartnerUpdateView(UpdateView):
         return ctx
 
 
-class PartnerDeleteView(DeleteView):
+class PartnerDeleteView(LoginRequiredMixin, DeleteView):
     model = Partner
     template_name = 'crm/partner_confirm-delete.html'
     success_url = reverse_lazy('partner-list')
@@ -50,16 +51,12 @@ class PartnerDeleteView(DeleteView):
 
 
 # /crm/partners/
-class PartnerListView(ListView):
+class PartnerListView(LoginRequiredMixin, ListView):
     model = Partner
     template_name = 'crm/partner-list.html'
     context_object_name = 'partners'
 
     def get_queryset(self):
-        import ipdb; ipdb.set_trace()
-        # Asegúra usuario esté autenticado
-        if not self.request.user.is_authenticated:
-            return Partner.objects.none()
         my_company = Company.get_by_user(self.request.user)
         if my_company:
             return Partner.objects.filter(company=my_company)
@@ -72,7 +69,7 @@ class PartnerListView(ListView):
 
 
 # /crm/partners/<pk>/
-class PartnerDetailView(DetailView):
+class PartnerDetailView(LoginRequiredMixin, DetailView):
     model = Partner
     template_name = 'crm/partner-presentation.html'
     context_object_name = 'partner'
