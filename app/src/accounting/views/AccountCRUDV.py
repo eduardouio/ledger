@@ -50,13 +50,18 @@ class AccountUpdateView(LoginRequiredMixin, UpdateView):
 # /accounting/delete/pk/
 class AccountDeleteView(LoginRequiredMixin, DeleteView):
     model = Account
-    template_name = 'accounting/account-confirm-delete.html'
     success_url = reverse_lazy('account-list')
 
-    def get_context_data(self, **kwargs):
-        ctx = super(AccountDeleteView, self).get_context_data(**kwargs)
-        ctx['title_bar'] = 'Delete Account'
-        return ctx
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        account = self.get_object()
+        if account.company != Company.get_by_user(request.user):
+            return HttpResponseRedirect
+
+        account.delete()
+        return HttpResponseRedirect(self.success_url + '?action=deleted')
 
 
 # /accounting/
@@ -81,7 +86,7 @@ class AccountListView(LoginRequiredMixin, ListView):
         ctx['url_new'] = reverse_lazy('account-create')
 
         if self.request.GET.get('action') == 'deleted':
-            ctx['action_type'] = 'deleted'
+            ctx['action_type'] = 'success'
             ctx['message'] = 'Account deleted successfully'
 
         return ctx
@@ -98,13 +103,13 @@ class AccountDetailView(LoginRequiredMixin, DetailView):
         ctx['title_bar'] = 'Account Detail'
         ctx['action_type'] = None
         if self.request.GET.get('action') == 'updated':
-            ctx['action_type'] = 'updated'
+            ctx['action_type'] = 'success'
             ctx['message'] = 'Account updated successfully'
         elif self.request.GET.get('action') == 'created':
-            ctx['action_type'] = 'created'
+            ctx['action_type'] = 'success'
             ctx['message'] = 'Account created successfully'
         elif self.request.GET.get('action') == 'deleted':
-            ctx['action_type'] = 'deleted'
+            ctx['action_type'] = 'success'
             ctx['message'] = 'Account deleted successfully'
         elif self.request.GET.get('action') == 'alert':
             ctx['action_type'] = 'alert'
