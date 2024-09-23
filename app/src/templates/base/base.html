@@ -2,71 +2,7 @@
 <div class="mx-auto bg-gray-100 w-full">
    <div class="m-5">
     {% block title_bar %}
-    <div class="breadcrumbs text-sm text-green-600 px-2 rounded-md border border-gray-400 m-0 p-1 shadow bg-white">
-        <div class="flex items-center justify-between">
-           <div class="flex items-center justify-between gap-3">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-square-rounded-chevrons-right" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#f21" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                 <path d="M9 9l3 3l-3 3" />
-                 <path d="M13 9l3 3l-3 3" />
-                 <path d="M12 3c7.2 0 9 1.8 9 9s-1.8 9 -9 9s-9 -1.8 -9 -9s1.8 -9 9 -9z" />
-              </svg>
-              <span class="uppercase">
-              {{ title_bar }}
-              </span>
-              <div>
-               <span class="badge text-error text-xs">
-               [showing {{ object_list|length }} Partners]
-               </span>
-            </div>
-           </div>
-              <div class="flex justify-between gap-3">
-                <div class="flex items-center bg-slate-100 rounded-md border">
-                    <div class="mr-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="text-green-300 h-5 w-5" viewBox="0 0 24 24" >
-                            <path  d="M0 0h24v24H0z" fill="none"/>
-                            <path d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-4.414 4.414v7l-6 2v-8.5l-4.48 -4.928a2 2 0 0 1 -.52 -1.345v-2.227z" />
-                          </svg>
-                    </div>
-                 <ul class="flex gap-3 justify-end text-gray-600 m-1">
-                    <li class="text-xs">
-                        <a href="{{url_filter_1}}" class="{% if option == 1 %} text-cyan-700 {% endif %}" >
-                            Customers
-                        </a>
-                    </li>
-                    <li class="text-xs">
-                        |
-                    </li>
-                    <li class="text-xs">
-                        <a href="{{ url_filter_2 }}" class="{% if option == 2 %} text-cyan-700 {% endif %}" >
-                            Suppliers
-                        </a>
-                    </li>
-                    <li class="text-xs">
-                        |
-                    </li>
-                    <li class="text-xs">
-                        <a href="{{ url_base }}" class="{% if option == 0 %} text-cyan-700 {% endif %}">
-                            Show All
-                        </a>
-                    </li>
-                 </ul>
-                </div>
-              </div>
-              <div>
-                  <a href="{% url 'partner-create' %}" class="btn btn-sm border border-gray-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                        <path d="M16 19h6" />
-                        <path d="M19 16v6" />
-                        <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
-                      </svg>
-                   Create New Partner
-               </a>
-           </div>
-        </div>
-     </div>
+    {% include 'components/tool-bar.html' %}
     {% endblock title_bar %}
       {% block content %}
       {% endblock content %}
