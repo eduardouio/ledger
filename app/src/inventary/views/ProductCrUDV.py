@@ -73,9 +73,9 @@ class ProductListView(LoginRequiredMixin, ListView):
             raise Exception('Company not found')
 
         if self.request.GET.get('type') == 'product':
-            return Product.objects.filter(company=my_company, product_type='product')
+            return Product.objects.filter(company=my_company, type='product')
         elif self.request.GET.get('type') == 'service':
-            return Product.objects.filter(company=my_company, product_type='service')
+            return Product.objects.filter(company=my_company, type='service')
 
         return Product.objects.filter(company=my_company)
 
