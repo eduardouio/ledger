@@ -22,13 +22,13 @@ urlpatterns = [
     path('transaction/<int:pk>/delete/', TransactionDeleteView.as_view(), name='transaction-delete'),
     path('transaction/', TransactionListView.as_view(), name='transaction-list'),
     path('transaction/<int:pk>/', TransactionDetailView.as_view(), name='transaction-detail'),
-    
+
     path('generalledger/new/', GeneralLedgerCreateView.as_view(), name='generalledger-create'),
     path('generalledger/<int:pk>/edit/', GeneralLedgerUpdateView.as_view(), name='generalledger-update'),
     path('generalledger/<int:pk>/delete/', GeneralLedgerDeleteView.as_view(), name='generalledger-delete'),
     path('generalledger/', GeneralLedgerListView.as_view(), name='generalledger-list'),
     path('generalledger/<int:pk>/', GeneralLedgerDetailView.as_view(), name='generalledger-detail'),
-    
+
     path('bank/new/', BankCreateView.as_view(), name='bank-create'),
     path('bank/<int:pk>/edit/', BankUpdateView.as_view(), name='bank-update'),
     path('bank/<int:pk>/delete/', BankDeleteView.as_view(), name='bank-delete'),

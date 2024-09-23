@@ -5,7 +5,11 @@
 </div>
 <form method="POST" class="w-full max-w-lg mx-auto">
     {% csrf_token %}
-    <input type="hidden" name="company" value="{{object.company.id}}">
+    {% if company %}
+      <input type="hidden" name="company" value="{{company.id}}">
+    {% else %}
+      <input type="hidden" name="company" value="{{object.company.id}}">
+    {% endif %}
     <div class="form-control">
       <label class="label" for="code">
         <span class="label-text">Account Code</span>

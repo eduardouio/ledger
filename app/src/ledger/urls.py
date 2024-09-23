@@ -23,10 +23,10 @@ urlpatterns = [
     path('', include('crm.urls')),
     path('', include('companies.urls')),
     path('', include('inventary.urls')),
+    path('', include('accounting.urls')),
     path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-    path('accounting/', include('accounting.urls')),
     path('warenhouses/', include('warenhouses.urls')),
     path('invoices/', include('invoices.urls')),
 ]
