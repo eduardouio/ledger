@@ -11,6 +11,7 @@ from companies.forms import CompanyForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
+# /
 class CompanyCreateView(LoginRequiredMixin, CreateView):
     model = Company
     form_class = CompanyForm
@@ -73,4 +74,4 @@ class CompanyDetailView(LoginRequiredMixin, DetailView):
         ctx = super(CompanyDetailView, self).get_context_data(**kwargs)
         ctx['title_bar'] = 'Company Detail'
         return ctx
-
+s
