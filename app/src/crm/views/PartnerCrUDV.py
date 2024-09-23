@@ -31,12 +31,16 @@ class PartnerUpdateView(LoginRequiredMixin, UpdateView):
     model = Partner
     form_class = PartnerForm
     template_name = 'crm/partner-form.html'
-    success_url = reverse_lazy('partner-list')
 
     def get_context_data(self, **kwargs):
         ctx = super(PartnerUpdateView, self).get_context_data(**kwargs)
         ctx['title_bar'] = 'Update Partner'
         return ctx
+
+    def get_success_url(self):
+        url = reverse_lazy('partner-detail', kwargs={'pk': self.object.id})
+        url += '?result=success'
+        return url
 
 
 # /crm/partners/<pk>/delete/
