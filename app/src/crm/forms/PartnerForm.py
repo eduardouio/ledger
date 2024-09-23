@@ -1,6 +1,7 @@
 from django import forms
 from crm.models import Partner
 
+
 class PartnerForm(forms.ModelForm):
     class Meta:
         model = Partner
