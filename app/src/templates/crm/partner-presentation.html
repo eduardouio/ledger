@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 {% block content %}
-{% if request.GET.result == 'success' %}
-{% include 'components/alert-success.html' %}
+{% if request.GET.result %}
+  {% include 'components/alert-success.html' %}
 {% endif %}
 <div class="bg-white shadow-md rounded-lg p-6 grid md:grid-cols-2 gap-2 grid-cols-1">
   <div class="mb-4 flex justify-between align-middle bg-gray-100 border border-gray-300 p-1">

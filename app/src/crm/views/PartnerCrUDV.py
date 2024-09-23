@@ -21,9 +21,22 @@ class PartnerCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('partner-list')
 
     def get_context_data(self, *args, **kwargs):
-        ctx = self.get_context_data(*args, **kwargs)
+        ctx = super(PartnerCreateView, self).get_context_data(*args, **kwargs)
         ctx['title_bar'] = 'Create Partner'
+        ctx['company'] = Company.get_by_user(self.request.user)
         return ctx
+
+    def get_success_url(self):
+        url = reverse_lazy('partner-detail', kwargs={'pk': self.object.id})
+        url += '?result=created'
+        return url
+
+    def get_form_kwargs(self):
+        kwargs = super(PartnerCreateView, self).get_form_kwargs()
+        kwargs['initial'] = {
+            'company': Company.get_by_user(self.request.user)
+        }
+        return kwargs
 
 
 # /crm/partners/<pk>/edit/
@@ -39,7 +52,7 @@ class PartnerUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         url = reverse_lazy('partner-detail', kwargs={'pk': self.object.id})
-        url += '?result=success'
+        url += '?result=updated'
         return url
 
 
@@ -100,4 +113,10 @@ class PartnerDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         ctx = super(PartnerDetailView, self).get_context_data(**kwargs)
         ctx['title_bar'] = 'Partner Detail'
+        if self.request.GET.get('result') == 'updated':
+            ctx['msg'] = 'Partner updated successfully'
+        if self.request.GET.get('result') == 'deleted':
+            ctx['msg'] = 'Partner deleted successfully'
+        if self.request.GET.get('result') == 'created':
+            ctx['msg'] = 'Partner created successfully'
         return ctx

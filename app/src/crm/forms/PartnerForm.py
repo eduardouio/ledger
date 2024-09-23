@@ -1,3 +1,4 @@
+from typing import Any
 from django import forms
 from crm.models import Partner
 
@@ -13,3 +14,4 @@ class PartnerForm(forms.ModelForm):
             'id_num': forms.TextInput(attrs={'class': 'border border-gray-400 p-1 rounded-sm'}),
             'email': forms.EmailInput(attrs={'class': 'border border-gray-400 p-1 rounded-sm'}),
         }
+    
