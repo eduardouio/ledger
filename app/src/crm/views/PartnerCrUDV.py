@@ -11,6 +11,7 @@ from crm.models import Partner
 from crm.forms import PartnerForm
 from companies.models import Company
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect
 
 
 # /crm/partner/add
@@ -28,15 +29,8 @@ class PartnerCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         url = reverse_lazy('partner-detail', kwargs={'pk': self.object.id})
-        url += '?result=created'
+        url += '?action=created'
         return url
-
-    def get_form_kwargs(self):
-        kwargs = super(PartnerCreateView, self).get_form_kwargs()
-        kwargs['initial'] = {
-            'company': Company.get_by_user(self.request.user)
-        }
-        return kwargs
 
 
 # /crm/partners/<pk>/edit/
@@ -52,20 +46,25 @@ class PartnerUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         url = reverse_lazy('partner-detail', kwargs={'pk': self.object.id})
-        url += '?result=updated'
+        url += '?action=updated'
         return url
 
 
 # /crm/partners/<pk>/delete/
 class PartnerDeleteView(LoginRequiredMixin, DeleteView):
     model = Partner
-    template_name = 'crm/partner_confirm-delete.html'
     success_url = reverse_lazy('partner-list')
 
-    def get_context_data(self, **kwargs):
-        ctx = super(PartnerDeleteView, self).get_context_data(**kwargs)
-        ctx['title_bar'] = 'Delete Partner'
-        return ctx
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        partner = self.get_object()
+        if partner.company != Company.get_by_user(request.user):
+            raise Exception('Error deleting partner')
+        partner.delete()
+
+        return HttpResponseRedirect(self.success_url + '?action=deleted')
 
 
 # /crm/partners/
@@ -89,6 +88,7 @@ class PartnerListView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         ctx = super(PartnerListView, self).get_context_data(**kwargs)
+        ctx['action_type'] = None
         options = {
             'customer': 1,
             'supplier': 2,
@@ -101,6 +101,9 @@ class PartnerListView(LoginRequiredMixin, ListView):
         ctx['url_filter_2'] = reverse_lazy('partner-list') + '?type=supplier'
         ctx['url_base'] = reverse_lazy('partner-list')
         ctx['option'] = options.get(self.request.GET.get('type', 'all'))
+        if self.request.GET.get('action') == 'deleted':
+            ctx['action_type'] = 'success'
+            ctx['message'] = 'Partner deleted successfully'
         return ctx
 
 
@@ -113,10 +116,18 @@ class PartnerDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         ctx = super(PartnerDetailView, self).get_context_data(**kwargs)
         ctx['title_bar'] = 'Partner Detail'
-        if self.request.GET.get('result') == 'updated':
-            ctx['msg'] = 'Partner updated successfully'
-        if self.request.GET.get('result') == 'deleted':
-            ctx['msg'] = 'Partner deleted successfully'
-        if self.request.GET.get('result') == 'created':
-            ctx['msg'] = 'Partner created successfully'
+        ctx['action_type'] = None
+        if self.request.GET.get('action') == 'updated':
+            ctx['action_type'] = 'success'
+            ctx['message'] = 'Partner updated successfully'
+        if self.request.GET.get('action') == 'deleted':
+            ctx['action_type'] = 'success'
+            ctx['message'] = 'Partner deleted successfully'
+        if self.request.GET.get('action') == 'created':
+            ctx['action_type'] = 'success'
+            ctx['message'] = 'Partner created successfully'
+        if self.request.GET.get('action') == 'alert':
+            ctx['action_type'] = 'alert'
+            ctx['message'] = 'The Partner will be removed, cannot be undone.'
+
         return ctx

@@ -8,9 +8,10 @@ from django.views.generic import (
 )
 from companies.models import Company
 from companies.forms import CompanyForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class CompanyCreateView(CreateView):
+class CompanyCreateView(LoginRequiredMixin, CreateView):
     model = Company
     form_class = CompanyForm
     template_name = 'company/company-form.html'
@@ -22,7 +23,7 @@ class CompanyCreateView(CreateView):
         return ctx
 
 
-class CompanyUpdateView(UpdateView):
+class CompanyUpdateView(LoginRequiredMixin, UpdateView):
     model = Company
     form_class = CompanyForm
     template_name = 'company/company-form.html'
@@ -34,7 +35,7 @@ class CompanyUpdateView(UpdateView):
         return ctx
 
 
-class CompanyDeleteView(DeleteView):
+class CompanyDeleteView(LoginRequiredMixin, DeleteView):
     model = Company
     template_name = 'company/company-confirm-delete.html'
     success_url = reverse_lazy('company-list')
@@ -45,13 +46,12 @@ class CompanyDeleteView(DeleteView):
         return ctx
 
 
-class CompanyListView(ListView):
+class CompanyListView(LoginRequiredMixin, ListView):
     model = Company
     template_name = 'company/company-list.html'
     context_object_name = 'companies'
 
     def get_queryset(self):
-                # Asegúra usuario esté autenticado
         if not self.request.user.is_authenticated:
             return Company.objects.none()
         if not self.request.user.is_authenticated:
@@ -64,7 +64,7 @@ class CompanyListView(ListView):
         return ctx
 
 
-class CompanyDetailView(DetailView):
+class CompanyDetailView(LoginRequiredMixin, DetailView):
     model = Company
     template_name = 'company/company-presentation.html'
     context_object_name = 'company'
