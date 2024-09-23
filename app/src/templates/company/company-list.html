@@ -44,13 +44,10 @@
         <td>{{ company.manager.username }}</td>
         <td>
           <a href="{% url 'company-update' company.id %}" class="btn btn-sm border border-gray-400">Edit</a>
-          <a href="{% url 'company-delete' company.id %}" class="btn btn-sm border border-gray-400 text-error">Delete</a>
         </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
-<br>
-<a href="{% url 'company-create' %}" class="btn btn-sm border border-gray-400">Create New Company</a>
 {% endblock content %}

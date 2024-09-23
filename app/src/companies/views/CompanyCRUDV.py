@@ -35,6 +35,11 @@ class CompanyUpdateView(LoginRequiredMixin, UpdateView):
         ctx['title_bar'] = 'Update Company'
         return ctx
 
+    def get_success_url(self):
+        url = reverse_lazy('company-detail', kwargs={'pk': self.object.pk})
+        url += '?action=updated'
+        return url
+
 
 class CompanyDeleteView(LoginRequiredMixin, DeleteView):
     model = Company
@@ -62,6 +67,7 @@ class CompanyListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         ctx = super(CompanyListView, self).get_context_data(**kwargs)
         ctx['title_bar'] = 'Company List'
+        ctx['module_name'] = 'companies'
         return ctx
 
 
@@ -73,5 +79,11 @@ class CompanyDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         ctx = super(CompanyDetailView, self).get_context_data(**kwargs)
         ctx['title_bar'] = 'Company Detail'
+        ctx['module_name'] = 'companies'
+        ctx['action_type'] = None
+
+        if self.request.GET.get('action') == 'updated':
+            ctx['action_type'] = 'success'
+            ctx['message'] = 'Company updated successfully'
+
         return ctx
-s

@@ -14,7 +14,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 
 
-# /crm/partner/add
+# /partner/add
 class PartnerCreateView(LoginRequiredMixin, CreateView):
     model = Partner
     form_class = PartnerForm
@@ -33,7 +33,7 @@ class PartnerCreateView(LoginRequiredMixin, CreateView):
         return url
 
 
-# /crm/partners/<pk>/edit/
+# /partners/<pk>/edit/
 class PartnerUpdateView(LoginRequiredMixin, UpdateView):
     model = Partner
     form_class = PartnerForm
@@ -50,7 +50,7 @@ class PartnerUpdateView(LoginRequiredMixin, UpdateView):
         return url
 
 
-# /crm/partners/<pk>/delete/
+# /partners/<pk>/delete/
 class PartnerDeleteView(LoginRequiredMixin, DeleteView):
     model = Partner
     success_url = reverse_lazy('partner-list')
@@ -67,7 +67,7 @@ class PartnerDeleteView(LoginRequiredMixin, DeleteView):
         return HttpResponseRedirect(self.success_url + '?action=deleted')
 
 
-# /crm/partners/
+# /partners/
 class PartnerListView(LoginRequiredMixin, ListView):
     model = Partner
     template_name = 'crm/partner-list.html'
@@ -90,7 +90,9 @@ class PartnerListView(LoginRequiredMixin, ListView):
         ctx = super(PartnerListView, self).get_context_data(**kwargs)
         ctx['action_type'] = None
         ctx['filter'] = 'partners'
-        
+        ctx['module_name'] = 'partners'
+        ctx['url_new'] = reverse_lazy('partner-create')
+
         options = {
             'customer': 1,
             'supplier': 2,
