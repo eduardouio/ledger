@@ -92,19 +92,13 @@ class PartnerListView(LoginRequiredMixin, ListView):
         ctx['filter'] = 'partners'
         ctx['module_name'] = 'partners'
         ctx['url_new'] = reverse_lazy('partner-create')
-
-        options = {
-            'customer': 1,
-            'supplier': 2,
-            'all': 0
-        }
         ctx['title_bar'] = 'Partners List'
-        ctx['customer_class'] = 'badge border text-xs bg-cyan-600 uppercase text-white'
-        ctx['supplier_class'] = 'badge border text-xs bg-green-600 uppercase text-white'
+        ctx['type_a_class'] = 'badge border text-xs bg-cyan-600 uppercase text-white'
+        ctx['type_b_class'] = 'badge border text-xs bg-green-600 uppercase text-white'
         ctx['url_filter_1'] = reverse_lazy('partner-list') + '?type=customer'
         ctx['url_filter_2'] = reverse_lazy('partner-list') + '?type=supplier'
         ctx['url_base'] = reverse_lazy('partner-list')
-        ctx['option'] = options.get(self.request.GET.get('type', 'all'))
+
         if self.request.GET.get('action') == 'deleted':
             ctx['action_type'] = 'success'
             ctx['message'] = 'Partner deleted successfully'
