@@ -89,6 +89,8 @@ class PartnerListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         ctx = super(PartnerListView, self).get_context_data(**kwargs)
         ctx['action_type'] = None
+        ctx['filter'] = 'partners'
+        
         options = {
             'customer': 1,
             'supplier': 2,
