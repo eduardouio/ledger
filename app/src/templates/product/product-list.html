@@ -1,5 +1,11 @@
 {% extends 'base/base.html' %}
 {% block content %}
+{% if action_type == 'success' %}
+  {% include 'components/alert-success.html' %}
+{% endif %}
+{% if action_type  ==  'alert' %}
+  {% include 'components/alert-warning.html' %}
+{% endif %}
 <div class="overflow-x-auto">
 <table class="table table-xs table-pin-rows table-pin-cols" id="myTable">
   <thead>
@@ -37,12 +43,18 @@
         <td>{{ item.code_sku }}</td>
         <td>{{ item.code_bars }}</td>
         <td>{{ item.price }}</td>
-        <td>{{ item.get_type_display }}</td>
+        <td>
+           <span class="{% if item.type ==  'product' %}
+            {{ type_a_class }} 
+           {% else %} 
+           {{ type_b_class}} 
+           {% endif %}">
+               {{ item.get_type_display }}
+           </span> 
+        </td>
     </tr>
     {% endfor %}
 </tbody>
 </table>
 </div>
-<br>
-<a href="{% url 'product-create' %}" class="btn btn-sm border border-gray-400 ">Create New Product</a>
 {% endblock content %}

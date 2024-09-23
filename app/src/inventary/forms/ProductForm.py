@@ -1,10 +1,12 @@
 from django import forms
 from inventary.models import Product
 
+
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['company', 'account', 'code_sku', 'code_bars', 'name', 'price', 'cost', 'type']
+        fields = ['company', 'account', 'code_sku',
+                  'code_bars', 'name', 'price', 'cost', 'type']
         widgets = {
             'company': forms.Select(attrs={'class': 'border border-gray-400 p-1 rounded-sm'}),
             'account': forms.Select(attrs={'class': 'border border-gray-400 p-1 rounded-sm'}),

@@ -11,13 +11,18 @@
           {{ title_bar }}
           </span>
           <div>
-           <span class="badge text-error text-xs">
-           [showing {{ object_list|length }} Records]
-           </span>
+            {% if object_list  %}
+            <span class="badge text-error text-xs">
+            [showing {{ object_list|length }} Records]
+            </span>
+            {% endif %}
         </div>
        </div>
        {% if filter == 'partners'  %}
             {% include 'components/partners-filter.html' %}
+        {% endif %}
+        {% if filter == 'products'  %}
+            {% include 'components/products-filter.html' %}
         {% endif %}
         {% if module_name != 'companies'  %}        
           <div>

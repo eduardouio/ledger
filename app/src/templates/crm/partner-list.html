@@ -41,8 +41,8 @@
         <td>{{ item.name }}</td>
         <td>
             <span class="{% if item.type ==  'supplier' %}
-                         {{ supplier_class }} 
-                         {% else %} {{ customer_class}} 
+                         {{ type_a_class }} 
+                         {% else %} {{ type_b_class}} 
                          {% endif %}">
                 {{ item.type }}
             </span>
