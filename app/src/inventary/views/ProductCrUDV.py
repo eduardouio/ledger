@@ -62,7 +62,7 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
         return HttpResponseRedirect(self.success_url + '?action=deleted')
 
 
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin, ListView):
     model = Product
     template_name = 'product/product-list.html'
     context_object_name = 'products'
