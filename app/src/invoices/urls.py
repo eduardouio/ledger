@@ -30,9 +30,9 @@ urlpatterns = [
     path('bills/<int:pk>/', BillDetailView.as_view(), name='bills-detail'),
     path('bills/', BillListView.as_view(), name='bills-list'),
 
-    path('sales/create/', InvoiceCreateView.as_view(), name='invoice-create'),
-    path('sales/update/<int:pk>/', InvoiceUpdateView.as_view(), name='invoice-update'),
-    path('sales/delete/<int:pk>/', InvoiceDeleteView.as_view(), name='invoice-delete'),
-    path('sales/<int:pk>/', InvoiceDetailView.as_view(), name='invoice-detail'),
-    path('sales/', InvoiceListView.as_view(), name='invoice-list'),
+    path('sales/create/', InvoiceCreateView.as_view(), name='sales-create'),
+    path('sales/update/<int:pk>/', InvoiceUpdateView.as_view(), name='sales-update'),
+    path('sales/delete/<int:pk>/', InvoiceDeleteView.as_view(), name='sales-delete'),
+    path('sales/<int:pk>/', InvoiceDetailView.as_view(), name='sales-detail'),
+    path('sales/', InvoiceListView.as_view(), name='sales-list'),
 ]
