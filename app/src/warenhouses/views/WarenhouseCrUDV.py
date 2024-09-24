@@ -95,6 +95,7 @@ class WarenhouseDetailView(LoginRequiredMixin, DetailView):
         ctx = super(WarenhouseDetailView, self).get_context_data(**kwargs)
         ctx['title_bar'] = 'Warenhouse Detail'
         ctx['action_type'] = None
+        ctx['url_new'] = reverse_lazy('warenhouse-create')
         if self.request.GET.get('action') == 'created':
             ctx['action_type'] = 'success'
             ctx['message'] = 'Warenhouse created successfully'
