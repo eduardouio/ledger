@@ -1,0 +1,8 @@
+todo
+===================================
+partners
+account
+company
+products
+banks
+invoice

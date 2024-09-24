@@ -7,11 +7,13 @@ from django.views.generic import (
     DetailView
 )
 from django.forms.models import inlineformset_factory
-from ..models import Invoice, InvoiceItems  # Asumiendo que tienes un modelo InvoiceItem
-from ..forms import InvoiceForm, InvoiceItemsForm
+from invoices.models import Invoice, InvoiceItems
+from invoices.forms import InvoiceForm, InvoiceItemsForm
+from companies.models import Company
 
-# Crea el formset para los ítems de la factura
+
 InvoiceItemFormSet = inlineformset_factory(Invoice, InvoiceItems, form=InvoiceItemsForm, extra=1)
+
 
 class InvoiceCreateView(CreateView):
     model = Invoice
@@ -22,10 +24,8 @@ class InvoiceCreateView(CreateView):
     def get_context_data(self, **kwargs):
         ctx = super(InvoiceCreateView, self).get_context_data(**kwargs)
         if self.request.POST:
-            # Si hay datos en el POST, crea el formset con esos datos
             ctx['formset'] = InvoiceItemFormSet(self.request.POST)
         else:
-            # Si no, crea un formset vacío
             ctx['formset'] = InvoiceItemFormSet()
         ctx['title_bar'] = 'Create Invoice'
         return ctx
@@ -34,9 +34,7 @@ class InvoiceCreateView(CreateView):
         context = self.get_context_data()
         formset = context['formset']
         if formset.is_valid():
-            # Guarda la factura primero
             self.object = form.save()
-            # Luego guarda los ítems, asociándolos con la factura
             formset.instance = self.object
             formset.save()
             return super().form_valid(form)
@@ -75,7 +73,6 @@ class InvoiceUpdateView(UpdateView):
             return self.form_invalid(form)
 
 
-
 class InvoiceDeleteView(DeleteView):
     model = Invoice
     template_name = 'invoice/invoice-confirm-delete.html'
@@ -93,11 +90,15 @@ class InvoiceListView(ListView):
     context_object_name = 'invoices'
 
     def get_queryset(self):
-        return Invoice.objects.all()
+        company = Company.get_by_user(self.request.user)
+        return Invoice.get_bills(company)
 
     def get_context_data(self, **kwargs):
         ctx = super(InvoiceListView, self).get_context_data(**kwargs)
-        ctx['title_bar'] = 'Invoices List'
+        ctx['title_bar'] = 'Sales Invoices List'
+        ctx['action_type'] = None
+        ctx['module_name'] = 'bills'
+        ctx['url_new'] = reverse_lazy('bills-create')
         return ctx
 
 

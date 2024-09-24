@@ -13,3 +13,10 @@ from .InvoiceCRUDV import (
     InvoiceDetailView,
     InvoiceListView
 )
+
+from .BillsCRUD import (
+    BillCreateView,
+    BillDetailView,
+    BillUpdateView,
+    BillDeleteView
+)
