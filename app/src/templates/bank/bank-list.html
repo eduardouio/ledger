@@ -1,6 +1,8 @@
   {% extends 'base/base.html' %}
   {% block content %}
-
+  {% if action_type == 'success' %}
+  {% include 'components/alert-success.html' %}
+{% endif %}
   <div class="overflow-x-auto">
     <table class="table table-xs table-pin-rows table-pin-cols" id="myTable">
       <thead>
@@ -42,14 +44,12 @@
           <td>{{ bank.routing_number }}</td>
           <td>
             <a href="{% url 'bank-update' bank.id %}" class="btn btn-sm border border-gray-400">Edit</a>
-            <a href="{% url 'bank-delete' bank.id %}" class="btn btn-sm border border-gray-400 text-error">Delete</a>
+            <a href="{% url 'bank-detail' bank.id %}?action=alert" class="btn btn-sm border border-gray-400 text-error">Delete</a>
           </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
-<br>
-  <a href="{% url 'bank-create' %}" class="btn btn-sm border border-gray-400">Create New Bank</a>
   {% endblock content %}
 
