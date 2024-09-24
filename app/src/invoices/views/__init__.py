@@ -18,5 +18,6 @@ from .BillsCRUD import (
     BillCreateView,
     BillDetailView,
     BillUpdateView,
-    BillDeleteView
+    BillDeleteView,
+    BillListView
 )

@@ -101,5 +101,12 @@ class Product(BaseModel):
             company=my_company
         )
 
+    @classmethod
+    def get_all(cls, company):
+        my_company = Company.get_by_name(company)
+        return cls.objects.filter(
+            company=my_company
+        )
+
     def __str__(self):
         return self.name

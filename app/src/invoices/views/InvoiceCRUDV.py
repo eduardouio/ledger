@@ -97,8 +97,8 @@ class InvoiceListView(ListView):
         ctx = super(InvoiceListView, self).get_context_data(**kwargs)
         ctx['title_bar'] = 'Sales Invoices List'
         ctx['action_type'] = None
-        ctx['module_name'] = 'bills'
-        ctx['url_new'] = reverse_lazy('bills-create')
+        ctx['module_name'] = 'invoice'
+        ctx['url_new'] = reverse_lazy('invoice-create')
         return ctx
 
 
