@@ -1,44 +1,22 @@
 {% extends 'base/base.html' %}
-
 {% block content %}
-
   <div class="text-error">
     {{ form.errors }}
   </div>
-
-  <form method="POST" >
+  <form method="POST" class="flex justify-between gap-2">
     {% csrf_token %}
-
-    <!-- Invoice Data -->
-    <div class="grid grid-cols-2 gap-4">
-      <div class="form-control">
-        <label class="label" for="company">
-          <span class="label-text">Company</span>
-        </label>
-        {{ form.company }}
-      </div>
-
+    {% if company %}
+    <input type="hidden" name="company" value="{{company.id}}">
+    {% else %}
+    <input type="hidden" name="company" value="{{object.company.id}}">
+    {% endif %}
+    <input type="hidden" name="type" value="bill">
       <div class="form-control">
         <label class="label" for="partner">
           <span class="label-text">Partner</span>
         </label>
         {{ form.partner }}
       </div>
-
-      <div class="form-control">
-        <label class="label" for="number">
-          <span class="label-text">Document Number</span>
-        </label>
-        {{ form.number }}
-      </div>
-
-      <div class="form-control">
-        <label class="label" for="type">
-          <span class="label-text">Type</span>
-        </label>
-        {{ form.type }}
-      </div>
-
       <div class="form-control">
         <label class="label" for="date">
           <span class="label-text">Date</span>
@@ -52,11 +30,16 @@
         </label>
         {{ form.due_date }}
       </div>
+      <div class="form-control w-2/12">
+        <label class="label" for="number">
+          <span class="label-text">Document Number</span>
+        </label>
+        {{ form.number }}
+      </div>
     </div>
 
     <!-- Invoice Items -->
-    <h3 class="text-xl font-bold mb-4 mt-6 text-center">Invoice Items</h3>
-
+    <small class="mb-4 mt-6 text-center">Invoice Items</small>
     <div class="overflow-x-auto">
       <table class="table table-xs table-pin-rows table-pin-cols mx-auto">
         <thead>
@@ -109,8 +92,12 @@
         Cancel
       </a>
     </div>
-
     {{ invoice_items_formset.management_form }}
   </form>
-
 {% endblock content %}
+{% block script %}
+var products = {{ products | safe }};
+{% endblock script %}
+{% block js_files %}
+  <script src="{% static 'js/bill-app.js'%}"></script>
+{% endblock js_files %}

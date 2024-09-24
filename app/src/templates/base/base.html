@@ -1,3 +1,4 @@
+{% load static %}
 {% include 'base/header.html' %}
 <div class="container w-11/12 mx-auto bg-gray-100 m-2">
   {% block title_bar %}
@@ -8,4 +9,14 @@
       {% endblock content %}
    </div>
 </div>
+</div>
+<footer class="bg-teal-400 text-white shadow-md py-4 border border-t-teal-500 border-t-1">
+    <div class="container mx-auto text-center">
+        <p>© 2024 ledger. Todos los derechos reservados</p>
+    </div>
+</footer>
+{% block script %}
+{% endblock script %}
+{% block js_files %}
+{% endblock js_files %}
 {% include 'base/footer.html' %}
