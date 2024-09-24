@@ -1,9 +1,9 @@
 {% include 'base/header.html' %}
-<div class="mx-auto bg-gray-100 w-full">
-   <div class="m-5">
-    {% block title_bar %}
-      {% include 'components/title_bar.html' %}
-    {% endblock title_bar %}
+<div class="container w-11/12 mx-auto bg-gray-100 m-2">
+  {% block title_bar %}
+  {% include 'components/title_bar.html' %}
+{% endblock title_bar %}
+   <div class="m-2 p-2 shadow border">
       {% block content %}
       {% endblock content %}
    </div>
