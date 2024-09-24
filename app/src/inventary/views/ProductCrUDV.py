@@ -110,9 +110,6 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
         if self.request.GET.get('action') == 'updated':
             ctx['action_type'] = 'success'
             ctx['message'] = 'Product updated successfully'
-        if self.request.GET.get('action') == 'deleted':
-            ctx['action_type'] = 'success'
-            ctx['message'] = 'Product deleted successfully'
         if self.request.GET.get('action') == 'created':
             ctx['action_type'] = 'success'
             ctx['message'] = 'Product created successfully'

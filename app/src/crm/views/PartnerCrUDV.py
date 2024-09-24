@@ -97,7 +97,6 @@ class PartnerListView(LoginRequiredMixin, ListView):
         ctx['type_b_class'] = 'badge border text-xs bg-green-600 uppercase text-white'
         ctx['url_filter_1'] = reverse_lazy('partner-list') + '?type=customer'
         ctx['url_filter_2'] = reverse_lazy('partner-list') + '?type=supplier'
-        ctx['url_base'] = reverse_lazy('partner-list')
 
         if self.request.GET.get('action') == 'deleted':
             ctx['action_type'] = 'success'
@@ -118,9 +117,6 @@ class PartnerDetailView(LoginRequiredMixin, DetailView):
         if self.request.GET.get('action') == 'updated':
             ctx['action_type'] = 'success'
             ctx['message'] = 'Partner updated successfully'
-        if self.request.GET.get('action') == 'deleted':
-            ctx['action_type'] = 'success'
-            ctx['message'] = 'Partner deleted successfully'
         if self.request.GET.get('action') == 'created':
             ctx['action_type'] = 'success'
             ctx['message'] = 'Partner created successfully'

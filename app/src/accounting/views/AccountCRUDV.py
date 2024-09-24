@@ -108,9 +108,6 @@ class AccountDetailView(LoginRequiredMixin, DetailView):
         elif self.request.GET.get('action') == 'created':
             ctx['action_type'] = 'success'
             ctx['message'] = 'Account created successfully'
-        elif self.request.GET.get('action') == 'deleted':
-            ctx['action_type'] = 'success'
-            ctx['message'] = 'Account deleted successfully'
         elif self.request.GET.get('action') == 'alert':
             ctx['action_type'] = 'alert'
             ctx['message'] = 'The Partner will be removed, cannot be undone.'
