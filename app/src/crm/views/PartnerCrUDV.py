@@ -19,7 +19,6 @@ class PartnerCreateView(LoginRequiredMixin, CreateView):
     model = Partner
     form_class = PartnerForm
     template_name = 'crm/partner-form.html'
-    success_url = reverse_lazy('partner-list')
 
     def get_context_data(self, *args, **kwargs):
         ctx = super(PartnerCreateView, self).get_context_data(*args, **kwargs)
