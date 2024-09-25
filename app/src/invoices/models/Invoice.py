@@ -5,6 +5,14 @@ from companies.models import Company
 from accounts.models import CustomUserModel
 from crm.models import Partner
 
+PAYTERM = (
+    ('DUE ON RECEIPT', 'DUE ON RECEIPT'),
+    ('15 DAYS', '15 DAYS'),
+    ('30 DAYS', '30 DAYS'),
+    ('60 DAYS', '60 DAYS'),
+    ('90 DAYS', '90 DAYS'),
+)
+
 
 class Invoice(BaseModel):
     company = models.ForeignKey(
@@ -29,9 +37,13 @@ class Invoice(BaseModel):
     due_date = models.DateField(
         'Due Date'
     )
-    number = models.CharField(
+    pay_term = models.CharField(
+        'Payment Term',
+        max_length=20,
+        choices=PAYTERM
+    )
+    number = models.IntegerField(
         'Document Number',
-        max_length=20
     )
     amount = models.DecimalField(
         'Amount',
@@ -99,3 +111,10 @@ class Invoice(BaseModel):
         return Invoice.objects.filter(
             type='invoice', company=company
         )
+
+    @classmethod
+    def get_next_invoice_number(cls, company):
+        last = Invoice.objects.filter(company=company).last()
+        if not last:
+            return 1
+        return last.number + 1

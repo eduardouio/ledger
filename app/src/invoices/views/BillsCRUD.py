@@ -32,7 +32,7 @@ class BillCreateView(CreateView):
         company = Company.get_by_user(self.request.user)
         ctx['company'] = company
         ctx['title_bar'] = 'Create Bill Invoice'
-        products =  Product.ger_all(company)
+        products =  Product.get_all(company)
         ctx['products'] = serialize('json', products)
         return ctx
 

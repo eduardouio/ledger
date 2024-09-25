@@ -19,6 +19,12 @@
       </div>
       <div class="form-control">
         <label class="label" for="date">
+          <span class="label-text">Pay Term</span>
+        </label>
+        {{ form.pay_term }}
+      </div>
+      <div class="form-control">
+        <label class="label" for="date">
           <span class="label-text">Date</span>
         </label>
         {{ form.date }}
@@ -39,7 +45,17 @@
     </div>
 
     <!-- Invoice Items -->
-    <small class="mb-4 mt-6 text-center">Invoice Items</small>
+     <div class="text-end  m-2 p-2">
+       <button type="button" id="add-item" class="btn btn-sm border border-green-400">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+          <path d="M9 12h6" />
+          <path d="M12 9v6" />
+        </svg>
+        Add Item
+      </button>
+     </div>
     <div class="overflow-x-auto">
       <table class="table table-xs table-pin-rows table-pin-cols mx-auto">
         <thead>
@@ -68,10 +84,30 @@
         </tbody>
       </table>
     </div>
-
-    <br>
-    <button type="button" id="add-item" class="btn btn-sm border border-gray-400">Add Item</button>
-
+    <div class="flex justify-end">
+    <div class="grid grid-cols-2 gap-1 py-4 w-3/12">
+        <label class="label" for="number">
+          <strong class="label-text">SUBTOTAL 1:</strong>
+        </label>
+        {{ form.number }}
+        <label class="label" for="number">
+          <strong class="label-text text-cyan-600">DISCOUNT:</strong>
+        </label>
+        {{ form.number }}
+        <label class="label" for="number">
+          <strong class="label-text">SUBTOTAL 2:</strong>
+        </label>
+        {{ form.number }}
+        <label class="label" for="number">
+          <strong class="label-text text-orange-600">TAX:</strong>
+        </label>
+        {{ form.number }}
+        <label class="label" for="number">
+          <strong class="label-text text-green-600">GRAND TOTAL:</strong>
+        </label>
+        {{ form.number }}
+    </div>
+  </div>
     <!-- Submit Button -->
     <div class="py-3 text-end flex justify-between mt-6">
       <button type="submit" class="btn btn-sm border border-gray-400">

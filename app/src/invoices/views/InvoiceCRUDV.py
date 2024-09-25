@@ -1,5 +1,6 @@
 from django.urls import reverse_lazy
 from django.views.generic import (
+    TemplateView,
     CreateView,
     UpdateView,
     DeleteView,
@@ -7,28 +8,44 @@ from django.views.generic import (
     DetailView
 )
 from django.forms.models import inlineformset_factory
+from django.core.serializers import serialize
+from django.contrib.auth.mixins import LoginRequiredMixin
 from invoices.models import Invoice, InvoiceItems
 from invoices.forms import InvoiceForm, InvoiceItemsForm
 from companies.models import Company
+from inventary.models import Product
 
 
 InvoiceItemFormSet = inlineformset_factory(Invoice, InvoiceItems, form=InvoiceItemsForm, extra=1)
 
 
-class InvoiceCreateView(CreateView):
+class InvoiceCreateView(LoginRequiredMixin, CreateView):
     model = Invoice
     form_class = InvoiceForm
     template_name = 'invoice/invoice-form.html'
-    success_url = reverse_lazy('invoice-list')
 
     def get_context_data(self, **kwargs):
         ctx = super(InvoiceCreateView, self).get_context_data(**kwargs)
-        if self.request.POST:
-            ctx['formset'] = InvoiceItemFormSet(self.request.POST)
-        else:
-            ctx['formset'] = InvoiceItemFormSet()
         ctx['title_bar'] = 'Create Invoice'
+        ctx['company'] = Company.get_by_user(self.request.user)
+        products = Product.get_all(ctx['company'])
+        ctx['products'] = serialize('json', products)
+        ctx['formset'] = InvoiceItemFormSet()
+        ctx['invoice_number'] = Invoice.get_next_invoice_number(ctx['company'])
         return ctx
+
+    def get_form(self, form_class=None):
+        form = super(InvoiceCreateView, self).get_form(form_class)
+        if not self.object:
+            form.fields['number'].initial = Invoice.get_next_invoice_number(
+                Company.get_by_user(self.request.user)
+            )
+        return form
+
+    def get_success_url(self):
+        url = reverse_lazy('ales-detail', kwargs={'pk': self.object.pk})
+        url = url + '?action=created'
+        return url
 
     def form_valid(self, form):
         context = self.get_context_data()
@@ -42,7 +59,7 @@ class InvoiceCreateView(CreateView):
             return self.form_invalid(form)
 
 
-class InvoiceUpdateView(UpdateView):
+class InvoiceUpdateView(LoginRequiredMixin, UpdateView):
     model = Invoice
     form_class = InvoiceForm
     template_name = 'invoice/invoice-form.html'
@@ -73,7 +90,7 @@ class InvoiceUpdateView(UpdateView):
             return self.form_invalid(form)
 
 
-class InvoiceDeleteView(DeleteView):
+class InvoiceDeleteView(LoginRequiredMixin, DeleteView):
     model = Invoice
     template_name = 'invoice/invoice-confirm-delete.html'
     success_url = reverse_lazy('invoice-list')
@@ -84,7 +101,7 @@ class InvoiceDeleteView(DeleteView):
         return ctx
 
 
-class InvoiceListView(ListView):
+class InvoiceListView(LoginRequiredMixin, ListView):
     model = Invoice
     template_name = 'invoice/invoice-list.html'
     context_object_name = 'invoices'
@@ -98,11 +115,11 @@ class InvoiceListView(ListView):
         ctx['title_bar'] = 'Sales Invoices List'
         ctx['action_type'] = None
         ctx['module_name'] = 'invoice'
-        ctx['url_new'] = reverse_lazy('invoice-create')
+        ctx['url_new'] = reverse_lazy('sales-create')
         return ctx
 
 
-class InvoiceDetailView(DetailView):
+class InvoiceDetailView(LoginRequiredMixin, DetailView):
     model = Invoice
     template_name = 'invoice/invoice-detail.html'
     context_object_name = 'invoice'
