@@ -29,9 +29,9 @@ urlpatterns = [
     path('generalledger/', GeneralLedgerListView.as_view(), name='generalledger-list'),
     path('generalledger/<int:pk>/', GeneralLedgerDetailView.as_view(), name='generalledger-detail'),
 
-    path('bank/new/', BankCreateView.as_view(), name='bank-create'),
-    path('bank/<int:pk>/edit/', BankUpdateView.as_view(), name='bank-update'),
-    path('bank/<int:pk>/delete/', BankDeleteView.as_view(), name='bank-delete'),
-    path('bank/', BankListView.as_view(), name='bank-list'),
-    path('bank/<int:pk>/', BankDetailView.as_view(), name='bank-detail'),
+    path('banks/new/', BankCreateView.as_view(), name='bank-create'),
+    path('banks/<int:pk>/edit/', BankUpdateView.as_view(), name='bank-update'),
+    path('banks/<int:pk>/delete/', BankDeleteView.as_view(), name='bank-delete'),
+    path('banks/', BankListView.as_view(), name='bank-list'),
+    path('banks/<int:pk>/', BankDetailView.as_view(), name='bank-detail'),
 ]

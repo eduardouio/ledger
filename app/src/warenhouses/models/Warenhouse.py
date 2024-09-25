@@ -11,7 +11,7 @@ class Warenhouse(BaseModel):
     )
     code = models.CharField(
         'Warenhouse Code',
-        max_length=20
+        max_length=5
     )
     name = models.CharField(
         'Warenhouse Name',

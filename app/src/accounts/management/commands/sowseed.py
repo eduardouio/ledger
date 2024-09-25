@@ -6,6 +6,7 @@ from invoices.models import Invoice, InvoiceItems
 from crm.models import Partner
 from decimal import Decimal
 from inventary.models import Product
+from warenhouses.models import Warenhouse
 import random
 from faker import Faker
 import json
@@ -29,6 +30,10 @@ class Command(BaseCommand):
         self.createPartners(faker)
         print('cargamos los productos')
         self.createProducts(faker)
+        print('cargamos los bancos')
+        self.createBanks(faker)
+        print('cargamos los almacenes')
+        self.createWarehouse(faker)
         print('Generamos facturas de compra y venta')
         self.loadTransactions(faker)
         print('Fin')
@@ -76,8 +81,6 @@ class Command(BaseCommand):
 
         if file_content is None:
             raise Exception('No existe el archivo de cuentas')
-        # Iterar sobre los niveles y crear las cuentas
-        # Asegura que los niveles se procesen en orden
         for level in sorted(file_content.keys()):
             for account_data in file_content[level]:
                 parent_account = None if level == 'level_1' else Account.get_account(
@@ -95,6 +98,39 @@ class Command(BaseCommand):
                     parent_account=parent_account,
                     id_user_created=1
                 )
+
+    def createBanks(self, faker):
+        my_company = Company.get_by_tax_id('9999999999')
+        if not my_company:
+            raise Exception('No existe el cliente System Company')
+
+        if Bank.objects.filter(company=my_company).count() > 0:
+            print('Ya existen bancos')
+            return True
+
+        Bank.objects.create(
+            account=Account.get_account('6117002', my_company),
+            name='Banco de prueba',
+            account_number='0000000001',
+            company=Company.get_by_tax_id('9999999999'),
+            account_type='checking',
+        )
+
+    def createWarehouse(self, faker):
+        my_company = Company.get_by_tax_id('9999999999')
+        if not my_company:
+            raise Exception('No existe el cliente System Company')
+
+        if Warenhouse.objects.filter(company=my_company).count() > 0:
+            print('Ya existen almacenes')
+            return True
+
+        Warenhouse.objects.create(
+            company=my_company,
+            code='0001',
+            name='Almacen de prueba',
+            address='Direccion de prueba'
+        )
 
     def createDefaultBank(self):
         my_company = Company.get_by_tax_id('9999999999')
