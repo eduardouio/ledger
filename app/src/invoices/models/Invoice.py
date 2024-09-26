@@ -6,11 +6,12 @@ from accounts.models import CustomUserModel
 from crm.models import Partner
 
 PAYTERM = (
-    ('DUE ON RECEIPT', 'DUE ON RECEIPT'),
-    ('15 DAYS', '15 DAYS'),
-    ('30 DAYS', '30 DAYS'),
-    ('60 DAYS', '60 DAYS'),
-    ('90 DAYS', '90 DAYS'),
+    ('CASH', 'CASH'),
+    ('7 DAYS', '7-DAYS'),
+    ('15 DAYS', '15-DAYS'),
+    ('30 DAYS', '30-DAYS'),
+    ('60 DAYS', '60-DAYS'),
+    ('90 DAYS', '90-DAYS'),
 )
 
 

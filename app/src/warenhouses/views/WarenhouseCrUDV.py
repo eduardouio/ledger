@@ -43,7 +43,7 @@ class WarenhouseUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         url = reverse_lazy('warenhouse-detail', kwargs={'pk': self.object.pk})
-        url += '?action=created'
+        url += '?action=updated'
         return url
 
 

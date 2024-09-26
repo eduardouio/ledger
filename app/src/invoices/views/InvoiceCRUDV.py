@@ -12,6 +12,7 @@ from django.core.serializers import serialize
 from django.contrib.auth.mixins import LoginRequiredMixin
 from invoices.models import Invoice, InvoiceItems
 from invoices.forms import InvoiceForm, InvoiceItemsForm
+from crm.models import Partner
 from companies.models import Company
 from inventary.models import Product
 
@@ -26,10 +27,12 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         ctx = super(InvoiceCreateView, self).get_context_data(**kwargs)
-        ctx['title_bar'] = 'Create Invoice'
         ctx['company'] = Company.get_by_user(self.request.user)
         products = Product.get_all(ctx['company'])
+        partners = Partner.get_customers(ctx['company'])
+        ctx['title_bar'] = 'Create Invoice'
         ctx['products'] = serialize('json', products)
+        ctx['customers'] = serialize('json', partners)
         ctx['formset'] = InvoiceItemFormSet()
         ctx['invoice_number'] = Invoice.get_next_invoice_number(ctx['company'])
         return ctx
