@@ -2,6 +2,14 @@ from common import BaseModel
 from companies.models import Company
 from django.db import models
 
+PAYD_TERMS = (
+    (0, 'Cash'),
+    (7, '7 Days'),
+    (15, '15 Days'),
+    (30, '30 Days'),
+    (60, '60 Days'),
+)
+
 
 class Partner(BaseModel):
     id = models.AutoField(primary_key=True)
@@ -30,6 +38,11 @@ class Partner(BaseModel):
         max_length=100,
         blank=True,
         null=True
+    )
+    payd_terms = models.IntegerField(
+        'Payment Terms',
+        choices=PAYD_TERMS,
+        default=0
     )
 
     @classmethod

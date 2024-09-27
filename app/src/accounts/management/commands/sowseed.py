@@ -168,7 +168,8 @@ class Command(BaseCommand):
                 name=faker.company(),
                 id_num=faker.ean8(),
                 email=faker.email(),
-                type='supplier'
+                type='supplier',
+                payd_terms=random.choice([0, 7, 15, 30, 60])
             )
 
         customers = Partner.objects.filter(company=my_company, type='customer')
