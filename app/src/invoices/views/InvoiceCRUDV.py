@@ -7,7 +7,6 @@ from django.views.generic import (
     ListView,
     DetailView
 )
-from django.forms.models import inlineformset_factory
 from django.core.serializers import serialize
 from django.contrib.auth.mixins import LoginRequiredMixin
 from invoices.models import Invoice, InvoiceItems
@@ -15,9 +14,6 @@ from invoices.forms import InvoiceForm, InvoiceItemsForm
 from crm.models import Partner
 from companies.models import Company
 from inventary.models import Product
-
-
-InvoiceItemFormSet = inlineformset_factory(Invoice, InvoiceItems, form=InvoiceItemsForm, extra=1)
 
 
 class InvoiceCreateView(LoginRequiredMixin, CreateView):
@@ -33,17 +29,8 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
         ctx['title_bar'] = 'Create Invoice'
         ctx['products'] = serialize('json', products)
         ctx['customers'] = serialize('json', partners)
-        ctx['formset'] = InvoiceItemFormSet()
         ctx['invoice_number'] = Invoice.get_next_invoice_number(ctx['company'])
         return ctx
-
-    def get_form(self, form_class=None):
-        form = super(InvoiceCreateView, self).get_form(form_class)
-        if not self.object:
-            form.fields['number'].initial = Invoice.get_next_invoice_number(
-                Company.get_by_user(self.request.user)
-            )
-        return form
 
     def get_success_url(self):
         url = reverse_lazy('ales-detail', kwargs={'pk': self.object.pk})
