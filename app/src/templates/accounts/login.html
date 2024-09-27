@@ -11,7 +11,12 @@
     <div class="card w-96 bg-white shadow-xl">
         <div class="card-body">
             <h2 class="card-title text-center">Login</h2>
-            <form action="#" method="POST">
+            <span class="alert alert-error">
+                {{ message }}
+            </span>
+            <form method="POST">
+                {{ form.errors }}
+                {% csrf_token %}
                 <div class="form-control">
                     <label class="label" for="email">
                         <span class="label-text">Email</span>
@@ -27,9 +32,9 @@
                 <div class="form-control mt-6">
                     <button class="btn btn-primary w-full">Login</button>
                 </div>
-                <div class="mt-4 text-center">
+                <!-- <div class="mt-4 text-center">
                     <a href="#" class="link link-hover">Forgot password?</a>
-                </div>
+                </div> -->
             </form>
         </div>
     </div>

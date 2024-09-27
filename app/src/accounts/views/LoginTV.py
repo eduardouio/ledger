@@ -22,3 +22,20 @@ class LoginTV(TemplateView):
 
         context = self.get_context_data(**kwargs)
         return self.render_to_response({**context, **page_data})
+
+    def post(self, request, *args, **kwargs):
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = authenticate(username=email, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect('/')
+        else:
+            page_data = {
+                'title_page': 'Inicio Sesion',
+                'module_name': 'Accounts',
+                'message': 'Usuario o contraseña incorrecta',
+                'status': 'not_logged_in',
+            }
+            context = self.get_context_data(**kwargs)
+            return self.render_to_response({**context, **page_data})
