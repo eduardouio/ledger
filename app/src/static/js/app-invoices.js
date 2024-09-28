@@ -18,7 +18,7 @@ const app = Vue.createApp({
       invoice_headers: {
         customer:null,
         date: null,
-        pay_term: null,
+        pay_terms: null,
         due_date: null,
         number: invoice_number,
         status: null,
@@ -49,19 +49,25 @@ const app = Vue.createApp({
       this.new_item.quantity = 1;
     },
     setCustomer(){
-      console.log('Estamos llamando a la funcion de setPartner');
-      
-      this.getCurrentDate();
+        let today = new Date();
+        let year = today.getFullYear();
+        let month = String(today.getMonth() + 1).padStart(2, '0');
+        let day = String(today.getDate()).padStart(2, '0');
+        this.invoice_headers.date = `${year}-${month}-${day}`;
+        let days = this.invoice_headers.customer.pay_terms ?? 0; 
+
+        if (days == 0){
+            this.invoice_headers.due_date = `${year}-${month}-${day}`;
+            this.invoice_headers.pay_terms = '';
+            return;
+        }
+
+        due_date.setDate(today.getDate() + days);
+        let due_year = due_date.getFullYear();
+        let due_month = String(due_date.getMonth() + 1).padStart(2, '0');
+        let due_day = String(due_date.getDate()).padStart(2, '0');
+        this.invoice_headers.due_date = `${due_year}-${due_month}-${due_day}`;
     },
-    getCurrentDate(){
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = String(today.getMonth() + 1).padStart(2, '0');
-      const day = String(today.getDate()).padStart(2, '0');
-      this.invoice_headers.date = `${year}-${month}-${day}`;
-      return; 
-    },
-    getDueDate(){},
   },
   // Ciclo de vida de la app
   mounted() {
@@ -93,6 +99,5 @@ const app = Vue.createApp({
     }
 }});
 
-// Montando la app en el elemento con id="app"
 app.config.compilerOptions.delimiters = ['[[', ']]'];
 const vm = app.mount('#app');
