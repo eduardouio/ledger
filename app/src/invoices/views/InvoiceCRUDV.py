@@ -23,12 +23,14 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         ctx = super(InvoiceCreateView, self).get_context_data(**kwargs)
-        ctx['company'] = Company.get_by_user(self.request.user)
+        company = Company.get_by_user(self.request.user)
+        ctx['company'] = company
         products = Product.get_all(ctx['company'])
         partners = Partner.get_customers(ctx['company'])
         ctx['title_bar'] = 'Create Invoice'
         ctx['products'] = serialize('json', products)
         ctx['customers'] = serialize('json', partners)
+        ctx['company_data'] = serialize('json', [company])
         ctx['invoice_number'] = Invoice.get_next_invoice_number(ctx['company'])
         return ctx
 

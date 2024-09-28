@@ -24,13 +24,13 @@
         <label class="label" for="date">
           <span class="label-text">Date</span>
         </label>
-        <input type="date" v-model="invoice_headers.date" class="border border-gray-400 p-1 rounded-sm input input-xs w-full">
+        <input type="date" @change="setDueDate" v-model="invoice_headers.date" class="border border-gray-400 p-1 rounded-sm input input-xs w-full">
       </div>
       <div class="form-control">
         <label class="label" for="date">
           <span class="label-text">Pay Term</span>
         </label>
-        <select v-model="invoice_headers.pay_terms" class="border border-gray-400 p-1 rounded-sm input input-xs w-full">
+        <select v-model="invoice_headers.pay_terms" @change="setDueDate" class="border border-gray-400 p-1 rounded-sm input input-xs w-full">
           <option selected>Select a payment term</option>
           <option value="0">Cash</option>
           <option value="7">7 DAYS</option>
@@ -55,7 +55,7 @@
     </div>
     <!-- Invoice Items -->
      <div class="text-end  m-2 p-2">
-       <button type="button" id="add-item" class="btn btn-sm border border-green-400" @click="addNewItem">
+       <button type="button" id="add-item" class="btn btn-sm border border-green-400" @click="addNewItem" :disabled="is_disabled_add_item">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
           <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
@@ -77,24 +77,36 @@
           </tr>
         </thead>
         <tbody>
+          <tr v-for="(item, index) in invoice_items" :key="index" class="invoice-item text-gray-700">
+            <td>
+              <div class="flex gap-3">
+                <span v-show="item.delete" @click="deleteItem(index)">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M9 11l3 3l8 -8" />
+                    <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
+                  </svg>
+                </span>
+                <span v-show="!item.delete" @click="item.delete=!item.delete">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="red" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                  </svg>
+
+                </span>
+                [[ item.product.name ]]
+              </div>
+            </td>
+            <td class="text-xl text-center">[[ item.quantity ]]</td>
+            <td class="text-xl text-end">[[ item.price ]]</td>
+            <td class="text-xl text-end">[[ item.discount ]]</td>
+            <td class="text-xl text-end">[[ (item.quantity * item.price) - item.discount ]]</td>
+          </tr>
             <tr class="invoice-item text-gray-700">
               <td class="px-1 py-1">
-                <div class="flex gap-3 items-center">
-                  <span id="confirm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="red" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                      <path d="M4 7l16 0" />
-                      <path d="M10 11l0 6" />
-                      <path d="M14 11l0 6" />
-                      <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                      <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                    </svg>
-                  </span>
                   <select v-model="new_item.product" @change="selectItem" class="border border-gray-400 p-1 rounded-sm input input-xs w-full">
                     <option selected>Select a product</option>
                     <option v-for="product in products" :value="product" :key="product.id">[[ product.name ]]</option>
                   </select>
-                </div>
               </td>
               <td class="px-1 py-1">
                 <input v-model="new_item.quantity" type="number" class="border border-gray-400 p-1 rounded-sm input input-xs w-full text-end text-xl">
@@ -123,25 +135,25 @@
         <label class="text-sm text-cyan-800 text-end" for="number">
           DISCOUNT:
         </label>
-        {{ form.discount }}
+        <input type="number" class="border border-gray-400 p-1 rounded-sm text-end input input-xs w-full text-xl text-error" v-model="discount" readonly>
       </div>
       <div class="grid grid-cols-2 gap-1 items-center">
         <label class="text-sm text-cyan-800 text-end" for="number">
           SUBTOTAL 2:
         </label>
-        <input v-model="subtotal_2" readonly class="border border-gray-400 p-1 rounded-sm text-end input input-xs w-full text-xl">
+        <input v-model="subtotal_2" type="number"  readonly class="border border-gray-400 p-1 rounded-sm text-end input input-xs w-full text-xl">
       </div>
       <div class="grid grid-cols-2 gap-1 items-center">
         <label class="text-sm text-cyan-800 text-end" for="number">
-          TAX:
+          TAX <span class="text-info">[ [[ company.tax_in_sales ]]% ]</span>:
         </label>
-        {{ form.tax }}
+    <input v-model="tax" type="number" class="border border-gray-400 p-1 rounded-sm text-end input input-xs w-full text-xl" readonly>
       </div>
       <div class="grid grid-cols-2 gap-1 items-center">
         <label class="text-sm text-cyan-800 text-end" for="number">
           TOTAL:
         </label>
-        <input type="number" class="border border-gray-400 p-1 rounded-sm text-end input input-xs w-full text-xl" name="subtotal" id="frm-subtotal" placeholder="00.0" readonly>
+        <input v-model="total" type="number" class="border border-gray-400 p-1 rounded-sm text-end input input-xs w-full text-xl"  placeholder="00.0" readonly>
       </div>
   </div>
     <!-- Submit Button -->
@@ -175,6 +187,7 @@
 var productsData = {{ products | safe }};
 var customersData = {{ customers | safe }};
 var invoice_number = {{ invoice_number }};
+var companyData = {{ company_data | safe }};
 </script>
 <script src="/static/js/app-invoices.js"></script>
 {% endblock script %}

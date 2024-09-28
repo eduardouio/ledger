@@ -3,6 +3,7 @@ const app = Vue.createApp({
   // Datos reactivos
   data() {
     return {
+      confirm_delete:false,
       customers: customersData.map((itm) => {
         return {
           id: itm.pk,
@@ -15,6 +16,12 @@ const app = Vue.createApp({
           ...itm.fields
         }
       }),
+      company: companyData.map((itm) => {
+        return {
+          id: itm.pk,
+          ...itm.fields
+        }
+      })[0],
       invoice_headers: {
         customer:null,
         date: null,
@@ -34,19 +41,32 @@ const app = Vue.createApp({
         id:null,
         quantity: 0,
         price: 0,
-        discount: 0
+        discount: 0,
+        delete: false
       }
     };
   },
   // Métodos de la app
   methods: {
     addNewItem() {
-      console.log('Estamos llamando a la funcion de addNewItem');
+      if (this.new_item.discount == '' || this.new_item.discount == null){ 
+        this.new_item.discount = 0;
+      }
+
+      this.invoice_items.push({...this.new_item});
+      this.new_item = {
+        product: null,
+        quantity: 0,
+        price: 0,
+        discount: 0
+      };
+      this.is_disabled_add_item = true;
     },
-    selectItem(event){
+    selectItem(){
       this.new_item.price = this.new_item.product.price;
       this.new_item.id = this.new_item.product.id;
       this.new_item.quantity = 1;
+      this.is_disabled_add_item = false;
     },
     setCustomer(){
         let today = new Date();
@@ -67,6 +87,18 @@ const app = Vue.createApp({
         let due_day = String(today.getDate()).padStart(2, '0');
         this.invoice_headers.due_date = `${due_year}-${due_month}-${due_day}`;
     },
+    setDueDate(){
+      let start_date = new Date(this.invoice_headers.date);
+      let days = this.invoice_headers.pay_terms;
+      start_date.setDate(start_date.getDate() + days);
+      let due_year = start_date.getFullYear();
+      let due_month = String(start_date.getMonth() + 1).padStart(2, '0');
+      let due_day = String(start_date.getDate()).padStart(2, '0');
+      this.invoice_headers.due_date = `${due_year}-${due_month}-${due_day}`;
+    },
+    deleteItem(index){
+      this.invoice_items.splice(index, 1);
+    }
   },
   // Ciclo de vida de la app
   mounted() {
@@ -75,26 +107,36 @@ const app = Vue.createApp({
   // Propiedades computadas
   computed: {
     new_item_total() {
-      return (this.new_item.quantity * this.new_item.price) - this.new_item.discount;
+      return (
+        this.new_item.quantity * this.new_item.price) 
+        - this.new_item.discount;
     },
     subtotal_1() {
-      return this.invoice_items.reduce((acc, item) => {
+      let subtotal_1 = this.invoice_items.reduce((acc, item) => {
         return acc + (item.quantity * item.price) - item.discount;
-      }, '0.00');
+      },'0');
+      subtotal_1 = parseFloat(subtotal_1);
+      return subtotal_1.toFixed(2);
     },
     discount() {
-      return this.invoice_items.reduce((acc, item) => {
+      let discount = this.invoice_items.reduce((acc, item) => {
         return acc + item.discount;
-      }, '0.00');
+      }, '0');
+      discount = parseFloat(discount);
+      return discount.toFixed(2);
+
     },
     subtotal_2() {
-      return this.subtotal_1 - this.discount;
+      let subtotal_2 = this.subtotal_1 - this.discount;
+      return subtotal_2.toFixed(2);
     },
     tax() {
-      return this.subtotal_2 * 0.12;
+      let tax = this.subtotal_2 * 0.16;
+      return tax.toFixed(2);
     },
     total() {
-      return this.subtotal_2 + this.tax;
+      let total = parseFloat(this.subtotal_2 + this.tax);
+      return total.toFixed(2);
     }
 }});
 
