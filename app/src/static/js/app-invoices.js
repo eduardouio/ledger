@@ -55,17 +55,16 @@ const app = Vue.createApp({
         let day = String(today.getDate()).padStart(2, '0');
         this.invoice_headers.date = `${year}-${month}-${day}`;
         let days = this.invoice_headers.customer.pay_terms ?? 0; 
-
+        this.invoice_headers.pay_terms = days;
         if (days == 0){
+            console.log('Cliente de contado')
             this.invoice_headers.due_date = `${year}-${month}-${day}`;
-            this.invoice_headers.pay_terms = '';
             return;
         }
-
-        due_date.setDate(today.getDate() + days);
-        let due_year = due_date.getFullYear();
-        let due_month = String(due_date.getMonth() + 1).padStart(2, '0');
-        let due_day = String(due_date.getDate()).padStart(2, '0');
+        today.setDate(today.getDate() + days);
+        let due_year = today.getFullYear();
+        let due_month = String(today.getMonth() + 1).padStart(2, '0');
+        let due_day = String(today.getDate()).padStart(2, '0');
         this.invoice_headers.due_date = `${due_year}-${due_month}-${due_day}`;
     },
   },
