@@ -114,14 +114,14 @@ const app = Vue.createApp({
     subtotal_1() {
       let subtotal_1 = this.invoice_items.reduce((acc, item) => {
         return acc + (item.quantity * item.price) - item.discount;
-      },'0');
+      },0);
       subtotal_1 = parseFloat(subtotal_1);
       return subtotal_1.toFixed(2);
     },
     discount() {
       let discount = this.invoice_items.reduce((acc, item) => {
-        return acc + item.discount;
-      }, '0');
+        return acc + (item.discount * 1 );
+      }, 0);
       discount = parseFloat(discount);
       return discount.toFixed(2);
 

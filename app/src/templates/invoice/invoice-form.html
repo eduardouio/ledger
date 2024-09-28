@@ -147,13 +147,13 @@
         <label class="text-sm text-cyan-800 text-end" for="number">
           TAX <span class="text-info">[ [[ company.tax_in_sales ]]% ]</span>:
         </label>
-    <input v-model="tax" type="number" class="border border-gray-400 p-1 rounded-sm text-end input input-xs w-full text-xl" readonly>
+    <input v-model="tax" type="number" class="border border-gray-400 p-1 rounded-sm text-end input input-xs w-full text-xl text-orange-500" readonly>
       </div>
       <div class="grid grid-cols-2 gap-1 items-center">
         <label class="text-sm text-cyan-800 text-end" for="number">
           TOTAL:
         </label>
-        <input v-model="total" type="number" class="border border-gray-400 p-1 rounded-sm text-end input input-xs w-full text-xl"  placeholder="00.0" readonly>
+        <input v-model="total" type="number" class="border border-gray-400 p-1 rounded-sm text-end input input-xs w-full text-xl text-success"  placeholder="00.0" readonly>
       </div>
   </div>
     <!-- Submit Button -->
