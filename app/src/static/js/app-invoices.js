@@ -144,8 +144,8 @@ const app = Vue.createApp({
       return tax.toFixed(2);
     },
     total() {
-      let total = parseFloat(this.subtotal_2 + this.tax);
-      return total.toFixed(2);
+      let my_total = parseFloat(this.subtotal_2) + parseFloat(this.tax);
+      return my_total.toFixed(2);
     },
     isCompleteInvoice() {
       return this.invoice_headers.customer 
