@@ -30,14 +30,14 @@
         <label class="label" for="date">
           <span class="label-text">Pay Term</span>
         </label>
-        <select v-model="invoice_headers.pay_term" class="border border-gray-400 p-1 rounded-sm input input-xs w-full">
+        <select v-model="invoice_headers.pay_terms" class="border border-gray-400 p-1 rounded-sm input input-xs w-full">
           <option selected>Select a payment term</option>
-          <option value="cash">Cash</option>
-          <option value="7-DAYS">7 DAYS</option>
-          <option value="15-DAYS">15 DAYS</option>
-          <option value="30-DAYS">30 DAYS</option>
-          <option value="60-DAYS">60 DAYS</option>
-          <option value="90-DAYS">90 DAYS</option>
+          <option value="0">Cash</option>
+          <option value="7">7 DAYS</option>
+          <option value="15">15 DAYS</option>
+          <option value="30">30 DAYS</option>
+          <option value="60">60 DAYS</option>
+          <option value="90">90 DAYS</option>
         </select>
       </div>
       <div class="form-control">
@@ -168,7 +168,7 @@
   </form>
 {% endblock content %}
 {% block js_files %}
-<script src="https://unpkg.com/vue@3"></script>
+<script src="/static/js/vue@3.js"></script>
 {% endblock js_files %}
 {% block script %}
 <script>

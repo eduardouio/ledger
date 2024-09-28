@@ -28,8 +28,12 @@
   </div>
 
   <div class="mb-4 flex justify-between align-middle bg-gray-100 border border-gray-300 p-1">
-    <label class="block text-sm font-medium text-gray-700">Company</label>
-    <span class="text-lg font-semibold">{{ object.company.name }}</span>
+    <label class="block text-sm font-medium text-gray-700">Pay Terms</label>
+    {% if object.pay_terms %}
+    <span class="text-lg font-semibold">{{ object.pay_terms }} Days</span>
+    {% else %}
+    <span class="text-lg font-semibold">Cash</span>
+    {% endif %}
   </div>
 </div>
 </div>
