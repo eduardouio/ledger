@@ -39,7 +39,7 @@ class Partner(BaseModel):
         blank=True,
         null=True
     )
-    payd_terms = models.IntegerField(
+    pay_terms = models.IntegerField(
         'Payment Terms',
         choices=PAYD_TERMS,
         default=0
