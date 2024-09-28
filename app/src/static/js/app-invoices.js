@@ -52,7 +52,6 @@ const app = Vue.createApp({
       if (this.new_item.discount == '' || this.new_item.discount == null){ 
         this.new_item.discount = 0;
       }
-
       this.invoice_items.push({...this.new_item});
       this.new_item = {
         product: null,
@@ -60,7 +59,8 @@ const app = Vue.createApp({
         price: 0,
         discount: 0
       };
-      this.is_disabled_add_item = true;
+      this.is_disabled_add_item = true
+      this.$refs.quantityInput.focus();
     },
     selectItem(){
       this.new_item.price = this.new_item.product.price;
@@ -113,7 +113,7 @@ const app = Vue.createApp({
     },
     subtotal_1() {
       let subtotal_1 = this.invoice_items.reduce((acc, item) => {
-        return acc + (item.quantity * item.price) - item.discount;
+        return acc + (item.quantity * item.price);
       },0);
       subtotal_1 = parseFloat(subtotal_1);
       return subtotal_1.toFixed(2);
@@ -131,13 +131,20 @@ const app = Vue.createApp({
       return subtotal_2.toFixed(2);
     },
     tax() {
-      let tax = this.subtotal_2 * 0.16;
+      let tax = this.subtotal_2 * this.company.tax_in_sales / 100;
       return tax.toFixed(2);
     },
     total() {
       let total = parseFloat(this.subtotal_2 + this.tax);
       return total.toFixed(2);
-    }
+    },
+    isCompleteInvoice() {
+      return this.invoice_headers.customer 
+            && this.invoice_headers.date 
+            && this.invoice_headers.pay_terms
+            && this.invoice_headers.due_date
+            && this.invoice_items
+    },
 }});
 
 app.config.compilerOptions.delimiters = ['[[', ']]'];
