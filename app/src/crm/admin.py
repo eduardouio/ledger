@@ -4,7 +4,8 @@ from crm.models import Partner
 
 
 class ParentAdmin(SimpleHistoryAdmin):
-    list_display = ('name', 'type', 'company', 'id_num', 'email', 'pay_terms')
+    list_display = ('name', 'type', 'company', 'id_num', 'email',
+                    'pay_terms')
     search_fields = ['name', 'type']
 
 

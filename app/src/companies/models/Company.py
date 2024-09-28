@@ -46,6 +46,18 @@ class Company(BaseModel):
         blank=True,
         null=True
     )
+    tax_in_sales = models.DecimalField(
+        'Tax in Sales',
+        max_digits=5,
+        decimal_places=2,
+        default=0.00
+    )
+    tax_in_purchases = models.DecimalField(
+        'Tax in Purchases',
+        max_digits=5,
+        decimal_places=2,
+        default=0.00
+    )
     manager = models.ForeignKey(
         CustomUserModel,
         on_delete=models.RESTRICT,

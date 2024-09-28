@@ -5,7 +5,10 @@ from accounts.models import CustomUserModel
 class CompanyForm(forms.ModelForm):
     class Meta:
         model = Company
-        fields = ['tax_id', 'name', 'address', 'phone', 'email', 'website', 'logo', 'manager']
+        fields = [
+            'tax_id', 'name', 'address', 'phone', 'email', 'website',
+            'logo', 'manager', 'tax_in_sales', 'tax_in_purchases'
+        ]
         widgets = {
             'tax_id': forms.TextInput(attrs={'class': 'border border-gray-400 p-1 rounded-sm'}),
             'name': forms.TextInput(attrs={'class': 'border border-gray-400 p-1 rounded-sm'}),
@@ -15,4 +18,6 @@ class CompanyForm(forms.ModelForm):
             'website': forms.URLInput(attrs={'class': 'border border-gray-400 p-1 rounded-sm'}),
             'logo': forms.FileInput(attrs={'class': 'border border-gray-400 p-1 rounded-sm'}),
             'manager': forms.Select(attrs={'class': 'border border-gray-400 p-1 rounded-sm'}),
+            'tax_in_sales': forms.NumberInput(attrs={'class': 'border border-gray-400 p-1 rounded-sm'}),
+            'tax_in_purchases': forms.NumberInput(attrs={'class': 'border border-gray-400 p-1 rounded-sm'}),
         }

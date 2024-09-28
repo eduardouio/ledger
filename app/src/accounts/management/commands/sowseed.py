@@ -63,7 +63,9 @@ class Command(BaseCommand):
             tax_id='9999999999',
             name='SYSTEM COMPANY',
             address='Companie sistem for default data',
-            manager=myUser
+            manager=myUser,
+            tax_in_sales=12.2,
+            tax_in_purchases=12.2
         )
 
     def loadCOAInEnterpise(self):

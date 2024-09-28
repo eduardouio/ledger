@@ -10,7 +10,9 @@ class CompanyAdmin(SimpleHistoryAdmin):
         'email',
         'manager',
         'created_at',
-        'is_active'
+        'is_active',
+        'tax_in_sales',
+        'tax_in_purchases',
     )
 
 
