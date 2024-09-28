@@ -3,6 +3,7 @@ const app = Vue.createApp({
   // Datos reactivos
   data() {
     return {
+      message: '',
       confirm_delete:false,
       customers: customersData.map((itm) => {
         return {
@@ -49,6 +50,10 @@ const app = Vue.createApp({
   // Métodos de la app
   methods: {
     addNewItem() {
+      if (this.new_item.product == null || this.new_item.quantity == 0){
+        this.message = 'Product/Service es required and Quantity must be greater than 0';
+        return;
+      }
       if (this.new_item.discount == '' || this.new_item.discount == null){ 
         this.new_item.discount = 0;
       }
@@ -61,6 +66,7 @@ const app = Vue.createApp({
       };
       this.is_disabled_add_item = true
       this.$refs.quantityInput.focus();
+      this.message = ''
     },
     selectItem(){
       this.new_item.price = this.new_item.product.price;
@@ -98,6 +104,9 @@ const app = Vue.createApp({
     },
     deleteItem(index){
       this.invoice_items.splice(index, 1);
+    },
+    saveInvoice(){
+      
     }
   },
   // Ciclo de vida de la app
@@ -141,9 +150,8 @@ const app = Vue.createApp({
     isCompleteInvoice() {
       return this.invoice_headers.customer 
             && this.invoice_headers.date 
-            && this.invoice_headers.pay_terms
             && this.invoice_headers.due_date
-            && this.invoice_items
+            && this.invoice_items.length > 0;
     },
 }});
 

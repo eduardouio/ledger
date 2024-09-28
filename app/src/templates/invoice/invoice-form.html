@@ -1,9 +1,9 @@
 {% extends 'base/base.html' %}
 {% block content %}
-  <div class="text-error">
-    {{ form.errors }}
+  <div class="text-error" v-if="message">
+    [[ message ]]
   </div>
-  <form method="POST" class="flex justify-between gap-3">
+  <form class="flex justify-between gap-3">
     {% csrf_token %}
     {% if company %}
     <input type="hidden" name="company" value="{{company.id}}">
@@ -15,7 +15,7 @@
         <label class="label" for="customer">
           <span class="label-text">Customer</span>
         </label>
-        <select v-model="invoice_headers.customer" @change="setCustomer" class="border border-gray-400 p-1 rounded-sm input input-sm text-sm w-full">
+        <select v-model="invoice_headers.customer" @change="setCustomer" class="border border-gray-400 p-1 rounded-sm input input-sm text-xl w-full">
           <option selected>Select a partner</option>
           <option v-for="customer in customers" :value="customer" :key="customer.id">[[ customer.name ]]</option>
         </select>
@@ -56,24 +56,24 @@
     <div class="overflow-x-auto">
       <table class="table table-xs table-pin-rows table-pin-cols mx-auto">
         <thead>
-          <tr class="bg-slate-200">
-            <th class="px-1 py-1 text-center w-7/12">Product</th>
-            <th class="px-1 py-1 text-center w-1/12">Quantity</th>
-            <th class="px-1 py-1 text-center w-1/12">Price</th>
-            <th class="px-1 py-1 text-center w-1/12">Discount</th>
-            <th class="px-1 py-1 text-center w-1/12">Total</th>
+          <tr class="">
+            <th class="px-1 py-1 text-center w-7/12 bg-gray-500 text-white text-md">Product</th>
+            <th class="px-1 py-1 text-center w-1/12 bg-gray-500 text-white text-md">Quantity</th>
+            <th class="px-1 py-1 text-center w-1/12 bg-gray-500 text-white text-md">Price</th>
+            <th class="px-1 py-1 text-center w-1/12 bg-gray-500 text-white text-md">Discount</th>
+            <th class="px-1 py-1 text-center w-1/12 bg-gray-500 text-white text-md">Total</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, index) in invoice_items" :key="index" class="invoice-item text-gray-700">
             <td class="text-xl">
-              <div class="flex gap-3">
+              <div class="flex gap-3 items-center">
                 <span v-show="item.delete" @click="deleteItem(index)">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checkbox" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                     <path d="M9 11l3 3l8 -8" />
                     <path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" />
-                  </svg>
+                  </svg>  
                 </span>
                 <span v-show="!item.delete" @click="item.delete=!item.delete">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="red" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -114,7 +114,7 @@
         </tbody>
       </table>
     </div>
-    <div class="text-end  m-2 p-2">
+    <div class="text-end m-4">
       <button type="button" id="add-item" class="btn btn-sm border border-green-400" @click="addNewItem" :disabled="is_disabled_add_item">
        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -159,7 +159,7 @@
   </div>
     <!-- Submit Button -->
     <div class="py-3 text-end flex justify-between mt-6">
-      <button type="submit" class="btn btn-sm border border-gray-400" :disabled="!isCompleteInvoice">
+      <button type="submit" class="btn btn-md border border-gray-400" :disabled="!isCompleteInvoice">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
           <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
@@ -168,7 +168,7 @@
         </svg>
         Save Invoice
       </button>
-      <a href="{% url 'bills-list' %}" class="btn btn-sm border border-gray-400">
+      <a href="{% url 'bills-list' %}" class="btn btn-md border border-gray-400 text-error">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ban" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
           <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
@@ -177,7 +177,6 @@
         Cancel
       </a>
     </div>
-    {{ invoice_items_formset.management_form }}
   </form>
 {% endblock content %}
 {% block js_files %}
@@ -185,10 +184,10 @@
 {% endblock js_files %}
 {% block script %}
 <script>
-var productsData = {{ products | safe }};
-var customersData = {{ customers | safe }};
-var invoice_number = {{ invoice_number }};
-var companyData = {{ company_data | safe }};
+  var productsData = {{ products | safe }};
+  var customersData = {{ customers | safe }};
+  var invoice_number = {{ invoice_number }};
+  var companyData = {{ company_data | safe }};
 </script>
 <script src="/static/js/app-invoices.js"></script>
 {% endblock script %}
