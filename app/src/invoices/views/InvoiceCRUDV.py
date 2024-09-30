@@ -105,6 +105,31 @@ class InvoiceDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         ctx = super(InvoiceDetailView, self).get_context_data(**kwargs)
-        ctx['invoice_items'] = InvoiceItems.get_by_invoice(self.object)
+        invoice_items = []
+        subtotal1 = 0
+        total_discount = 0
+        total = 0
+
+        for item in InvoiceItems.get_by_invoice(self.object):
+            total += (item.quantity * item.price) - item.discount
+            subtotal1 += item.quantity * item.price
+            total_discount += item.discount
+            new_item = {
+                'id': item.id,
+                'product': item.product,
+                'quantity': item.quantity,
+                'price': item.price,
+                'discount': item.discount,
+                'total': (item.quantity * item.price) - item.discount
+            }
+            invoice_items.append(new_item)
+
+        ctx['invoice_items'] = invoice_items
         ctx['title_bar'] = 'Invoice Detail'
+        ctx['totals'] = {
+            'subtotal': subtotal1,
+            'discount': total_discount,
+            'total': total
+        }
+        ctx['url_new'] = reverse_lazy('sales-create')
         return ctx
