@@ -40,9 +40,8 @@ class Partner(BaseModel):
         blank=True,
         null=True
     )
-    pay_terms = models.IntegerField(
+    pay_terms = models.PositiveSmallIntegerField(
         'Payment Terms',
-        choices=PAYD_TERMS,
         default=0
     )
 

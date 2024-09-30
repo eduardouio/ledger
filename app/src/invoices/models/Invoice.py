@@ -5,17 +5,11 @@ from companies.models import Company
 from accounts.models import CustomUserModel
 from crm.models import Partner
 
-PAYTERM = (
-    ('CASH', 'CASH'),
-    ('7 DAYS', '7-DAYS'),
-    ('15 DAYS', '15-DAYS'),
-    ('30 DAYS', '30-DAYS'),
-    ('60 DAYS', '60-DAYS'),
-    ('90 DAYS', '90-DAYS'),
-)
-
 
 class Invoice(BaseModel):
+    id = models.AutoField(
+        primary_key=True
+    )
     company = models.ForeignKey(
         Company,
         on_delete=models.CASCADE
@@ -29,8 +23,8 @@ class Invoice(BaseModel):
     type = models.CharField(
         max_length=20,
         choices=(
-            ('invoice', 'Invoice'),
-            ('bill', 'Bill'))
+            ('Invoice', 'Invoice'),
+            ('Bill', 'Bill'))
     )
     date = models.DateField(
         'Date'
@@ -38,10 +32,11 @@ class Invoice(BaseModel):
     due_date = models.DateField(
         'Due Date'
     )
-    pay_term = models.CharField(
-        'Payment Term',
-        max_length=20,
-        choices=PAYTERM
+    pay_term = models.IntegerField(
+        'Credit Days',
+        blank=True,
+        null=True,
+        default=0
     )
     number = models.IntegerField(
         'Document Number',
@@ -66,16 +61,19 @@ class Invoice(BaseModel):
         CustomUserModel,
         on_delete=models.CASCADE
     )
+    pay_terms = models.PositiveSmallIntegerField(
+        'Payment Terms',
+        default=0
+    )
     status = models.CharField(
         'Status',
         max_length=20,
         choices=[
-            ('draft', 'draft'),
-            ('acepted', 'Acepted'),
-            ('void', 'Void'),
-            ('paid', 'Paid'),
+            ('Acepted', 'Acepted'),
+            ('Void', 'Void'),
+            ('Paid', 'Paid'),
         ],
-        default='draft'
+        default='Accepted'
     )
 
     class Meta:
