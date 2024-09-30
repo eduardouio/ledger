@@ -7,13 +7,12 @@
 </div>
 
 <form method="POST" class="w-full max-w-lg mx-auto">
-    {% csrf_token %}
-    <div class="form-control">
-      <label class="label" for="company">
-        <span class="label-text">Company</span>
-      </label>
-      {{ form.company }}
-    </div>
+  {% csrf_token %}
+  {% if company %}
+  <input type="hidden" name="company" value="{{company.id}}">
+  {% else %}
+  <input type="hidden" name="company" value="{{object.company.id}}">
+  {% endif %}
     <div class="form-control">
       <label class="label" for="invoice">
         <span class="label-text">Invoice(s)</span>
@@ -40,11 +39,10 @@
     </div>
     <div class="form-control">
       <label class="label" for="payment_number">
-        <span class="label-text">Payment Number</span>
+        <span class="label-text">Document Number</span>
       </label>
       {{ form.payment_number }}
     </div>
-    <div class="py-3 text-end flex justify-between">
         <div class="py-3 text-end flex justify-between">
             <button type="submit" class="btn btn-sm border border-gray-400">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">

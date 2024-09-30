@@ -32,7 +32,7 @@ class Payment(BaseModel):
             ('other', 'Other')
         ])
     payment_number = models.CharField(
-        'Payment Number',
+        'Document Number',
         max_length=50,
         blank=True,
         null=True
