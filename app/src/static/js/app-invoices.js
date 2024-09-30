@@ -131,12 +131,12 @@ const app = Vue.createApp({
       })
       .then(response => response.json())
       .then(data => {
-        console.log('Success:', data);
         if (data.status == 'ok'){
-          window.location.href = '/invoices/';
+          window.location.href = data.url;
         }
       })
       .catch((error) => {
+        alert('Error has ocurred');
         console.error('Error:', error);
       });
     }

@@ -66,7 +66,7 @@ class InvoiceCreateView(LoginRequiredMixin, TemplateView):
                 discount=Decimal(item['discount'])
             )
         url = reverse_lazy('sales-detail', kwargs={'pk': invoice.id})
-        return JsonResponse({'url': url}, status=201)
+        return JsonResponse({'url': url, 'status': 'ok'}, status=201)
 
 
 class InvoiceUpdateView(LoginRequiredMixin, UpdateView):
