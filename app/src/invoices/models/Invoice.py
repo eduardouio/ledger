@@ -102,13 +102,13 @@ class Invoice(BaseModel):
     @classmethod
     def get_bills(cls, company):
         return Invoice.objects.filter(
-            type='bill', company=company
+            type='Bill', company=company
         )
 
     @classmethod
     def get_invoices(cls, company):
         return Invoice.objects.filter(
-            type='invoice', company=company
+            type='Invoice', company=company
         )
 
     @classmethod

@@ -8,7 +8,7 @@ class InvoiceItems(BaseModel):
         primary_key=True
     )
     invoice = models.ForeignKey(
-        'invoices.Invoice',  # Se usa una cadena para evitar el problema de dependencia circular
+        'invoices.Invoice',
         on_delete=models.CASCADE
     )
     product = models.ForeignKey(
@@ -33,7 +33,7 @@ class InvoiceItems(BaseModel):
 
     @classmethod
     def get_by_invoice(cls, invoice):
-        cls.objects.filter(invoice=invoice)
+        return cls.objects.filter(invoice=invoice)
 
     def __str__(self):
         return self.product.name
