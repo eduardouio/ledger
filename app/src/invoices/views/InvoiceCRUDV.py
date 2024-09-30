@@ -69,38 +69,6 @@ class InvoiceCreateView(LoginRequiredMixin, TemplateView):
         return JsonResponse({'url': url, 'status': 'ok'}, status=201)
 
 
-class InvoiceUpdateView(LoginRequiredMixin, UpdateView):
-    model = Invoice
-    form_class = InvoiceForm
-    template_name = 'invoice/invoice-form.html'
-    success_url = reverse_lazy('invoice-list')
-
-    def get_context_data(self, **kwargs):
-        ctx = super(InvoiceUpdateView, self).get_context_data(**kwargs)
-        if self.request.POST:
-            # Si se están enviando datos en el POST, se pasa el POST al formset
-            ctx['formset'] = InvoiceItemFormSet(
-                self.request.POST, instance=self.object)
-        else:
-            # Si no, se carga el formset con los ítems existentes de la factura
-            ctx['formset'] = InvoiceItemFormSet(instance=self.object)
-        ctx['title_bar'] = 'Update Invoice'
-        return ctx
-
-    def form_valid(self, form):
-        context = self.get_context_data()
-        formset = context['formset']
-        if formset.is_valid():
-            # Guarda la factura primero
-            self.object = form.save()
-            # Luego guarda los ítems asociados
-            formset.instance = self.object
-            formset.save()
-            return super().form_valid(form)
-        else:
-            return self.form_invalid(form)
-
-
 class InvoiceDeleteView(LoginRequiredMixin, DeleteView):
     model = Invoice
     template_name = 'invoice/invoice-confirm-delete.html'
@@ -119,7 +87,7 @@ class InvoiceListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         company = Company.get_by_user(self.request.user)
-        return Invoice.get_bills(company)
+        return Invoice.get_invoices(company)
 
     def get_context_data(self, **kwargs):
         ctx = super(InvoiceListView, self).get_context_data(**kwargs)
@@ -137,5 +105,6 @@ class InvoiceDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         ctx = super(InvoiceDetailView, self).get_context_data(**kwargs)
+        ctx['invoice_items'] = InvoiceItems.get_by_invoice(self.object)
         ctx['title_bar'] = 'Invoice Detail'
         return ctx

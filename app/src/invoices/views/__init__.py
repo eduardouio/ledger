@@ -9,7 +9,6 @@ from .PaymentCRUDV import (
 from .InvoiceCRUDV import (
     InvoiceCreateView,
     InvoiceDeleteView,
-    InvoiceUpdateView,
     InvoiceDetailView,
     InvoiceListView
 )
@@ -17,7 +16,6 @@ from .InvoiceCRUDV import (
 from .BillsCRUD import (
     BillCreateView,
     BillDetailView,
-    BillUpdateView,
     BillDeleteView,
     BillListView
 )

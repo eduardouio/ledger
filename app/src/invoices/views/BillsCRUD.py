@@ -48,33 +48,6 @@ class BillCreateView(CreateView):
             return self.form_invalid(form)
 
 
-class BillUpdateView(UpdateView):
-    model = Invoice
-    form_class = InvoiceForm
-    template_name = 'bills/bills-form.html'
-    success_url = reverse_lazy('invoice-list')
-
-    def get_context_data(self, **kwargs):
-        ctx = super(BillUpdateView, self).get_context_data(**kwargs)
-        if self.request.POST:
-            ctx['formset'] = InvoiceItemFormSet(self.request.POST, instance=self.object)
-        else:
-            ctx['formset'] = InvoiceItemFormSet(instance=self.object)
-        ctx['title_bar'] = 'Update Invoice'
-        return ctx
-
-    def form_valid(self, form):
-        context = self.get_context_data()
-        formset = context['formset']
-        if formset.is_valid():
-            self.object = form.save()
-            formset.instance = self.object
-            formset.save()
-            return super().form_valid(form)
-        else:
-            return self.form_invalid(form)
-
-
 class BillDeleteView(DeleteView):
     model = Invoice
     template_name = 'bills/bills-confirm-delete.html'
