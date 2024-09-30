@@ -5,6 +5,9 @@ from invoices.models import Invoice
 
 
 class Payment(BaseModel):
+    id = models.AutoField(
+        primary_key=True
+    )
     company = models.ForeignKey(
         Company,
         on_delete=models.CASCADE

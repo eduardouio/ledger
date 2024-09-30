@@ -8,7 +8,9 @@ from accounting.models import Transaction
 
 
 class InventoryMovement(BaseModel):
-    id = models.AutoField(primary_key=True)
+    id = models.AutoField(
+        primary_key=True
+    )
     company = models.ForeignKey(
         Company,
         on_delete=models.CASCADE

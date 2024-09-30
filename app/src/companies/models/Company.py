@@ -4,7 +4,9 @@ from django.db import models
 
 
 class Company(BaseModel):
-    id = models.AutoField(primary_key=True)
+    id = models.AutoField(
+        primary_key=True
+    )
     tax_id = models.CharField(
         'Tax ID',
         max_length=20,

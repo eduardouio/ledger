@@ -3,8 +3,10 @@ from common import BaseModel
 from inventary.models import Product
 
 
-
 class InvoiceItems(BaseModel):
+    id = models.AutoField(
+        primary_key=True
+    )
     invoice = models.ForeignKey(
         'invoices.Invoice',  # Se usa una cadena para evitar el problema de dependencia circular
         on_delete=models.CASCADE

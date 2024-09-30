@@ -5,6 +5,9 @@ from accounting.models import Account
 
 
 class Product(BaseModel):
+    id = models.AutoField(
+        primary_key=True
+    )
     company = models.ForeignKey(
         Company,
         on_delete=models.CASCADE
