@@ -25,7 +25,7 @@ class PaymentCreateView(LoginRequiredMixin, CreateView):
         return ctx
 
 
-class PaymentUpdateView(LoginRequiredMixin,UpdateView):
+class PaymentUpdateView(LoginRequiredMixin, UpdateView):
     login_url = '/accounts/login/'
     model = Payment
     form_class = PaymentForm
@@ -38,7 +38,7 @@ class PaymentUpdateView(LoginRequiredMixin,UpdateView):
         return ctx
 
 
-class PaymentDeleteView(LoginRequiredMixin,DeleteView):
+class PaymentDeleteView(LoginRequiredMixin, DeleteView):
     login_url = '/accounts/login/'
     model = Payment
     template_name = 'payment/payment-confirm-delete.html'
@@ -56,7 +56,7 @@ class PaymentListView(ListView):
     context_object_name = 'payments'
 
     def get_queryset(self):
-                # Asegúra usuario esté autenticado
+        # Asegúra usuario esté autenticado
         if not self.request.user.is_authenticated:
             return Payment.objects.none()
         my_company = Company.get_by_user(self.request.user)
