@@ -33,10 +33,7 @@ class InvoiceItems(BaseModel):
 
     @classmethod
     def get_by_invoice(cls, invoice):
-        return {
-            "header": invoice,
-            "items": cls.objects.filter(invoice=invoice)
-        }
+        cls.objects.filter(invoice=invoice)
 
     def __str__(self):
         return self.product.name
