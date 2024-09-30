@@ -1,6 +1,7 @@
 from common import BaseModel
 from companies.models import Company
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 
 PAYD_TERMS = (
     (0, 'Cash'),
@@ -44,6 +45,13 @@ class Partner(BaseModel):
         choices=PAYD_TERMS,
         default=0
     )
+
+    @classmethod
+    def get_by_id(cls, id):
+        try:
+            return cls.objects.get(id=id)
+        except ObjectDoesNotExist:
+            return None
 
     @classmethod
     def get_suppliers(cls, company):
