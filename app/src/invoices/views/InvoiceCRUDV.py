@@ -1,7 +1,10 @@
+import json
+from datetime import date
+from decimal import Decimal
 from django.urls import reverse_lazy
+from django.http import JsonResponse
 from django.views.generic import (
     TemplateView,
-    CreateView,
     UpdateView,
     DeleteView,
     ListView,
@@ -16,9 +19,7 @@ from companies.models import Company
 from inventary.models import Product
 
 
-class InvoiceCreateView(LoginRequiredMixin, CreateView):
-    model = Invoice
-    form_class = InvoiceForm
+class InvoiceCreateView(LoginRequiredMixin, TemplateView):
     template_name = 'invoice/invoice-form.html'
 
     def get_context_data(self, **kwargs):
@@ -32,23 +33,40 @@ class InvoiceCreateView(LoginRequiredMixin, CreateView):
         ctx['customers'] = serialize('json', partners)
         ctx['company_data'] = serialize('json', [company])
         ctx['invoice_number'] = Invoice.get_next_invoice_number(ctx['company'])
+        ctx['saveURL'] = reverse_lazy('sales-create')
         return ctx
 
-    def get_success_url(self):
-        url = reverse_lazy('ales-detail', kwargs={'pk': self.object.pk})
-        url = url + '?action=created'
-        return url
-
-    def form_valid(self, form):
-        context = self.get_context_data()
-        formset = context['formset']
-        if formset.is_valid():
-            self.object = form.save()
-            formset.instance = self.object
-            formset.save()
-            return super().form_valid(form)
-        else:
-            return self.form_invalid(form)
+    def post(self, request, *args, **kwargs):
+        data = json.loads(request.body)
+        invoice_data = data['invoice_headers']
+        line_items = data['invoice_items']
+        company = Company.get_by_user(request.user)
+        customer = Partner.get_by_id(invoice_data['customer']['id'])
+        invoice = Invoice.objects.create(
+            company=company,
+            partner=customer,
+            type='Invoice',
+            date=date.fromisoformat(invoice_data['date']),
+            due_date=date.fromisoformat(invoice_data['due_date']),
+            number=invoice_data['number'],
+            amount=Decimal(invoice_data['total']),
+            tax=Decimal(invoice_data['tax']),
+            discount=Decimal(invoice_data['discount']),
+            pay_terms=invoice_data['pay_terms'],
+            status='acepted',
+            user=request.user
+        )
+        for item in line_items:
+            product = Product.get_by_id(item['product']['id'], company)
+            InvoiceItems.objects.create(
+                invoice=invoice,
+                product=product,
+                quantity=item['quantity'],
+                price=Decimal(item['price']),
+                discount=Decimal(item['discount'])
+            )
+        url = reverse_lazy('sales-detail', kwargs={'pk': invoice.id})
+        return JsonResponse({'url': url}, status=201)
 
 
 class InvoiceUpdateView(LoginRequiredMixin, UpdateView):
@@ -61,7 +79,8 @@ class InvoiceUpdateView(LoginRequiredMixin, UpdateView):
         ctx = super(InvoiceUpdateView, self).get_context_data(**kwargs)
         if self.request.POST:
             # Si se están enviando datos en el POST, se pasa el POST al formset
-            ctx['formset'] = InvoiceItemFormSet(self.request.POST, instance=self.object)
+            ctx['formset'] = InvoiceItemFormSet(
+                self.request.POST, instance=self.object)
         else:
             # Si no, se carga el formset con los ítems existentes de la factura
             ctx['formset'] = InvoiceItemFormSet(instance=self.object)

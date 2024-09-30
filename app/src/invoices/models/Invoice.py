@@ -80,7 +80,7 @@ class Invoice(BaseModel):
         unique_together = ('company', 'number')
 
     def __str__(self):
-        return self.number
+        return '{} {}'.format(self.number, self.partner.name)
 
     @classmethod
     def get_by_id(cls, id, company):

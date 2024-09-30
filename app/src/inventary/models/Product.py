@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 from common import BaseModel
 from companies.models import Company
 from accounting.models import Account
@@ -110,6 +111,16 @@ class Product(BaseModel):
         return cls.objects.filter(
             company=my_company
         )
+
+    @classmethod
+    def get_by_id(cls, id, company):
+        try:
+            return cls.objects.get(
+                pk=id,
+                company=company
+            )
+        except ObjectDoesNotExist:
+            raise Exception('Product not found')
 
     def __str__(self):
         return self.name

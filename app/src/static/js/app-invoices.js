@@ -106,10 +106,42 @@ const app = Vue.createApp({
       this.invoice_items.splice(index, 1);
     },
     saveInvoice(){
-      
+      let date = new Date(this.invoice_headers.date);
+      let due_date = new Date(this.invoice_headers.due_date);
+      if (date > due_date){
+        this.message = 'Due date must be greater than date';
+        return;
+      }
+
+      this.invoice_headers.date = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+      this.invoice_headers.due_date = `${due_date.getFullYear()}-${String(due_date.getMonth() + 1).padStart(2, '0')}-${String(due_date.getDate()).padStart(2, '0')}`;
+
+      let data = {
+        invoice_headers: this.invoice_headers,
+        invoice_items: this.invoice_items
+      };
+      console.log(data);
+      fetch('/sales/create/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        if (data.status == 'ok'){
+          window.location.href = '/invoices/';
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
     }
   },
-  // Ciclo de vida de la app
+  // Ciclo de vida de la app  
   mounted() {
     console.log('App mounted!');
   },
@@ -125,6 +157,7 @@ const app = Vue.createApp({
         return acc + (item.quantity * item.price);
       },0);
       subtotal_1 = parseFloat(subtotal_1);
+      this.invoice_headers.subtotal_1 = subtotal_1;
       return subtotal_1.toFixed(2);
     },
     discount() {
@@ -132,6 +165,7 @@ const app = Vue.createApp({
         return acc + (item.discount * 1 );
       }, 0);
       discount = parseFloat(discount);
+      this.invoice_headers.discount = discount;
       return discount.toFixed(2);
 
     },
@@ -141,10 +175,12 @@ const app = Vue.createApp({
     },
     tax() {
       let tax = this.subtotal_2 * this.company.tax_in_sales / 100;
+      this.invoice_headers.tax = tax
       return tax.toFixed(2);
     },
     total() {
       let my_total = parseFloat(this.subtotal_2) + parseFloat(this.tax);
+      this.invoice_headers.total = my_total;
       return my_total.toFixed(2);
     },
     isCompleteInvoice() {
