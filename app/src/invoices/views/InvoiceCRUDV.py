@@ -31,7 +31,6 @@ class InvoiceCreateView(LoginRequiredMixin, TemplateView):
         ctx['customers'] = serialize('json', partners)
         ctx['company_data'] = serialize('json', [company])
         ctx['invoice_number'] = Invoice.get_next_invoice_number(ctx['company'])
-        ctx['saveURL'] = reverse_lazy('sales-create')
         return ctx
 
     def post(self, request, *args, **kwargs):
@@ -43,7 +42,7 @@ class InvoiceCreateView(LoginRequiredMixin, TemplateView):
         invoice = Invoice.objects.create(
             company=company,
             partner=customer,
-            type='Invoice',
+            type='INVOICE',
             date=date.fromisoformat(invoice_data['date']),
             due_date=date.fromisoformat(invoice_data['due_date']),
             number=invoice_data['number'],
@@ -51,7 +50,7 @@ class InvoiceCreateView(LoginRequiredMixin, TemplateView):
             tax=Decimal(invoice_data['tax']),
             discount=Decimal(invoice_data['discount']),
             pay_terms=invoice_data['pay_terms'],
-            status='acepted',
+            status='ACEPTED',
             user=request.user
         )
         for item in line_items:

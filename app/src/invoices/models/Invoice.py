@@ -23,8 +23,8 @@ class Invoice(BaseModel):
     type = models.CharField(
         max_length=20,
         choices=(
-            ('Invoice', 'Invoice'),
-            ('Bill', 'Bill'))
+            ('INVOICE', 'INVOICE'),
+            ('BILL', 'BILL'))
     )
     date = models.DateField(
         'Date'
@@ -69,11 +69,11 @@ class Invoice(BaseModel):
         'Status',
         max_length=20,
         choices=[
-            ('Acepted', 'Acepted'),
-            ('Void', 'Void'),
-            ('Paid', 'Paid'),
+            ('ACEPTED', 'ACEPTED'),
+            ('VOID', 'VOID'),
+            ('PAID', 'PAID'),
         ],
-        default='Accepted'
+        default='ACCEPTED'
     )
 
     class Meta:
@@ -102,13 +102,13 @@ class Invoice(BaseModel):
     @classmethod
     def get_bills(cls, company):
         return Invoice.objects.filter(
-            type='Bill', company=company
+            type='BILL', company=company
         )
 
     @classmethod
     def get_invoices(cls, company):
         return Invoice.objects.filter(
-            type='Invoice', company=company
+            type='INVOICE', company=company
         )
 
     @classmethod
