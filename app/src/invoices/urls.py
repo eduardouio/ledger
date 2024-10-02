@@ -11,7 +11,6 @@ from .views import (
     InvoiceDeleteView,
     BillCreateView,
     BillDetailView,
-    BillDeleteView,
     BillListView
 )
 
@@ -23,7 +22,6 @@ urlpatterns = [
     path('payments/delete/<int:pk>/', PaymentDeleteView.as_view(), name='payment-delete'),
 
     path('bills/add/', BillCreateView.as_view(), name='bills-create'),
-    path('bills/delete/<int:pk>/', BillDeleteView.as_view(), name='bills-delete'),
     path('bills/<int:pk>/', BillDetailView.as_view(), name='bills-detail'),
     path('bills/', BillListView.as_view(), name='bills-list'),
 

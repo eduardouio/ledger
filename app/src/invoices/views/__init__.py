@@ -16,6 +16,5 @@ from .InvoiceCRUDV import (
 from .BillsCRUD import (
     BillCreateView,
     BillDetailView,
-    BillDeleteView,
     BillListView
 )
