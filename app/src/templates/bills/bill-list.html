@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+{% block content %}
+
+<div class="overflow-x-auto">
+  <table class="table table-xs table-pin-rows table-pin-cols" id="myTable">
+    <thead>
+      <tr>
+        <th>Number</th>
+        <th>Date</th>
+        <th>Partner</th>
+        <th>Due Date</th>
+        <th>Amount</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for invoice in invoices %}
+      <tr>
+        <td>
+          <a href="{% url 'sales-detail' invoice.id %}" class="flex gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+              <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
+            </svg>
+            {{ invoice.number }}
+          </a>
+        </td>
+        <td>{{ invoice.date }}</td>
+        <td>{{ invoice.partner.name }}</td>
+        <td>{{ invoice.due_date }}</td>
+        <td>{{ invoice.amount }}</td>
+        <td>{{ invoice.status }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock content %}
