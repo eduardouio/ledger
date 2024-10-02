@@ -121,7 +121,7 @@ const app = Vue.createApp({
         invoice_items: this.invoice_items
       };
       console.log(data);
-      fetch('/sales/create/', {
+      fetch('/sales/add/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

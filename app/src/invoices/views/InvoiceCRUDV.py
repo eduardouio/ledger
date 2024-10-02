@@ -5,7 +5,6 @@ from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.views.generic import (
     TemplateView,
-    UpdateView,
     DeleteView,
     ListView,
     DetailView
@@ -13,7 +12,6 @@ from django.views.generic import (
 from django.core.serializers import serialize
 from django.contrib.auth.mixins import LoginRequiredMixin
 from invoices.models import Invoice, InvoiceItems
-from invoices.forms import InvoiceForm, InvoiceItemsForm
 from crm.models import Partner
 from companies.models import Company
 from inventary.models import Product
