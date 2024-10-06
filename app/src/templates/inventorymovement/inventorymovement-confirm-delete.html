@@ -2,13 +2,13 @@
 
 {% block content %}
 
-<p>Are you sure you want to delete the INventory Movement <strong>{{ object.name }}</strong> for <strong>{{ object.company.name }}</strong>?</p>
+<p>Are you sure you want to delete the Inventory Movement <strong>{{ object.name }}</strong> for <strong>{{ object.company.name }}</strong>?</p>
 
 <form method="POST">
     {% csrf_token %}
-    <div class="py-3 text-end flex justify-between">
-      <button type="submit" class="btn btn-sm border border-gray-400 bg-red-500 text-white">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <div class="d-flex justify-content-between py-3">
+      <button type="submit" class="btn btn-sm btn-danger d-flex align-items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-trash" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
           <path d="M4 7l16 0" />
           <path d="M10 11l0 6" />
@@ -16,16 +16,18 @@
           <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
           <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
         </svg>
-        Delete
+        <span class="ms-1">Delete</span>
       </button>
-      <a href="{% url 'inventorymovement-list' %}" class="btn btn-sm border border-gray-400">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ban" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+
+      <a href="{% url 'inventorymovement-list' %}" class="btn btn-sm btn-secondary d-flex align-items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-x-circle" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-          <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+          <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
           <path d="M5.7 5.7l12.6 12.6" />
         </svg>
-        Cancel
+        <span class="ms-1">Cancel</span>
       </a>
     </div>
 </form>
+
 {% endblock content %}

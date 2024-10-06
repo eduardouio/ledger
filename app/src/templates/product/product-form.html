@@ -1,59 +1,53 @@
 {% extends 'base/base.html' %}
 {% block content %}
-<div class="text-error">
+<div class="text-danger">
   {{ form.errors }}
 </div>
-<form method="POST" class="w-full max-w-lg mx-auto">
+<form method="POST" class="w-100 max-w-lg mx-auto">
     {% csrf_token %}
     {% if company %}
     <input type="hidden" name="company" value="{{company.id}}">
     {% else %}
     <input type="hidden" name="company" value="{{object.company.id}}">
     {% endif %}
-    <div class="form-control">
-      <label class="label" for="account">
-        <span class="label-text">Account</span>
-      </label>
-      {{ form.account }}
+    
+    <div class="form-group">
+      <label for="account">Account</label>
+      {{ form.account|add_class:"form-control" }}
     </div>
-    <div class="form-control">
-      <label class="label" for="code_sku">
-        <span class="label-text">SKU Code</span>
-      </label>
-      {{ form.code_sku }}
+
+    <div class="form-group">
+      <label for="code_sku">SKU Code</label>
+      {{ form.code_sku|add_class:"form-control" }}
     </div>
-    <div class="form-control">
-      <label class="label" for="code_bars">
-        <span class="label-text">Bars Code</span>
-      </label>
-      {{ form.code_bars }}
+
+    <div class="form-group">
+      <label for="code_bars">Bars Code</label>
+      {{ form.code_bars|add_class:"form-control" }}
     </div>
-    <div class="form-control">
-      <label class="label" for="name">
-        <span class="label-text">Product Name</span>
-      </label>
-      {{ form.name }}
+
+    <div class="form-group">
+      <label for="name">Product Name</label>
+      {{ form.name|add_class:"form-control" }}
     </div>
-    <div class="form-control">
-      <label class="label" for="price">
-        <span class="label-text">Price</span>
-      </label>
-      {{ form.price }}
+
+    <div class="form-group">
+      <label for="price">Price</label>
+      {{ form.price|add_class:"form-control" }}
     </div>
-    <div class="form-control">
-      <label class="label" for="cost">
-        <span class="label-text">Cost</span>
-      </label>
-      {{ form.cost }}
+
+    <div class="form-group">
+      <label for="cost">Cost</label>
+      {{ form.cost|add_class:"form-control" }}
     </div>
-    <div class="form-control">
-      <label class="label" for="type">
-        <span class="label-text">Type</span>
-      </label>
-      {{ form.type }}
+
+    <div class="form-group">
+      <label for="type">Type</label>
+      {{ form.type|add_class:"form-control" }}
     </div>
-    <div class="py-3 text-end flex justify-between">
-        <button type="submit" class="btn btn-sm border border-gray-400">
+
+    <div class="py-3 d-flex justify-content-between">
+        <button type="submit" class="btn btn-outline-success btn-sm">
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
@@ -62,7 +56,7 @@
           </svg>
             Save Product
         </button>
-        <a href="{% url 'product-list' %}" class="btn btn-sm border border-gray-400">
+        <a href="{% url 'product-list' %}" class="btn btn-outline-danger btn-sm">
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ban" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />

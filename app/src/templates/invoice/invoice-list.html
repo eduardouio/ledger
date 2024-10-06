@@ -1,8 +1,8 @@
 {% extends 'base/base.html' %}
 {% block content %}
 
-<div class="overflow-x-auto">
-  <table class="table table-xs table-pin-rows table-pin-cols" id="myTable">
+<div class="table-responsive">
+  <table class="table table-sm" id="myTable">
     <thead>
       <tr>
         <th>Number</th>
@@ -17,7 +17,7 @@
       {% for invoice in invoices %}
       <tr>
         <td>
-          <a href="{% url 'sales-detail' invoice.id %}" class="flex gap-3">
+          <a href="{% url 'sales-detail' invoice.id %}" class="d-flex gap-2 align-items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
               <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
@@ -36,4 +36,5 @@
     </tbody>
   </table>
 </div>
+
 {% endblock content %}

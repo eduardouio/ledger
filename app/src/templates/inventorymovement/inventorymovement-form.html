@@ -1,97 +1,75 @@
 {% extends 'base/base.html' %}
 {% block content %}
 
-<div class="text-error">
+<div class="text-danger">
   {{ form.errors }}
 </div>
 
-<form method="POST" class="w-full max-w-lg mx-auto">
+<form method="POST" class="container">
     {% csrf_token %}
-    <div class="form-control">
-      <label class="label" for="company">
-        <span class="label-text">Company</span>
-      </label>
-      {{ form.company }}
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label" for="company">Company</label>
+        {{ form.company|add_class:"form-control" }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="date">Date</label>
+        {{ form.date|add_class:"form-control" }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="product">Product</label>
+        {{ form.product|add_class:"form-control" }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="warenhouse">Warehouse</label>
+        {{ form.warenhouse|add_class:"form-control" }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="description">Description</label>
+        {{ form.description|add_class:"form-control" }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="quantity">Quantity</label>
+        {{ form.quantity|add_class:"form-control" }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="cost_per_unit">Cost Per Unit</label>
+        {{ form.cost_per_unit|add_class:"form-control" }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="total_cost">Total Cost</label>
+        {{ form.total_cost|add_class:"form-control" }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="trasanction">Transaction</label>
+        {{ form.trasanction|add_class:"form-control" }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="movement">Movement Type</label>
+        {{ form.movement|add_class:"form-control" }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="user">User</label>
+        {{ form.user|add_class:"form-control" }}
+      </div>
     </div>
-    <div class="form-control">
-      <label class="label" for="date">
-        <span class="label-text">Date</span>
-      </label>
-      {{ form.date }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="product">
-        <span class="label-text">Product</span>
-      </label>
-      {{ form.product }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="warenhouse">
-        <span class="label-text">Warenhouse</span>
-      </label>
-      {{ form.warenhouse }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="description">
-        <span class="label-text">Description</span>
-      </label>
-      {{ form.description }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="quantity">
-        <span class="label-text">Quantity</span>
-      </label>
-      {{ form.quantity }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="cost_per_unit">
-        <span class="label-text">Cost Per Unit</span>
-      </label>
-      {{ form.cost_per_unit }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="total_cost">
-        <span class="label-text">Total Cost</span>
-      </label>
-      {{ form.total_cost }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="trasanction">
-        <span class="label-text">Transaction</span>
-      </label>
-      {{ form.trasanction }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="movement">
-        <span class="label-text">Movement Type</span>
-      </label>
-      {{ form.movement }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="user">
-        <span class="label-text">User</span>
-      </label>
-      {{ form.user }}
-    </div>
-    <div class="py-3 text-end flex justify-between">
-        <div class="py-3 text-end flex justify-between">
-            <button type="submit" class="btn btn-sm border border-gray-400">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
-                <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                <path d="M14 4l0 4l-6 0l0 -4" />
-              </svg>
-                Save Inventory Movement
-            </button>
-            <a href="{% url 'inventorymovement-list'%}" class="btn btn-sm border border-gray-400">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ban" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-                <path d="M5.7 5.7l12.6 12.6" />
-              </svg>
-              Cancel
-            </a>
+
+    <div class="mt-4 d-flex justify-content-between">
+        <button type="submit" class="btn btn-success btn-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-save" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M7.293 9.293a1 1 0 0 1 1.414 0L12 12.586l-3.293 3.293a1 1 0 0 1-1.414-1.414L10.586 12l-3.293-3.293a1 1 0 0 1 0-1.414z"/>
+            <path fill-rule="evenodd" d="M12.586 10H15v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V1a1 1 0 0 1 1-1h9.586l.707.707L13.293 2H15v6h-2.414l-2.293-2.293L12.586 10zM12 3.586V10h-2.586L7.414 8.293 3.414 12H3v3h12v-5h-2.586l-3-3z"/>
+          </svg>
+          Save Inventory Movement
+        </button>
+        <a href="{% url 'inventorymovement-list'%}" class="btn btn-danger btn-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-x-circle" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8a8 8 0 1 1-16 0 8 8 0 0 1 16 0z"/>
+            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+          </svg>
+          Cancel
+        </a>
     </div>
 </form>
+
 {% endblock content %}

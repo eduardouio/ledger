@@ -1,0 +1,14 @@
+teien que tener varios permisos para cada uno de los usuaruisa desntro de un mismo cliente
+Quitar el costo del pedido en la pantalla de pedidos, el costo debe ser automatico halando del ultimo costo del kardex
+
+el lciente y el proveedor van atados a una cuenta contable, 
+
+se debe controlar los cheques, agregar bumero de ch
+s
+CUENTA DE MAYOR O TITULO COMO ESTA EN SAP, ES CUENTA ACTIVA O DE MOVIMIENTO
+
+para crear los codigos
+
+
+corregir como se crea la cuenta contable, la secuencia son automaticas.
+

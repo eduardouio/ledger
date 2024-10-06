@@ -1,67 +1,71 @@
 {% extends 'base/base.html' %}
 {% block content %}
-<div class="text-error">
+<div class="text-danger">
   {{ form.errors }}
 </div>
-<form method="POST" class="w-full max-w-lg mx-auto">
+<form method="POST" class="w-100 mx-auto">
     {% csrf_token %}
     {% if company %}
     <input type="hidden" name="company" value="{{company.id}}">
     {% else %}
     <input type="hidden" name="company" value="{{object.company.id}}">
     {% endif %}
-    <div class="form-control">
-      <label class="label" for="type">
-        <span class="label-text">Supplier Type</span>
-      </label>
-      {{ form.type }}
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="type" class="form-label">Supplier Type</label>
+          {{ form.type|add_class:"form-control" }}
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="name" class="form-label">Supplier Name</label>
+          {{ form.name|add_class:"form-control" }}
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="id_num" class="form-label">ID Number</label>
+          {{ form.id_num|add_class:"form-control" }}
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="pay_term" class="form-label">Pay Terms</label>
+          {{ form.pay_terms|add_class:"form-control" }}
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email Address</label>
+          {{ form.email|add_class:"form-control" }}
+        </div>
+      </div>
     </div>
 
-    <div class="form-control">
-      <label class="label" for="name">
-        <span class="label-text">Supplier Name</span>
-      </label>
-      {{ form.name }}
-    </div>
-
-    <div class="form-control">
-      <label class="label" for="id_num">
-        <span class="label-text">ID Number</span>
-      </label>
-      {{ form.id_num }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="pay_term">
-        <span class="label-text">Pay Terms</span>
-      </label>
-      {{ form.pay_terms }}
-    </div>
-
-    <div class="form-control">
-      <label class="label" for="email">
-        <span class="label-text">Email Address</span>
-      </label>
-      {{ form.email }}
-    </div>
-
-    <div class="py-3 text-end flex justify-between">
-      <button type="submit" class="btn btn-sm border border-gray-400">
+    <div class="py-3 d-flex justify-content-between">
+      <button type="submit" class="btn btn-sm btn-secondary">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
           <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
           <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
           <path d="M14 4l0 4l-6 0l0 -4" />
         </svg>
-          Save Partner
+        Save Partner
       </button>
-      <a href="{% url 'partner-list' %}" class="btn btn-sm border border-gray-400">
+
+      <a href="{% url 'partner-list' %}" class="btn btn-sm btn-danger">
         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ban" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-          <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+          <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
           <path d="M5.7 5.7l12.6 12.6" />
         </svg>
         Cancel
       </a>
     </div>
-  </form>
+</form>
 {% endblock content %}

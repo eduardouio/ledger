@@ -3,14 +3,14 @@
 {% if action_type == 'success' %}
   {% include 'components/alert-success.html' %}
 {% endif %}
-<div class="overflow-x-auto">
-  <table class="table table-xs table-pin-rows table-pin-cols" id="myTable">
-    <thead>
+<div class="table-responsive">
+  <table class="table table-sm table-bordered" id="myTable">
+    <thead class="table-light">
       <tr>
         <th>Company</th>
-        <th>Warenhouse Code</th>
-        <th>Warenhouse Name</th>
-        <th>Warenhouse Address</th>
+        <th>Warehouse Code</th>
+        <th>Warehouse Name</th>
+        <th>Warehouse Address</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -22,9 +22,9 @@
         <td>{{ warenhouse.name }}</td>
         <td>{{ warenhouse.address }}</td>
         <td>
-          <a href="{% url 'warenhouse-detail' warenhouse.id %}" class="btn btn-sm border border-gray-400">View</a>
-          <a href="{% url 'warenhouse-update' warenhouse.id %}" class="btn btn-sm border border-gray-400">Edit</a>
-          <a href="{% url 'warenhouse-detail' warenhouse.id %}?action=alert" class="btn btn-sm border border-gray-400 text-error">Delete</a>
+          <a href="{% url 'warenhouse-detail' warenhouse.id %}" class="btn btn-outline-primary btn-sm">View</a>
+          <a href="{% url 'warenhouse-update' warenhouse.id %}" class="btn btn-outline-secondary btn-sm">Edit</a>
+          <a href="{% url 'warenhouse-detail' warenhouse.id %}?action=alert" class="btn btn-outline-danger btn-sm">Delete</a>
         </td>
       </tr>
       {% endfor %}

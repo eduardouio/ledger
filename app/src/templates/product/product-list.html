@@ -3,55 +3,55 @@
 {% if action_type == 'success' %}
   {% include 'components/alert-success.html' %}
 {% endif %}
-<div class="overflow-x-auto">
-<table class="table table-xs table-pin-rows table-pin-cols" id="myTable">
-  <thead>
-    <tr class="text-teal-600">
+<div class="table-responsive">
+  <table class="table table-sm table-striped" id="myTable">
+    <thead>
+      <tr class="text-primary">
         <th>ID</th>
         <th>Name</th>
         <th>SKU</th>
         <th>Bars Code</th>
         <th>Price</th>
         <th>Type</th>
-    </tr>
-</thead>
-<tbody>
-    {% for item in object_list %}
-    <tr>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in object_list %}
+      <tr>
         <td>
-            <div class="flex justify-between">
-                <a href="{% url 'product-detail' item.id %}">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-maximize" width="20" height="20" viewBox="0 0 20 20" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M16 4l4 0l0 4" />
-                        <path d="M14 10l6 -6" />
-                        <path d="M8 20l-4 0l0 -4" />
-                        <path d="M4 20l6 -6" />
-                        <path d="M16 20l4 0l0 -4" />
-                        <path d="M14 14l6 6" />
-                        <path d="M8 4l-4 0l0 4" />
-                        <path d="M4 4l6 6" />
-                    </svg>
-                </a>
-                <span>{{ bank.company.id }}</span>
-            </div>
+          <div class="d-flex justify-content-between">
+            <a href="{% url 'product-detail' item.id %}">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-maximize" width="20" height="20" viewBox="0 0 20 20" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M16 4l4 0l0 4" />
+                <path d="M14 10l6 -6" />
+                <path d="M8 20l-4 0l0 -4" />
+                <path d="M4 20l6 -6" />
+                <path d="M16 20l4 0l0 -4" />
+                <path d="M14 14l6 6" />
+                <path d="M8 4l-4 0l0 4" />
+                <path d="M4 4l6 6" />
+              </svg>
+            </a>
+            <span>{{ bank.company.id }}</span>
+          </div>
         </td>
         <td>{{ item.name }}</td>
         <td>{{ item.code_sku }}</td>
         <td>{{ item.code_bars }}</td>
         <td>{{ item.price }}</td>
         <td>
-           <span class="{% if item.type ==  'product' %}
+           <span class="{% if item.type == 'product' %}
             {{ type_a_class }} 
            {% else %} 
-           {{ type_b_class}} 
+           {{ type_b_class }} 
            {% endif %}">
-               {{ item.get_type_display }}
+             {{ item.get_type_display }}
            </span> 
         </td>
-    </tr>
-    {% endfor %}
-</tbody>
-</table>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 {% endblock content %}

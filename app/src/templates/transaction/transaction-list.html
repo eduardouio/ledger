@@ -1,9 +1,9 @@
 {% extends 'base/base.html' %}
 {% block content %}
 
-<div class="overflow-x-auto">
-  <table class="table table-xs table-pin-rows table-pin-cols" id="myTable">
-    <thead>
+<div class="table-responsive">
+  <table class="table table-sm table-bordered" id="myTable">
+    <thead class="table-light">
       <tr>
         <th>Company</th>
         <th>Description</th>
@@ -22,9 +22,9 @@
         <td>{{ transaction.date }}</td>
         <td>{{ transaction.user.username }}</td>
         <td>
-          <a href="{% url 'transaction-detail' transaction.id %}" class="btn btn-sm border border-gray-400">View</a>
-          <a href="{% url 'transaction-update' transaction.id %}" class="btn btn-sm border border-gray-400">Edit</a>
-          <a href="{% url 'transaction-delete' transaction.id %}" class="btn btn-sm border border-gray-400 text-error">Delete</a>
+          <a href="{% url 'transaction-detail' transaction.id %}" class="btn btn-outline-primary btn-sm">View</a>
+          <a href="{% url 'transaction-update' transaction.id %}" class="btn btn-outline-secondary btn-sm">Edit</a>
+          <a href="{% url 'transaction-delete' transaction.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
         </td>
       </tr>
       {% endfor %}
@@ -32,5 +32,6 @@
   </table>
 </div>
 <br>
-<a href="{% url 'transaction-create' %}" class="btn btn-sm border border-gray-400">Create New Transaction</a>
+<a href="{% url 'transaction-create' %}" class="btn btn-outline-success btn-sm">Create New Transaction</a>
+
 {% endblock content %}

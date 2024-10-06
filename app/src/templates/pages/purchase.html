@@ -2,18 +2,18 @@
 {% block content %}
 <div class="container mx-auto">
     <!-- Nueva Factura Section -->
-    <div class="bg-white p-4 rounded-lg shadow-lg mb-8">
-        <div class="grid grid-cols-5 gap-4 pb-4">
-            <a href="" class="col-span-1 btn border border-gray-400 font-light bg-gradient-to-t from-blue-400 to-sky-300">New Sale</a>
-            <a href="" class="col-span-1 btn border border-gray-400 font-light bg-gradient-to-t from-blue-400 to-sky-300">Customers</a>
-            <a href="" class="col-span-1 btn border border-gray-400 font-light bg-gradient-to-t from-blue-400 to-sky-300">Products</a>
-            <a href="" class="col-span-1 btn border border-gray-400 font-light bg-gradient-to-t from-blue-400 to-sky-300">Services</a>
-            <a href="" class="col-span-1 btn border border-gray-400 font-light bg-gradient-to-t from-blue-400 to-sky-300">Account Plan</a>
+    <div class="bg-white p-4 rounded-lg shadow-sm mb-8">
+        <div class="row pb-4">
+            <a href="" class="col btn border border-secondary bg-gradient">New Sale</a>
+            <a href="" class="col btn border border-secondary bg-gradient">Customers</a>
+            <a href="" class="col btn border border-secondary bg-gradient">Products</a>
+            <a href="" class="col btn border border-secondary bg-gradient">Services</a>
+            <a href="" class="col btn border border-secondary bg-gradient">Account Plan</a>
         </div>
-        <div class="overflow-x-auto">
-            <table class="table table-xs table-pin-rows table-pin-cols" id="myTable">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="myTable">
               <thead>
-                <tr class="text-teal-600">
+                <tr class="text-primary">
                     <th class="text-center">Code</th>
                     <th>Name</th>
                     <th>Type</th>
@@ -25,7 +25,7 @@
                 {% for item in object_list %}
                 <tr>
                     <td>
-                        <div class="flex justify-between">
+                        <div class="d-flex justify-content-between">
                         <a href="/accounting/account/{{ item.id}}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrows-maximize" width="20" height="20" viewBox="0 0 20 20" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -49,12 +49,12 @@
                     <td>Level{{ item.level }}</td>
                     <td>
                         {% if item.parent_account.code %}
-                        <span class="badge bg-gray-200 border border-gray-500 text-xs">
+                        <span class="badge bg-light text-dark border border-secondary">
                             {{ item.parent_account.code }}
                         </span>
                         {{ item.parent_account.name}}
                         {% else %}
-                        <span class="text-gray-400">
+                        <span class="text-muted">
                             --
                         </span>    
                         {% endif %}
@@ -64,8 +64,8 @@
             </tbody>
             </table>
             </div>
-        <div class="grid grid-cols-5 gap-4 py-10">
-            <a href="" class="col-span-1 btn border border-gray-400 font-light bg-gradient-to-t from-blue-400 to-sky-300">
+        <div class="row py-10">
+            <a href="" class="col btn border border-secondary bg-gradient">
                 Make Pay
             </a>
         </div>

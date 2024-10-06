@@ -1,85 +1,96 @@
 {% extends 'base/base.html' %}
 {% block content %}
 
-<div class="text-error">
+<div class="text-danger">
   {{ form.errors }}
 </div>
 
-<form method="POST" class="w-full max-w-lg mx-auto" enctype="multipart/form-data">
+<form method="POST" class="w-100 mx-auto" enctype="multipart/form-data">
     {% csrf_token %}
-    <div class="form-control">
-      <label class="label" for="tax_id">
-        <span class="label-text">Tax ID</span>
-      </label>
-      {{ form.tax_id }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="name">
-        <span class="label-text">Company Name</span>
-      </label>
-      {{ form.name }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="address">
-        <span class="label-text">Address</span>
-      </label>
-      {{ form.address }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="phone">
-        <span class="label-text">Phone Number</span>
-      </label>
-      {{ form.phone }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="email">
-        <span class="label-text">Email Address</span>
-      </label>
-      {{ form.email }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="email">
-        <span class="label-text">Tax In Sales</span>
-      </label>
-      {{ form.tax_in_sales }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="email">
-        <span class="label-text">Tax In Purchases</span>
-      </label>
-      {{ form.tax_in_purchases }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="website">
-        <span class="label-text">Website</span>
-      </label>
-      {{ form.website }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="logo">
-        <span class="label-text">Company Logo</span>
-      </label>
-      {{ form.logo }}
-    </div>
-    <div class="form-control">
-      <label class="label" for="manager">
-        <span class="label-text">Manager</span>
-      </label>
-      {{ form.manager }}
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label" for="tax_id">Tax ID</label>
+          {{ form.tax_id|add_class:"form-control" }}
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label" for="name">Company Name</label>
+          {{ form.name|add_class:"form-control" }}
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label" for="address">Address</label>
+          {{ form.address|add_class:"form-control" }}
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label" for="phone">Phone Number</label>
+          {{ form.phone|add_class:"form-control" }}
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label" for="email">Email Address</label>
+          {{ form.email|add_class:"form-control" }}
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label" for="tax_in_sales">Tax In Sales</label>
+          {{ form.tax_in_sales|add_class:"form-control" }}
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label" for="tax_in_purchases">Tax In Purchases</label>
+          {{ form.tax_in_purchases|add_class:"form-control" }}
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label" for="website">Website</label>
+          {{ form.website|add_class:"form-control" }}
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label" for="logo">Company Logo</label>
+          {{ form.logo|add_class:"form-control" }}
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label" for="manager">Manager</label>
+          {{ form.manager|add_class:"form-control" }}
+        </div>
+      </div>
     </div>
     
-    <div class="py-3 text-end flex justify-between">
-      <div class="py-3 text-end flex justify-between">
-        <button type="submit" class="btn btn-sm border border-gray-400">
+    <div class="py-3 d-flex justify-content-between">
+        <button type="submit" class="btn btn-sm border border-secondary">
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-floppy" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />
             <path d="M12 14m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
             <path d="M14 4l0 4l-6 0l0 -4" />
           </svg>
-            Save Company
+          Save Company
         </button>
-        <a href="{% url 'company-list' %}" class="btn btn-sm border border-gray-400">
+
+        <a href="{% url 'company-list' %}" class="btn btn-sm border border-danger text-danger">
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-ban" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
@@ -89,4 +100,5 @@
         </a>
     </div>
 </form>
+
 {% endblock content %}

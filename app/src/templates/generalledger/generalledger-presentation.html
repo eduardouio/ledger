@@ -1,57 +1,71 @@
 {% extends 'base/base.html' %}
 {% block content %}
-<h2 class="text-2xl font-bold mb-4">General Ledger Entry Details</h2>
+<h2 class="h4 mb-4">General Ledger Entry Details</h2>
 
-<div class="bg-white shadow-md rounded-lg p-6 grid md:grid-cols-2 gap-2 grid-cols-1">
-  <div class="mb-4 flex justify-between align-middle bg-gray-100 border border-gray-300 p-1">
-    <label class="block text-sm font-medium text-gray-700">Company</label>
-    <span class="text-lg font-semibold">{{ object.company.name }}</span>
+<div class="bg-white shadow-sm rounded p-4 mb-4">
+  <div class="row g-3">
+    <div class="col-md-6">
+      <div class="bg-light border rounded p-2">
+        <label class="form-label">Company</label>
+        <p class="fw-bold">{{ object.company.name }}</p>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="bg-light border rounded p-2">
+        <label class="form-label">Account</label>
+        <p class="fw-bold">{{ object.account.name }}</p>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="bg-light border rounded p-2">
+        <label class="form-label">Transaction</label>
+        <p class="fw-bold">{{ object.transaction.name }}</p>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="bg-light border rounded p-2">
+        <label class="form-label">Debit Amount</label>
+        <p class="fw-bold">{{ object.debit }}</p>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="bg-light border rounded p-2">
+        <label class="form-label">Credit Amount</label>
+        <p class="fw-bold">{{ object.credit }}</p>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="bg-light border rounded p-2">
+        <label class="form-label">Balance</label>
+        <p class="fw-bold">{{ object.balance }}</p>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="bg-light border rounded p-2">
+        <label class="form-label">Description</label>
+        <p class="fw-bold">{{ object.description }}</p>
+      </div>
+    </div>
   </div>
-
-  <div class="mb-4 flex justify-between align-middle bg-gray-100 border border-gray-300 p-1">
-    <label class="block text-sm font-medium text-gray-700">Account</label>
-    <span class="text-lg font-semibold">{{ object.account.name }}</span>
-  </div>
-
-  <div class="mb-4 flex justify-between align-middle bg-gray-100 border border-gray-300 p-1">
-    <label class="block text-sm font-medium text-gray-700">Transaction</label>
-    <span class="text-lg font-semibold">{{ object.transaction.name }}</span>
-  </div>
-
-  <div class="mb-4 flex justify-between align-middle bg-gray-100 border border-gray-300 p-1">
-    <label class="block text-sm font-medium text-gray-700">Debit Amount</label>
-    <span class="text-lg font-semibold">{{ object.debit }}</span>
-  </div>
-
-  <div class="mb-4 flex justify-between align-middle bg-gray-100 border border-gray-300 p-1">
-    <label class="block text-sm font-medium text-gray-700">Credit Amount</label>
-    <span class="text-lg font-semibold">{{ object.credit }}</span>
-  </div>
-
-  <div class="mb-4 flex justify-between align-middle bg-gray-100 border border-gray-300 p-1">
-    <label class="block text-sm font-medium text-gray-700">Balance</label>
-    <span class="text-lg font-semibold">{{ object.balance }}</span>
-  </div>
-
-  <div class="mb-4 flex justify-between align-middle bg-gray-100 border border-gray-300 p-1">
-    <label class="block text-sm font-medium text-gray-700">Description</label>
-    <span class="text-lg font-semibold">{{ object.description }}</span>
-  </div>
-
 </div>
 
-<div class="flex space-x-4 mt-4">
-  <a href="{% url 'generalledger-update' object.pk %}" class="btn btn-sm border border-gray-400">
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil-minus" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<div class="d-flex gap-2">
+  <a href="{% url 'generalledger-update' object.pk %}" class="btn btn-sm btn-secondary">
+    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-pencil" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
       <path d="M13.5 6.5l4 4" />
-      <path d="M16 19h6" />
     </svg>
     Edit
   </a>
-  <a href="{% url 'generalledger-delete' object.pk %}" class="btn btn-sm border border-gray-400 text-error">
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <a href="{% url 'generalledger-delete' object.pk %}" class="btn btn-sm btn-danger">
+    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-trash" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <path d="M4 7l16 0" />
       <path d="M10 11l0 6" />
@@ -61,13 +75,12 @@
     </svg>
     Delete
   </a>
-  <a href="{% url 'generalledger-list' %}" class="btn btn-sm border border-gray-400">
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-big-left" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <a href="{% url 'generalledger-list' %}" class="btn btn-sm btn-primary">
+    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-arrow-left" width="20" height="20" viewBox="0 0 24 24" stroke-width="1" stroke="#009988" fill="none" stroke-linecap="round" stroke-linejoin="round">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <path d="M20 15h-8v3.586a1 1 0 0 1 -1.707 .707l-6.586 -6.586a1 1 0 0 1 0 -1.414l6.586 -6.586a1 1 0 0 1 1.707 .707v3.586h8a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1z" />
     </svg>
     Back to List
   </a>
 </div>
-
 {% endblock %}
