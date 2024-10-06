@@ -1,42 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.14.0/dist/full.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100 flex items-center justify-center h-screen">
-    <div class="card w-96 bg-white shadow-xl">
-        <div class="card-body">
-            <h2 class="card-title text-center">Login</h2>
-            <span class="alert alert-error">
-                {{ message }}
-            </span>
-            <form method="POST">
-                {{ form.errors }}
-                {% csrf_token %}
-                <div class="form-control">
-                    <label class="label" for="email">
-                        <span class="label-text">Email</span>
-                    </label>
-                    <input type="email" id="email" name="email" placeholder="you@example.com" class="input input-bordered w-full" required />
+{% extends 'base/base.html' %}
+{% block content %}
+    <div class="container-fluid min-vh-100 d-flex">
+        <div class="row w-100">
+            <div class="col-6 d-flex justify-content-center align-items-center bg-gray bg-gradient border-end border-info border-2 p-0">
+                <img src="/static/img/login_image.jpg" class="image-cover">
+            </div>
+            <div class="col-6 d-flex justify-content-center align-items-center">
+                <div class="bg-gray bg-gradient border rounded-4 shadow pt-2 pb-2 border-info">
+                    <div class="container d-flex flex-column align-items-center">
+                        <div class="login-form text-center border m-1 p-5 border-primary border-2 rounded-4 bg-light">
+                            <main class="form-signin w-100 m-auto">
+                                <form method="post" action="">
+                                    {% csrf_token %}
+                                    {% if message %}
+                                    <div class="alert alert-danger">
+                                        {{ message }}
+                                    </div>
+                                    {% endif %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-coins" width="100" height="100" viewBox="0 0 24 24" stroke-width="1" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M9 14c0 1.657 2.686 3 6 3s6 -1.343 6 -3s-2.686 -3 -6 -3s-6 1.343 -6 3z" />
+                                        <path d="M9 14v4c0 1.656 2.686 3 6 3s6 -1.344 6 -3v-4" />
+                                        <path d="M3 6c0 1.072 1.144 2.062 3 2.598s4.144 .536 6 0c1.856 -.536 3 -1.526 3 -2.598c0 -1.072 -1.144 -2.062 -3 -2.598s-4.144 -.536 -6 0c-1.856 .536 -3 1.526 -3 2.598z" />
+                                        <path d="M3 6v10c0 .888 .772 1.45 2 2" />
+                                        <path d="M3 11c0 .888 .772 1.45 2 2" />
+                                      </svg>
+                                  <h1 class="h3 mb-3 fw-normal text-kosmo-primary">Ledger</h1>
+                                  <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
+                                    <label for="floatingInput">Email address</label>
+                                  </div>
+                                  <div class="form-floating">
+                                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+                                    <label for="floatingPassword">Password</label>
+                                  </div>
+                                <div class="m-5"></div>
+                                  <button class="w-100 btn btn-lg btn-success" type="submit">Iniciar Sesión</button>
+                                  <p class="mt-5 mb-3 text-muted">&copy;Ledger Todos los Derechos Reservados</p>
+                                </form>
+                              </main>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-control mt-4">
-                    <label class="label" for="password">
-                        <span class="label-text">Password</span>
-                    </label>
-                    <input type="password" id="password" name="password" placeholder="••••••••" class="input input-bordered w-full" required />
-                </div>
-                <div class="form-control mt-6">
-                    <button class="btn btn-primary w-full">Login</button>
-                </div>
-                <!-- <div class="mt-4 text-center">
-                    <a href="#" class="link link-hover">Forgot password?</a>
-                </div> -->
-            </form>
+            </div>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}
